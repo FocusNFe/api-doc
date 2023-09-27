@@ -113,6 +113,7 @@ Os seguintes eventos causam o acionamento do gatilho:
   * Erro na emissão de uma nota fiscal
   * Emissão de nota fiscal realizada com sucesso
   * Inutilização de faixa de numeração
+  * Tentativas de emissão em ambientes diferentes do ambiente onde a nota foi autorizada conforme descrito na seção “Reenvio automático em contingência” da NFe
 * **NFCe**:
   * Erro na emissão de uma NFCe em contingência
   * Efetivação de uma NFCe
