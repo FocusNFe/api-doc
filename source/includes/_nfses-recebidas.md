@@ -412,14 +412,10 @@ curl -u "token obtido no cadastro da empresa:" \
 ```
 
 Eventualmente são integradas melhorias nos dados retornados pela API de _NFSes Recebidas_.
-Para garantir compatibilidade, é possível consultar dados de _versões específicas da API_ informando o parâmetro **api_version**.
+Para garantir compatibilidade e facilitar transições, é possível consultar dados de _versões específicas da API_ informando o parâmetro **api_version** (recomendado).
 
-api_version | Padrão¹ | Descrição | Links | <abbr title="End of Life">EOL</abbr>
-------------|:-------:|:---------:|:----: | -----:
-`2020-11-17` | **x**<br><small>_(até&nbsp;1/10/2023)_</small> | Versão preliminar (beta) | [documentação legada](https://github.com/FocusNFe/api-doc/blob/v2.6.3/source/includes/_nfses-recebidas.md#dados-devolvidos) | 01/10/2024
-`2023-03-01` |  | Primeira versão oficial | [documentação](https://campos.focusnfe.com.br/nfser/NfseRecebida.html), [changelog](https://focusnfe.com.br/blog/changelog-nfser-v2023-03-01/) | -
+api_version | Padrão¹ | Descrição | Links | Release | <abbr title="End of Life">EOL</abbr>
+------------|:-------:|:---------:|:----: | :-----: | :-----:
+`2020-11-17` |  | Versão preliminar (beta) | [documentação legada](https://github.com/FocusNFe/api-doc/blob/v2.6.3/source/includes/_nfses-recebidas.md#dados-devolvidos) | 01/12/2020 | 01/10/2024
+`2023-03-01` | **x** | Primeira versão estável | [documentação](https://campos.focusnfe.com.br/nfser/NfseRecebida.html), [changelog](https://focusnfe.com.br/blog/changelog-nfser-v2023-03-01/) | 02/10/2023 | -
 <small>(¹) Última versão estável da API de _NFSes Recebidas_, assumida como padrão quando não informado o parâmetro.</small>
-
-<aside class="notice">
-A partir do dia <i>2/10/2023</i> a versão padrão será <code>2023-03-01</code>. Recomendamos que especifique a versão da API em seu sistema.
-</aside>
