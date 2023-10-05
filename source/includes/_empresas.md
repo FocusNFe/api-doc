@@ -26,7 +26,7 @@ O formato de envio dos campos é no formato JSON, que deverá ser enviado no for
 
 Abaixo são listados todos os campos de uma empresa.
 
->Exemplo de um arquivo JSON
+>Exemplo de um arquivo JSON de envio
 
 ```json
 {
@@ -164,11 +164,11 @@ Uma empresa pode ser criada usando o seguinte endereço
   "id": 17625,
   "nome": "Nome da empresa Ltda",
   "nome_fantasia": "Nome Fantasia",
-  "inscricao_estadual": 1234,
-  "inscricao_municipal": 46532,
+  "inscricao_estadual": "1234",
+  "inscricao_municipal": "46532",
   "bairro": "Vila Isabel",
   "cargo_responsavel": null,
-  "cep": 80210000,
+  "cep": "80210000",
   "cnpj": "88776429000116",
   "cpf": null,
   "codigo_municipio": "4106902",
@@ -186,9 +186,9 @@ Uma empresa pode ser criada usando o seguinte endereço
   "logradouro": "Rua João da Silva",
   "municipio": "Curitiba",
   "nome_responsavel": null,
-  "numero": 153,
+  "numero": "153",
   "pais": "Brasil",
-  "regime_tributario": 1,
+  "regime_tributario": "1",
   "telefone": "4130333333",
   "uf": "PR",
   "csc_nfce_producao": null,
