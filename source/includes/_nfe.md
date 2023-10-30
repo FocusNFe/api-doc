@@ -21,6 +21,7 @@ POST |  /v2/nfe/REFERENCIA/carta_correcao | Cria uma carta de correção para a 
 POST |  /v2/nfe/REFERENCIA/email  | Envia um email com uma cópia da nota fiscal com a referência informada
 POST |  /v2/nfe/inutilizacao  | Inutiliza uma numeração da nota fiscal
 POST |  /v2/nfe/importacao?ref=REFERENCIA | Cria uma nota fiscal a partir da importação de um XML
+POST |  /v2/nfe/danfe  | Gera uma DANFe de Preview
 
 ## Campos obrigatórios de uma NFe
 
@@ -2633,3 +2634,94 @@ Os dados devolvidos após a importação com sucesso são os mesmos da operaçã
 curl -u "token obtido no cadastro da empresa:" \
   -X POST -T arquivo.xml https://homologacao.focusnfe.com.br/v2/nfe/importacao
 ```
+
+
+## Pré-visualização de DANFe
+
+> Exemplo de envio usando um arquivo JSON
+
+```shell
+# O "arquivo.json" deve conter os dados da NFe.
+curl -u "token obtido no cadastro da empresa:" \
+  -X POST -T arquivo.json https://api.focusnfe.com.br/v2/nfe/danfe
+```
+
+> Exemplo de um arquivo JSON
+
+```json
+{
+  "natureza_operacao": "Remessa",
+  "data_emissao": "2018-03-21T11:00:00",
+  "data_entrada_saida": "2018-03-21T11:00:00",
+  "tipo_documento": "1",
+  "finalidade_emissao": "1",
+  "cnpj_emitente": "51916585000125",
+  "nome_emitente": "ACME LTDA",
+  "nome_fantasia_emitente": "ACME LTDA",
+  "logradouro_emitente": "R. Padre Natal Pigato",
+  "numero_emitente": "100",
+  "bairro_emitente": "Santa Felicidade",
+  "municipio_emitente": "Curitiba",
+  "uf_emitente": "PR",
+  "cep_emitente": "82320030",
+  "inscricao_estadual_emitente": "1234567",
+  "nome_destinatario": "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
+  "cpf_destinatario": "51966818092",
+  "telefone_destinatario": "1196185555",
+  "logradouro_destinatario": "Rua S\u00e3o Janu\u00e1rio",
+  "numero_destinatario": "99",
+  "bairro_destinatario": "Crespo",
+  "municipio_destinatario": "Manaus",
+  "uf_destinatario": "AM",
+  "pais_destinatario": "Brasil",
+  "cep_destinatario": "69073178",
+  "valor_frete": "0.0",
+  "valor_seguro": "0",
+  "valor_total": "47.23",
+  "valor_produtos": "47.23",
+  "modalidade_frete": "0",
+  "items": [
+    {
+      "numero_item": "1",
+      "codigo_produto": "1232",
+      "descricao": "Cartu00f5es de Visita",
+      "cfop": "6923",
+      "unidade_comercial": "un",
+      "quantidade_comercial": "100",
+      "valor_unitario_comercial": "0.4723",
+      "valor_unitario_tributavel": "0.4723",
+      "unidade_tributavel": "un",
+      "codigo_ncm": "49111090",
+      "quantidade_tributavel": "100",
+      "valor_bruto": "47.23",
+      "icms_situacao_tributaria": "400",
+      "icms_origem": "0",
+      "pis_situacao_tributaria": "07",
+      "cofins_situacao_tributaria": "07"
+    }
+  ]
+}
+```
+
+> Erro na validação do XML
+
+```json
+{
+  "codigo": "erro_validacao_xml",
+  "mensagem": "O XML não pôde ser interpretado, verifique seu conteúdo e tente novamente"
+}
+```
+
+Para gerar a DANFe de preview para uma nota fiscal eletrônica, utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+
+Gera uma DANFe:
+
+`https://api.focusnfe.com.br/v2/nfe/danfe`
+
+Utilize o comando **HTTP POST** para gerar a DANFe de preview. Envie como corpo do POST os dados em formato **JSON** da nota fiscal, ou o conteúdo de um **arquivo XML**.
+
+A resposta da API incluirá o arquivo de DANFe de preview gerado, que pode ser visualizado e baixado.
+
+<aside class="warning">
+A DANFe gerada por este endpoint é apenas para fins de visualização e não possui valor fiscal. Para a emissão de uma NFe com valor fiscal, utilize o processo de emissão padrão descrito na documentação.
+</aside>
