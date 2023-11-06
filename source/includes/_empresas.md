@@ -137,7 +137,8 @@ Abaixo são listados todos os campos de uma empresa.
 | smtp\_porta                                                  | numérico         |          |           |           | Porta do servidor SMTP para envio de e\-mails.
 | smtp\_login                                                  | texto            |          |           |           | Login do servidor SMTP para envio de e\-mails. Se o seu servidor de e-mail exigir autenticação, você deve inserir o nome de usuário aqui.
 | smtp\_senha                                                  | texto            |          |           |           | Senha do servidor SMTP para envio de e\-mails. Se o seu servidor de e-mail exigir autenticação, você deve inserir a senha aqui.
-| smtp\_remetente                                              | texto            |          |           |           | Remetente dos e\-mails enviados pelo servidor SMTP para envio de e\-mails.
+| smtp\_remetente                                              | texto            |          |           |           | Remetente (from) dos e\-mails enviados pelo servidor SMTP para envio de e\-mails.
+| smtp\_responder_para                                         | texto            |          |           |           | Responder para (reply to) dos e\-mails enviados pelo servidor SMTP para envio de e\-mails.
 | smtp\_modo\_verificacao\_openssl                             | texto            |          |           |           | Modo de verificação do servidor SMTP para envio de e\-mails. Valores possíveis: peer, none
 | smtp\_habilita\_starttls                                     | booleano         |          |           |           | Utiliza o STARTTLS quando estiver conectado ao servidor SMTP para envio de e\-mails.
 | smtp\_ssl                                                    | booleano         |          |           |           | Utiliza SSL quando estiver conectado ao servidor SMTP para envio de e\-mails.
