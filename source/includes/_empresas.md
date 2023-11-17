@@ -131,6 +131,18 @@ Abaixo são listados todos os campos de uma empresa.
 | login\_responsavel                                            | texto |             |              |              | Login para acesso da prefeitura. Necessário para emissão de NFSe em alguns municípios que não utilizam certificado digital.              |
 | senha\_responsavel                                            | texto |             |              |              | Senha para acesso da prefeitura. Necessário para emissão de NFSe em alguns municípios que não utilizam certificado digital. Por motivos de segurança, este atributo não é exibido na consulta da empresa após ser salvo. |
 | data\_inicio\_recebimento\_nfe                                | data         |          |           |           | Caso MDe esteja habilitado, permite especificar qual a data em que os documentos começarão ser recebidos. Documentos com datas anteriores serão ignorados e não serão cobrados. Se deixado em branco, serão buscados todos os documentos disponíveis. Uma vez definido, não poderá ser modificado.
+| smtp\_endereco                                               | texto            |          |           |           | Endereço do servidor SMTP para envio de e\-mails.
+| smtp\_dominio                                                | texto            |          |           |           | Domínio do servidor SMTP para envio de e\-mails. Se você precisa especificar um domínio HELO, você pode fazê\-lo aqui.
+| smtp\_autenticacao                                           | texto            |          |           |           | Tipo de autenticação do servidor SMTP para envio de e\-mails. Se o seu servidor de e-mail exigir autenticação, você deve inserir o tipo de autenticação aqui. Valores possíveis: plain, login, cram_md5
+| smtp\_porta                                                  | numérico         |          |           |           | Porta do servidor SMTP para envio de e\-mails.
+| smtp\_login                                                  | texto            |          |           |           | Login do servidor SMTP para envio de e\-mails. Se o seu servidor de e-mail exigir autenticação, você deve inserir o nome de usuário aqui.
+| smtp\_senha                                                  | texto            |          |           |           | Senha do servidor SMTP para envio de e\-mails. Se o seu servidor de e-mail exigir autenticação, você deve inserir a senha aqui.
+| smtp\_remetente                                              | texto            |          |           |           | Remetente (from) dos e\-mails enviados pelo servidor SMTP para envio de e\-mails.
+| smtp\_responder\_para                                        | texto            |          |           |           | Responder para (reply to) dos e\-mails enviados pelo servidor SMTP para envio de e\-mails.
+| smtp\_modo\_verificacao\_openssl                             | texto            |          |           |           | Modo de verificação do servidor SMTP para envio de e\-mails. Valores possíveis: peer, none
+| smtp\_habilita\_starttls                                     | booleano         |          |           |           | Utiliza o STARTTLS quando estiver conectado ao servidor SMTP para envio de e\-mails.
+| smtp\_ssl                                                    | booleano         |          |           |           | Utiliza SSL quando estiver conectado ao servidor SMTP para envio de e\-mails.
+| smtp\_tls                                                    | booleano         |          |           |           | Utiliza TLS quando estiver conectado ao servidor SMTP para envio de e\-mails.
 
 ## Status API
 
