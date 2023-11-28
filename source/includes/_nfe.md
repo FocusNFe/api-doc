@@ -2638,12 +2638,486 @@ curl -u "token obtido no cadastro da empresa:" \
 
 ## Pré-visualização de DANFe
 
-> Exemplo de envio usando um arquivo JSON
+> Exemplo de envio
 
 ```shell
 # O "arquivo.json" deve conter os dados da NFe.
 curl -u "token obtido no cadastro da empresa:" \
   -X POST -T arquivo.json https://api.focusnfe.com.br/v2/nfe/danfe
+```
+
+```php
+<?php
+/* Você deve definir isso globalmente para sua aplicação.
+Para ambiente de produção utilize e a variável abaixo:
+$server = "https://api.focusnfe.com.br"; */
+$server = "https://api.focusnfe.com.br";
+
+$nfe = array (
+  "natureza_operacao" => "Remessa",
+  "data_emissao" => "2017-11-30T12:00:00",
+  "data_entrada_saida" => "2017-11-3012:00:00",
+  "tipo_documento" => "1",
+  "finalidade_emissao" => "1",
+  "cnpj_emitente" => "51916585000125",
+  "nome_emitente" => "ACME LTDA",
+  "nome_fantasia_emitente" => "ACME LTDA",
+  "logradouro_emitente" => "R. Padre Natal Pigato",
+  "numero_emitente" => "100",
+  "bairro_emitente" => "Santa Felicidade",
+  "municipio_emitente" => "Curitiba",
+  "uf_emitente" => "PR",
+  "cep_emitente" => "82320030",
+  "inscricao_estadual_emitente" => "101942171617",
+  "nome_destinatario" => "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
+  "cpf_destinatario" => "51966818092",
+  "telefone_destinatario" => "1196185555",
+  "logradouro_destinatario" => "Rua S\u00e3o Janu\u00e1rio",
+  "numero_destinatario" => "99",
+  "bairro_destinatario" => "Crespo",
+  "municipio_destinatario" => "Manaus",
+  "uf_destinatario" => "AM",
+  "pais_destinatario" => "Brasil",
+  "cep_destinatario" => "69073178",
+  "valor_frete" => "0.0",
+  "valor_seguro" => "0",
+  "valor_total" => "47.23",
+  "valor_produtos" => "47.23",
+  "modalidade_frete" => "0",
+  "items" => array(
+    array(
+      "numero_item" => "1",
+      "codigo_produto" => "1232",
+      "descricao" => "Cartu00f5es de Visita",
+      "cfop" => "6923",
+      "unidade_comercial" => "un",
+      "quantidade_comercial" => "100",
+      "valor_unitario_comercial" => "0.4723",
+      "valor_unitario_tributavel" => "0.4723",
+      "unidade_tributavel" => "un",
+      "codigo_ncm" => "49111090",
+      "quantidade_tributavel" => "100",
+      "valor_bruto" => "47.23",
+      "icms_situacao_tributaria" => "400",
+      "icms_origem" => "0",
+      "pis_situacao_tributaria" => "07",
+      "cofins_situacao_tributaria" => "07"
+    )
+  ),
+);
+
+$login = "token obtido no cadastro da empresa";
+$password = "";
+
+// Inicia o processo de envio das informações usando o cURL.
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $server."/v2/nfe/danfe");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($nfe));
+curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
+$body = curl_exec($ch);
+$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+// As próximas três linhas são um exemplo de como imprimir as informações de retorno da API.
+print($http_code."\n");
+print($body."\n\n");
+print("");
+curl_close($ch);
+?>
+```
+
+```java
+import java.util.HashMap;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+
+public class NFeDanfe {
+
+  public static void main(String[] args) throws JSONException{
+
+    String login = "Token_obtido_no_cadastro_da_empresa";
+
+    /* Para ambiente de produção use a variável abaixo:
+    String server = "https://api.focusnfe.com.br/"; */
+    String server = "https://homologacao.focusnfe.com.br/";
+
+    String url = server.concat("v2/nfe/danfe");
+
+    /* Aqui são criados as hash's que receberão os dados da nota. */
+    HashMap<String, String> nfe = new HashMap<String, String>();
+    HashMap<String, String> itens = new HashMap<String, String>();
+
+    nfe.put("data_emissao", "2018-01-16T09:38:00");
+    nfe.put("natureza_operacao", "Remessa de Produtos");
+    nfe.put("forma_pagamento", "0");
+    nfe.put("tipo_documento", "1");
+    nfe.put("finalidade_emissao", "1");
+    nfe.put("cnpj_emitente", "51916585000125");
+    nfe.put("nome_emitente", "ACME LTDA");
+    nfe.put("nome_fantasia_emitente", "ACME TESTES");
+    nfe.put("logradouro_emitente", "Rua Interventor Manoel Ribas");
+    nfe.put("numero_emitente", "1355 ");
+    nfe.put("bairro_emitente", "Santa Felicidade");
+    nfe.put("municipio_emitente", "Curitiba");
+    nfe.put("uf_emitente", "PR");
+    nfe.put("cep_emitente", "82320030");
+    nfe.put("telefone_emitente", "44912345678");
+    nfe.put("inscricao_estadual_emitente", "1234567");
+    nfe.put("nome_destinatario", "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL");
+    nfe.put("cpf_destinatario", "51966818092");
+    nfe.put("inscricao_estadual_destinatario", "ISENTO");
+    nfe.put("telefone_destinatario", "19912345678");
+    nfe.put("logradouro_destinatario", "Rua Leonor Campos");
+    nfe.put("numero_destinatario", "29");
+    nfe.put("bairro_destinatario", "Swiss Park");
+    nfe.put("municipio_destinatario", "Campinas");
+    nfe.put("uf_destinatario", "SP");
+    nfe.put("pais_destinatario", "Brasil");
+    nfe.put("cep_destinatario", "13049555");
+    nfe.put("icms_base_calculo", "0");
+    nfe.put("icms_valor_total", "0");
+    nfe.put("icms_base_calculo_st", "0");
+    nfe.put("icms_valor_total_st", "0");
+    nfe.put("icms_modalidade_base_calculo", "0");
+    nfe.put("icms_valor", "0");
+    nfe.put("valor_frete", "0");
+    nfe.put("valor_seguro", "0");
+    nfe.put("valor_total", "1");
+    nfe.put("valor_produtos", "1");
+    nfe.put("valor_desconto", "0.00");
+    nfe.put("valor_ipi", "0");
+    nfe.put("modalidade_frete", "1");
+    itens.put("numero_item","128");
+    itens.put("codigo_produto","1007");
+    itens.put("descricao","Multi Mist 500g");
+    itens.put("cfop","6102");
+    itens.put("unidade_comercial","un");
+    itens.put("quantidade_comercial","1");
+    itens.put("valor_unitario_comercial","1");
+    itens.put("valor_unitario_tributavel","1");
+    itens.put("unidade_tributavel","un");
+    itens.put("codigo_ncm","11041900");
+    itens.put("valor_frete","0");
+    itens.put("valor_desconto","0.00");
+    itens.put("quantidade_tributavel","1");
+    itens.put("valor_bruto","1");
+    itens.put("icms_situacao_tributaria","103");
+    itens.put("icms_origem","0");
+    itens.put("pis_situacao_tributaria","07");
+    itens.put("cofins_situacao_tributaria","07");
+    itens.put("ipi_situacao_tributaria","53");
+    itens.put("ipi_codigo_enquadramento_legal","999");
+
+    /* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
+    JSONObject json = new JSONObject (nfe);
+    JSONObject jsonItens = new JSONObject (itens);
+
+    /* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
+    json.append("items", jsonItens);
+
+    /* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.
+    System.out.print(json); */
+
+    WebResource request = client.resource(url);
+
+    ClientResponse resposta = request.post(ClientResponse.class, json);
+
+    int hHttpCode = resposta.getStatus();
+
+    String body = resposta.getEntity(String.class);
+
+    /* As três linhas abaixo imprimem as informações retornadas pela API.
+     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+    System.out.print("HTTP Code: ");
+    System.out.print(hHttpCode);
+    System.out.printf(body);
+  }
+}
+```
+
+```ruby
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+require "json"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/nfe/danfe"
+
+# altere os campos conforme a nota que será enviada
+dados_da_nota = {
+  natureza_operacao: "Remessa",
+  data_emissao: "2017-11-30T12:00:00",
+  data_entrada_saida: "2017-11-3012:00:00",
+  tipo_documento: "1",
+  finalidade_emissao: "1",
+  cnpj_emitente: "51916585000125",
+  nome_emitente: "ACME LTDA",
+  nome_fantasia_emitente: "ACME LTDA",
+  logradouro_emitente: "R. Padre Natal Pigato",
+  numero_emitente: "100",
+  bairro_emitente: "Santa Felicidade",
+  municipio_emitente: "Curitiba",
+  uf_emitente: "PR",
+  cep_emitente: "82320030",
+  inscricao_estadual_emitente: "101942171617",
+  nome_destinatario: "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
+  cpf_destinatario: "51966818092",
+  telefone_destinatario: "1196185555",
+  logradouro_destinatario: "Rua Sao Januario",
+  numero_destinatario: "99",
+  bairro_destinatario: "Crespo",
+  municipio_destinatario: "Manaus",
+  uf_destinatario: "AM",
+  pais_destinatario: "Brasil",
+  cep_destinatario: "69073178",
+  valor_frete: "0.0",
+  valor_seguro: "0",
+  valor_total: "47.23",
+  valor_produtos: "47.23",
+  modalidade_frete: "0",
+  items: [
+    numero_item: "1",
+    codigo_produto: "1232",
+    descricao: "Cartu00f5es de Visita",
+    cfop: "6923",
+    unidade_comercial: "un",
+    quantidade_comercial: "100",
+    valor_unitario_comercial: "0.4723",
+    valor_unitario_tributavel: "0.4723",
+    unidade_tributavel: "un",
+    codigo_ncm: "49111090",
+    quantidade_tributavel: "100",
+    valor_bruto: "47.23",
+    icms_situacao_tributaria: "400",
+    icms_origem: "0",
+    pis_situacao_tributaria: "07",
+    cofins_situacao_tributaria: "07"
+  ]
+}
+
+# criamos um objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Post a partir da uri de requisição
+requisicao = Net::HTTP::Post.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, "")
+
+# convertemos os dados da nota para o formato JSON e adicionamos ao corpo da requisição
+requisicao.body = dados_da_nota.to_json
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
+```
+
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import json
+import requests
+
+'''
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "https://homologacao.focusnfe.com.br/v2/nfe/danfe"
+
+token="token obtido no cadastro da empresa"
+
+'''
+Usamos dicionarios para armazenar os campos e valores que em seguida,
+serao convertidos em JSON e enviados para nossa API
+'''
+nfe = {}
+itens = {}
+notas_referenciadas ={}
+
+nfe["natureza_operacao"] = "Venda"
+nfe["forma_pagamento"] = "0"
+nfe["data_emissao"] = "2018-03-07T10:20:00-03:00"
+nfe["tipo_documento"] = "0"
+nfe["local_destino"] = "1"
+nfe["finalidade_emissao"] = "4"
+nfe["consumidor_final"] = "0"
+nfe["presenca_comprador"] = "9"
+nfe["cnpj_emitente"] = "99999999999999"
+nfe["logradouro_emitente"] = "R. Padre Pigato"
+nfe["numero_emitente"] = "9236"
+nfe["bairro_emitente"] = "Santa Gula"
+nfe["municipio_emitente"] = "Curitiba"
+nfe["uf_emitente"] = "PR"
+nfe["cep_emitente"] = "82320999"
+nfe["telefone_emitente"] = "4199999999"
+nfe["inscricao_estadual_emitente"] = "999999999"
+nfe["regime_tributario_emitente"] = "1"
+nfe["cpf_destinatario"] = "99999999999"
+nfe["nome_destinatario"] = "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"
+nfe["logradouro_destinatario"] = "Rua Prof. Yolanda Romeu Lugarini"
+nfe["numero_destinatario"] = "1"
+nfe["bairro_destinatario"] = "JD SANTA CECILIA"
+nfe["municipio_destinatario"] = "CAMPO MAGRO"
+nfe["uf_destinatario"] = "PR"
+nfe["cep_destinatario"] = "83000000"
+nfe["indicador_inscricao_estadual_destinatario"] = "2"
+nfe["icms_base_calculo"] = "0"
+nfe["icms_valor_total"] = "0"
+nfe["icms_valor_total_desonerado"] = "0"
+nfe["icms_base_calculo_st"] = "0"
+nfe["icms_valor_total_st"] = "0"
+nfe["valor_produtos"] = "1.00"
+nfe["valor_frete"] = "0"
+nfe["valor_seguro"] = "0"
+nfe["valor_desconto"] = "0"
+nfe["valor_total_ii"] = "0"
+nfe["valor_ipi"] = "0"
+nfe["valor_pis"] = "0"
+nfe["valor_cofins"] = "0"
+nfe["valor_outras_despesas"] = "0"
+nfe["valor_total"] = "1.00"
+nfe["modalidade_frete"] = "0"
+notas_referenciadas["chave_nfe"] = 41170599999999999999550020000001111337477298
+itens["numero_item"] = "1"
+itens["codigo_produto"] = "ESSP"
+itens["descricao"] = "Carrinho de corrida"
+itens["cfop"] = "1202"
+itens["unidade_comercial"] = "UN"
+itens["quantidade_comercial"] = "1.00"
+itens["valor_unitario_comercial"] = "1.00"
+itens["valor_bruto"] = "1.00"
+itens["valor_desconto"] = "0"
+itens["unidade_tributavel"] = "UN"
+itens["codigo_ncm"] = "49119900"
+itens["quantidade_tributavel"] = "1.00"
+itens["valor_unitario_tributavel"] = "1.00"
+itens["inclui_no_total"] = "1"
+itens["icms_origem"] = "0"
+itens["icms_situacao_tributaria"] = "103"
+itens["pis_situacao_tributaria"] = "99"
+itens["cofins_situacao_tributaria"] = "99"
+
+# Adicionamos os dados das variaveis itens e notas_referenciadas como listas ao dicionario principal.
+nfe["items"] = [itens]
+nfe["notas_referenciadas"] = [notas_referenciadas]
+
+r = requests.post(url, data=json.dumps(nfe), auth=(token, ""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+```
+
+```javascript
+/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var request = new XMLHttpRequest();
+
+var token = "Token_obtido_no_cadastro_da_empresa";
+
+/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/
+var url = "https://homologacao.focusnfe.com.br/v2/nfe/danfe";
+
+/*
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/
+request.open('POST', url, false, token);
+
+var nfe = {
+"natureza_operacao": "Remessa",
+"data_emissao": "2018-03-21T11:00:00",
+"data_entrada_saida": "2018-03-21T11:00:00",
+"tipo_documento": "1",
+"finalidade_emissao": "1",
+"cnpj_emitente": "51916585000125",
+"nome_emitente": "ACME LTDA",
+"nome_fantasia_emitente": "ACME LTDA",
+"logradouro_emitente": "R. Padre Natal Pigato",
+"numero_emitente": "100",
+"bairro_emitente": "Santa Felicidade",
+"municipio_emitente": "Curitiba",
+"uf_emitente": "PR",
+"cep_emitente": "82320030",
+"inscricao_estadual_emitente": "1234567",
+"nome_destinatario": "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
+"cpf_destinatario": "51966818092",
+"telefone_destinatario": "1196185555",
+"logradouro_destinatario": "Rua S\u00e3o Janu\u00e1rio",
+"numero_destinatario": "99",
+"bairro_destinatario": "Crespo",
+"municipio_destinatario": "Manaus",
+"uf_destinatario": "AM",
+"pais_destinatario": "Brasil",
+"cep_destinatario": "69073178",
+"valor_frete": "0.0",
+"valor_seguro": "0",
+"valor_total": "47.23",
+"valor_produtos": "47.23",
+"modalidade_frete": "0",
+"items": [
+    {
+      "numero_item": "1",
+      "codigo_produto": "1232",
+      "descricao": "Cartu00f5es de Visita",
+      "cfop": "6923",
+      "unidade_comercial": "un",
+      "quantidade_comercial": "100",
+      "valor_unitario_comercial": "0.4723",
+      "valor_unitario_tributavel": "0.4723",
+      "unidade_tributavel": "un",
+      "codigo_ncm": "49111090",
+      "quantidade_tributavel": "100",
+      "valor_bruto": "47.23",
+      "icms_situacao_tributaria": "400",
+      "icms_origem": "0",
+      "pis_situacao_tributaria": "07",
+      "cofins_situacao_tributaria": "07"
+    }
+  ]
+};
+
+// Aqui fazermos a serializacao do JSON com os dados da nota e enviamos atraves do metodo usado.
+request.send(JSON.stringify(nfe));
+
+// Sua aplicacao tera que ser capaz de tratar as respostas da API.
+console.log("HTTP code: " + request.status);
+console.log("Corpo: " + request.responseText);
 ```
 
 > Exemplo de um arquivo JSON
