@@ -321,8 +321,8 @@ Você pode configurar o gatilho `nfse_recebida` para receber estes dados diretam
       "razao_social": "Fictício Prestador",
       "nome_fantasia": "Prestador Fictício",
       "telefone": "5430002222",
-        "email": null,
-        "endereco": {
+      "email": null,
+      "endereco": {
         "logradouro": "AV CENTRAL",
         "numero": "66",
         "complemento": null,
@@ -341,7 +341,7 @@ Você pode configurar o gatilho `nfse_recebida` para receber estes dados diretam
       "razao_social": "ACRAS TECNOLOGIA DA INFORMACAO LTDA",
       "telefone": "5433330000",
       "email": "test@example.com",
-        "endereco": {
+      "endereco": {
         "logradouro": "Rua Fictícia",
         "numero": "2",
         "complemento": "Ap1",
