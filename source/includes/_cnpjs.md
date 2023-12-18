@@ -194,6 +194,8 @@ A requisição REST devolve um JSON no corpo (body) da resposta com seguintes da
     "optante_mei": false,
     "endereco": {
       "codigo_municipio": "7535",
+      "codigo_siafi": "7535",
+      "codigo_ibge": "4106902",
       "nome_municipio": "CURITIBA",
       "logradouro": " XV DE NOVEMBRO",
       "complemento": "Conj 602 Andar 06 Cond Eugenia Campos Ed",
@@ -213,7 +215,9 @@ Para cada consulta à API de CNPJs a resposta trará um objeto JSON, com os camp
  * **cnae_principal**: CNAE Principal.
  * **optante_simples_nacional**: Indica se a empresa é optante pelo Simples Nacional.
  * **optante_mei**: Indica se a empresa é optante pelo MEI.
-  * **codigo_municipio**: Código do município onde a empresa está registrada.
+  * **codigo_municipio**: Código Siafi onde a empresa está registrada.
+  * **codigo_siafi**: Código Siafi onde a empresa está registrada.
+  * **codigo_ibge**: Código IBGE onde a empresa está registrada.
   * **nome_municipio**: Nome do município.
   * **logradouro**: Nome do logradouro.
   * **complemento**: Complemento do endereço, se houver.
