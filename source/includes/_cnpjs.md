@@ -190,10 +190,13 @@ A requisição REST devolve um JSON no corpo (body) da resposta com seguintes da
     "cnpj": "07504505000132",
     "situacao_cadastral": "ativa",
     "cnae_principal": "6209100",
+    "optante_simples_nacional": false,
+    "optante_mei": false,
     "endereco": {
       "codigo_municipio": "7535",
       "nome_municipio": "CURITIBA",
       "logradouro": " XV DE NOVEMBRO",
+      "complemento": "Conj 602 Andar 06 Cond Eugenia Campos Ed",
       "numero": "1234",
       "bairro": "CENTRO",
       "cep": "80060000",
@@ -208,9 +211,12 @@ Para cada consulta à API de CNPJs a resposta trará um objeto JSON, com os camp
  * **cnpj**: Número de inscrição no CNPJ.
  * **situacao_cadastral**: Situação cadastral da empresa.
  * **cnae_principal**: CNAE Principal.
+ * **optante_simples_nacional**: Indica se a empresa é optante pelo Simples Nacional.
+ * **optante_mei**: Indica se a empresa é optante pelo MEI.
   * **codigo_municipio**: Código do município onde a empresa está registrada.
   * **nome_municipio**: Nome do município.
   * **logradouro**: Nome do logradouro.
+  * **complemento**: Complemento do endereço, se houver.
   * **numero**: Número do logradouro, se houver.
   * **bairro**: Bairro.
   * **cep**: CEP.
