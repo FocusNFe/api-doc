@@ -217,7 +217,7 @@ Para cada consulta à API de CNPJs a resposta trará um objeto JSON, com os camp
  * **optante_mei**: Indica se a empresa é optante pelo MEI.
   * **codigo_municipio**: Código SIAFI do município onde a empresa está registrada. Este campo será alterado para representar o código IBGE em 1/6/2024. Caso necessite do código SIAFI, use o campo `codigo_siafi`
   * **codigo_siafi**: Código SIAFI do município onde a empresa está registrada.
-  * **codigo_ibge**: Código IBGE onde a empresa está registrada.
+  * **codigo_ibge**: Código IBGE do município onde a empresa está registrada.
   * **nome_municipio**: Nome do município.
   * **logradouro**: Nome do logradouro.
   * **complemento**: Complemento do endereço, se houver.
