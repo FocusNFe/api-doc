@@ -439,10 +439,11 @@ curl -XDELETE http://localhost:55555/v2/fiscal/sat/REFERENCIA
 ```json
 {
   "ref": "REFERENCIA",
-  "status": "autorizado",
+  "status": "cancelado",
   "mensagem": "Cupom cancelado com sucesso + conteudo CF-E-SAT cancelado.",
   "cpf_cnpj_emitente": "",
   "chave_nfe": "CFe77781082373077987991599000999380000289999993",
+  "chave_nfe_cancelamento": "CFe35240108723218000186599000184591245710771581",
   "numero": "123","
 }
 ```
@@ -599,10 +600,11 @@ curl -XDELETE https://homologacao.focusnfe.com.br/v2/cfe/REFERENCIA?pos_id=12345
 ```json
 {
   "ref": "REFERENCIA",
-  "status": "autorizado",
+  "status": "cancelado",
   "mensagem": "Cupom cancelado com sucesso + conteudo CF-E-SAT cancelado.",
   "cpf_cnpj_emitente": "",
   "chave_nfe": "CFe77781082373077987991599000999380000289999993",
+  "chave_nfe_cancelamento": "CFe35240108723218000186599000184591245710771581",
   "numero": "123","
 }
 ```
