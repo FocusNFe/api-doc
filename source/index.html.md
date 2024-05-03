@@ -67,7 +67,7 @@ Caso você emita NFe ou NFCe, você deverá ler também sobre os [backups](#back
 
 Caso você emita NFe ou NFSe, você poderá ler também sobre os [gatilhos e webhooks](#gatilhos-webhooks). O uso de gatilhos no sistema é opcional.
 
-Caso você tenha interesse em obter as notas emitidas contra a sua empresa, leia a seção de [manifestação](#manifestacao-nfe).
+Caso você tenha interesse em obter as notas emitidas contra a sua empresa, leia a seção de [Nfe recebidas](#nfe-recebidas).
 
 Se sua empresa irá administrar vários clientes que emitem notas, pode ser interessante você ler sobre a seção de [empresas](#empresas).
 

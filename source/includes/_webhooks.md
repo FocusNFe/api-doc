@@ -21,7 +21,7 @@ Gatilhos ou "WebHooks" são eventos automáticos que são disparados a partir de
 }
 ```
 
-Para NFe e MDe (Manifestação de Destinatário Eletrônica):
+Para NFe e NFe recebidas (Manifestação de Destinatário Eletrônica - MDe):
 
 * **status**:
   - **processando_autorizacao**: A nota ainda está em processamento pela API. Você deverá aguardar o processamento pela SEFAZ.
