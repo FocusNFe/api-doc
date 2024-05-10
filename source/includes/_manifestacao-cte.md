@@ -1,6 +1,6 @@
-# Manifestação - CTe
+# CTe recebidas
 
-Da mesma forma que a manifestação de NFe, a API para manifestação de CTe do sistema Focus permite que você consulte todos os conhecimentos de transporte recebidos pela sua empresa e permite que você realize a manifestação frente a receita. No caso da CTe, é necessário realizar a manifestação apenas se houver algum desacordo com a CTe emitida. A API faz ainda a guarda de todos os documentos recebidos para que você consulte quando precisar e recupera todas as MDFes associadas a CTe.
+Da mesma forma que a manifestação de NFe recebidas, a API para CTe recebidas do sistema Focus permite que você consulte todos os conhecimentos de transporte recebidos pela sua empresa e permite que você realize desacordo frente a receita. A API faz ainda a guarda de todos os documentos recebidos para que você consulte quando precisar e recupera todas as MDFes associadas a CTe.
 
 Através desta documentação deverá ser possível fazer a integração com a API do Focus NFe, caso alguma dúvida permaneça você pode entrar em contato com o suporte especializado através do e-mail suporte@focusnfe.com.br.
 
@@ -181,7 +181,7 @@ puts "Corpo da resposta: " + resposta.body
 // Solicite o seu token para realizar as requisições com nossa equipe de suporte.
  $login = "Token_obtido_no_cadastro_da_empresa";
  $chave = "Chave_de_identificação_da_NFe";
-/* Aqui enviamos o tipo de manifestação que desejamos realizar.
+/* Aqui enviamos o desacordo que desejamos realizar.
    Consulte nossa documentação, para conhecer os demais tipos possíveis: https://goo.gl/a9o7hm */
  $tipo = array("observacoes" => "Observações referente ao desacordo informado");
 // Para ambiente de Produção, utilize a URL: https://api.focusnfe.com.br/.
@@ -295,9 +295,9 @@ Caso queria consultar o desacordo realizado, utilize o seguinte endereço:
 
 Utilize o método **HTTP GET** para consultar os dados da nota fiscal.
 
-Na URL, informe em **CHAVE** a chave da CTe recebida. O retorno será o mesmo que a operação de manifestação.
+Na URL, informe em **CHAVE** a chave da CTe recebida. O retorno será o mesmo que a operação de desacordo.
 
-**OBS**: Conforme definido pela SEFAZ na NT 2022.001 do CT-e, se o tomador/destinatário for pessoa física (CPF cadastrado em nossa API para a manifestação do CT-e) não pode registrar o evento de desacordo desse tipo de documento via webservice. Essa ação deve ser realizada exclusivamente através da plataforma gov.br conforme procedimento a seguir:
+**OBS**: Conforme definido pela SEFAZ na NT 2022.001 do CT-e, se o tomador/destinatário for pessoa física (CPF cadastrado em nossa API para CTe recebidas) não poderá registrar o evento de desacordo desse tipo de documento via webservice. Essa ação deve ser realizada exclusivamente através da plataforma gov.br conforme procedimento a seguir:
 
 * Acessar o site: https://dfe-portal.svrs.rs.gov.br/CTE/PrestacaoServicoDesacordo
 * Selecionar a segunda opção: Login pela Plataforma gov.br (Tomador Pessoa Física)

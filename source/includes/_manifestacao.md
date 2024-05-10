@@ -1,6 +1,7 @@
-# Manifestação - NFe
+# NFe recebidas
+## Manifestação do Destinatário (MDe)
 
-A API para manifestação do sistema Focus permite que você consulte todas as notas recebidas pela sua empresa (modelo 55) e permite que você realize a manifestação frente a receita, informando se a operação descrita na nota foi realizada ou não. A API faz ainda a guarda de todos os documentos recebidos para que você consulte quando precisar.
+A API para NFe recebidas do sistema Focus permite que você consulte todas as notas recebidas pela sua empresa (modelo 55) e permite que você realize a manifestação frente a receita, informando se a operação descrita na nota foi realizada ou não. A API faz ainda a guarda de todos os documentos recebidos para que você consulte quando precisar.
 
 Através desta documentação deverá ser possível fazer a integração com a API do Focus NFe, caso alguma dúvida permaneça você pode entrar em contato com o suporte especializado através do e-mail suporte@focusnfe.com.br.
 
@@ -19,7 +20,7 @@ GET|/v2/nfes_recebidas/CHAVE/carta_correcao.xml|Se existir, baixa o XML da últi
 
 ## Status API
 
-Aqui você encontra os status possíveis para MDe.
+Aqui você encontra os status possíveis para NFe recebidas.
 
 HTTP CODE/STATUS | Status API Focus | Descrição | Correção
 ---|---|---|---|

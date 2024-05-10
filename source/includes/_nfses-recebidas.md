@@ -1,6 +1,6 @@
 # NFSes Recebidas
 
-De forma similar à [manifestação de NFe](#manifestacao-nfe), a API Focus para busca de _NFSes Recebidas_ permite que você consulte notas de serviço em que sua empresa é a tomadora do serviço. Denominamos _notas recebidas_ pois NFSe não contempla a operação de manifestação.
+De forma similar à [NFe recebidas](#nfe-recebidas), a API Focus para busca de _NFSes Recebidas_ permite que você consulte notas de serviço em que sua empresa é a tomadora do serviço. Denominamos _notas recebidas_ pois NFSe não contempla a operação de manifestação.
 
 A recuperação de notas é possível apenas em municípios que disponibilizam a consulta de notas recebidas / tomadas - como São Paulo, Sorocaba, Barueri e outras dezenas de [municípios integrados em nossa API](https://focusnfe.com.br/cidades-integradas-nfse/).
 
