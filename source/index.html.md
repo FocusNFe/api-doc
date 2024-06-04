@@ -17,6 +17,7 @@ includes:
   - nfce
   - comunicador-focus-nfe.md.erb
   - nfse
+  - nfsen
   - lote_rps
   - nfses-recebidas
   - cte

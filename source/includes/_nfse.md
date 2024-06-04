@@ -229,7 +229,7 @@ print(r.status_code, r.text)
 ```shell
 # arquivo.json deve conter os dados da NFSe
 curl -u "token obtido no cadastro da empresa:" \
-  -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/nfse
+  -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/nfse?ref=12345
 ```
 
 ```java
