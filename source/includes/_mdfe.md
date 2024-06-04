@@ -156,7 +156,7 @@ Quando a emissão é síncrona, será feita uma tentativa de envio e caso a nota
 Tipo de Emissão | Status HTTP se sucesso | Resposta | Observações
 -------|-------|-----|------
 assíncrona (default) | 202 - Accepted | Dados da nota com status processando_autorizacao | Necessário consultar a nota posteriormente ou utilizar webhooks para receber o resultado do processamento
-síncrona | 201 - Created | Dados da nota autorizada ou mensagem de erro | A emissão síncrona pode não estar disponível, neste caso será devolvido código de status 202 - Accepted e a nota será enfileirada
+síncrona | 201 - Created | Dados da nota autorizada ou mensagem de erro | A resposta será devolvida na mesma requisição
 
 ## Consulta
 
