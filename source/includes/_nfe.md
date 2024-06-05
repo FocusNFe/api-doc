@@ -18,6 +18,7 @@ POST |  /v2/nfe?ref=REFERENCIA  | Cria uma nota fiscal e a envia para processame
 GET  | /v2/nfe/REFERENCIA | Consulta a nota fiscal com a referência informada e o seu status de processamento
 DELETE |  /v2/nfe/REFERENCIA  | Cancela uma nota fiscal com a referência informada
 POST |  /v2/nfe/REFERENCIA/carta_correcao | Cria uma carta de correção para a nota fiscal com a referência informada.
+POST |  /v2/nfe/REFERENCIA/ator_interessado | Adiciona um ator interessado para a nota fiscal com a referência informada.
 POST |  /v2/nfe/REFERENCIA/email  | Envia um email com uma cópia da nota fiscal com a referência informada
 POST |  /v2/nfe/inutilizacao  | Inutiliza uma numeração da nota fiscal
 POST |  /v2/nfe/importacao?ref=REFERENCIA | Cria uma nota fiscal a partir da importação de um XML
@@ -1981,6 +1982,279 @@ A API irá em seguida devolver os seguintes campos:
 * **numero_carta_correcao**: Informa o número da carta de correção, caso ela tenha sido autorizada.
 
 Para uma mesma nota fiscal é possível enviar mais de uma carta de correção, até o limite de 20 correções, sendo que a última sempre substitui a anterior.
+
+## Ator Interessado
+
+```shell
+curl -u "token obtido no cadastro da empresa:" \
+  -X POST -d '{"cpf":"CPF_ATOR", "permite_autorizacao_terceiros": true}' \
+  https://homologacao.focusnfe.com.br/v2/nfe/12345/ator_interessado
+```
+
+```php
+<?php
+/* Você deve definir isso globalmente para sua aplicação.
+Para ambiente de produção utilize e a variável abaixo:
+$server = "https://api.focusnfe.com.br"; */
+$server = "https://homologacao.focusnfe.com.br";
+// Substituir a variável, ref, pela sua identificação interna de nota.
+$ref = "12345";
+$login = "token obtido no cadastro da empresa";
+$password = "";
+$ator_interessado = array (
+  "cpf" => "CPF_ATOR",
+  "permite_autorizacao_terceiros" => "true"
+);
+// Inicia o processo de envio das informações usando o cURL.
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $server . "/v2/nfe/" . $ref  . "/ator_interessado");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($ator_interessado));
+curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
+$body = curl_exec($ch);
+$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+// As próximas três linhas são um exemplo de como imprimir as informações de retorno da API.
+print($http_code."\n");
+print($body."\n\n");
+print("");
+curl_close($ch);
+?>
+```
+
+```java
+import java.util.HashMap;
+import org.codehaus.jettison.json.JSONObject;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+
+public class NFeAtorInteressado {
+
+  public static void main(String[] args){
+
+    String login = "Token_obtido_no_cadastro_da_empresa";
+
+    /* Substituir pela sua identificação interna da nota. */
+    String ref = "12345";
+
+    /* Para ambiente de produção use a variável abaixo:
+    String server = "https://api.focusnfe.com.br/"; */
+    String server = "https://homologacao.focusnfe.com.br/";
+
+    String url = server.concat("v2/nfe/"+ref+"/ator_interessado");
+
+    /* Aqui criamos um hashmap para receber a chave "ator_interessado" e os valores desejados. */
+    HashMap<String, String> ator_interessado = new HashMap<String, String>();
+    ator_interessado.put("cpf", "CPF_ATOR");
+    ator_interessado.put("permite_autorizacao_terceiros", "true");
+
+    /* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
+    JSONObject json = new JSONObject(ator_interessado);
+
+    /* Configuração para realizar o HTTP BasicAuth. */
+    Object config = new DefaultClientConfig();
+    Client client = Client.create((ClientConfig) config);
+    client.addFilter(new HTTPBasicAuthFilter(login, ""));
+
+    WebResource request = client.resource(url);
+
+    ClientResponse resposta = request.post(ClientResponse.class, json);
+
+    int httpCode = resposta.getStatus();
+
+    String body = resposta.getEntity(String.class);
+
+     /* As três linhas abaixo imprimem as informações retornadas pela API.
+    * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+    System.out.print("HTTP Code: ");
+    System.out.print(httpCode);
+    System.out.printf(body);
+  }
+}
+```
+
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+require "json"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# referência da nota - deve ser única para cada nota enviada
+ref = "id_referencia_nota"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/nfe/" + ref + "/ator_interessado"
+
+# altere os campos conforme a nota que será enviada
+ator_interessado = {
+  cpf: "CPF_ATOR",
+  permite_autorizacao_terceiros: true
+}
+
+# criamos um objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Post a partir da uri de requisição
+requisicao = Net::HTTP::Post.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# convertemos a hash da requisição para o formato JSON e adicionamos ao corpo da requisição
+requisicao.body = ator_interessado.to_json
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
+
+```
+
+```javascript
+
+/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var request = new XMLHttpRequest();
+
+var token = "Token_obtido_no_cadastro_da_empresa";
+
+// Substituir pela sua identificação interna da nota.
+var ref = "12345";
+
+/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/
+var url = "https://homologacao.focusnfe.com.br/v2/nfe/"+ ref + "/ator_interessado";
+
+/*
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/
+request.open('POST', url, false, token);
+
+var ator_interessado = {
+  "cpf": "CPF_ATOR",
+  "permite_autorizacao_terceiros": true
+};
+
+// Aqui fazermos a serializacao do JSON com os dados da requisição e enviamos atraves do metodo usado.
+request.send(JSON.stringify(ator_interessado));
+
+// Sua aplicacao tera que ser capaz de tratar as respostas da API.
+console.log("HTTP code: " + request.status);
+console.log("Corpo: " + request.responseText);
+
+```
+
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import json
+import requests
+
+'''
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "https://homologacao.focusnfe.com.br/v2/nfe/"
+
+# Substituir pela sua identificação interna da nota
+ref = "12345"
+
+token="token obtido no cadastro da empresa"
+
+'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API
+'''
+ator_interessado={}
+ator_interessado["cpf"] = "CPF_ATOR"
+ator_interessado["permite_autorizacao_terceiros"] = "true"
+
+r = requests.post(url+ref+"/ator_interessado", data=json.dumps(ator_interessado), auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+```
+> Exemplos de respostas da API por **status** para a requisição de ator interessado:
+
+> autorizado
+
+```json
+{
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "status": "autorizado",
+  "caminho_xml_evento_ator_interessado": "/arquivos_development/07504505000132_25/202406/XMLs/41240607504505000132550030000007431804923238-ato-01.xml",
+  "numero_evento_ator_interessado": 1
+}
+```
+
+> requisicao_invalida
+
+```json
+{
+  "codigo": "requisicao_invalida",
+  "mensagem": "Por favor, informe o CNPJ ou CPF do ator interessado."
+}
+```
+
+O objetivo do evento **Ator Interessado** é permitir que o emitente informe a identificação do Transportador a qualquer momento, como uma das pessoas autorizadas a acessar o XML da NF-e.
+
+Para registrar um Ator Interessado a uma NFe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+
+Registrar um Ator Interessado a uma NFe já autorizada:
+
+`https://api.focusnfe.com.br/v2/nfe/REFERENCIA/ator_interessado`
+
+Utilize o comando **HTTP POST** para registrar um ator interessado a sua nota para nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
+
+Os parâmetros disponiveis para o registro do evento:
+
+* **cpf**: (String) CPF do ator interessado, se aplicável.
+* **cnpj**: (String) CNPJ do ator interessado, se aplicável.
+* **permite_autorizacao_terceiros**: (Boolean) Permite que o transportador ou destinatário adicionem por conta própria outros fornecedores a baixarem o XML.
+
+A API irá em seguida devolver os seguintes campos:
+
+* **status_sefaz**: O status do evento na SEFAZ.
+* **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
+* **status**: autorizado, se o evento for registrado com sucesso, ou erro_autorizacao, se houve algum erro no registro do evento.
+* **caminho_xml_evento_ator_interessado**: Caso a evento tenha sido registrado, será informado aqui o caminho para download do XML do evento de ator interessado.
+* **numero_evento_ator_interessado**: O número sequencial do evento.
+
+### Prazo para o registro do Ator Interessado
+Este evento somente pode ser gerado no prazo de 6 meses após a data de autorização da NF-e.
 
 ## Reenvio de e-mail
 
