@@ -308,7 +308,7 @@ curl -u "token obtido no cadastro da empresa:" \
   https://homologacao.focusnfe.com.br/v2/mdfe/12345/inclusao_condutor
 ```
 
-> Resposta da API para a requisição de cancelamento:
+> Resposta da API para a requisição de inclusão de condutor:
 
 ```json
 {
@@ -357,7 +357,7 @@ curl -u "token obtido no cadastro da empresa:" \
   https://homologacao.focusnfe.com.br/v2/mdfe/12345/inclusao_dfe
 ```
 
-> Resposta da API para a requisição de cancelamento:
+> Resposta da API para a requisição de inclusão de DFe:
 
 ```json
 {
@@ -381,7 +381,7 @@ Os parâmetros de inclusão deverão ser enviados da seguinte forma:
 * **protocolo**: Nº do Protocolo de Autorização do MDF-e (Obrigatório)
 * **codigo_municipio_carregamento**: Código do Município de Carregamento (Obrigatório)
 * **nome_municipio_carregamento**: Nome do Município de Carregamento
-* **documentos**: Grupo de informações dos documentos que serão inseridos no MDF-e (Obrigatório)
+* **documentos**: Array com informações de cada documento que será inserido no MDF-e (Obrigatório)
  * **codigo_municipio_descarregamento**: Código do Município de Descarregamento (Obrigatório)
  * **nome_municipio_descarregamento**: Nome do Município de Descarregamento
  * **chave_nfe**: Chave da NF-e (Obrigatório)
