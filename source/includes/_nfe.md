@@ -2229,7 +2229,7 @@ print(r.status_code, r.text)
 }
 ```
 
-O objetivo do evento **Ator Interessado** é permitir que o emitente informe a identificação do Transportador a qualquer momento, como uma das pessoas autorizadas a acessar o XML da NF-e.
+O objetivo do evento **Ator Interessado** é permitir que o emitente informe a identificação do transportador (ou outra pessoa interessada) a qualquer momento, como uma das pessoas autorizadas a acessar o XML da NF-e.
 
 Para registrar um Ator Interessado a uma NFe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
 
