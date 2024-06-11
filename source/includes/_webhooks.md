@@ -309,7 +309,7 @@ Utilize o método HTTP POST para criar um novo gatilho. Esta requisição aceita
 
 *  **cnpj** – CNPJ da empresa. Se o CNPJ for omitido, o gatilho será acionado para todas as emissões feitas pelo token em questão.
 *  **cpf** – CPF da empresa/prestador do serviço. Se o CPF for omitido, o gatilho será acionado para todas as emissões feitas pelo token em questão.
-*  **event** – Informe qual evento que gostará de escutar: nfe, nfse, nfce_contingencia, nfce_correcao_timeout, nfe_recebida, nfse_recebida, inutilizacao, cte, mdfe
+*  **event** – Informe qual evento que gostará de escutar: nfe, nfse, nfce_contingencia, nfce_correcao_timeout, nfe_recebida, nfse_recebida, inutilizacao, cte, mdfe, nfsen
 *  **url** – URL que deverá ser chamada quando o gatilho for ativado
 *  **authorization** – (opcional) O valor que for informado neste campo será devolvido no acionamento do gatilho no cabeçalho "Authorization".
 Desta forma você poderá por exemplo informar um token secreto para garantir que apenas nossa API acione a sua URL.
@@ -656,6 +656,7 @@ Para isso é disponibilizado um endereço para cada tipo de documento que aceita
 * NFSe: `https://api.focusnfe.com.br/v2/nfse/REFERENCIA/hook`
 * CTe: `https://api.focusnfe.com.br/v2/cte/REFERENCIA/hook`
 * NFe Recebida: `https://api.focusnfe.com.br/v2/nfes_recebidas/CHAVE_NFE/hook`
+* NFSe Nacional: `https://api.focusnfe.com.br/v2/nfsen/CHAVE_NFE/hook`
 
 O corpo da requisição do método POST pode ser vazio.
 
