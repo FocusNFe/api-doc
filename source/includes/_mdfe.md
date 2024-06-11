@@ -12,7 +12,7 @@ As seguintes operações estão disponíveis:
 
 Através da API MDF-e é possível:
 
-* Emitir MDF-e (Conhecimento de Transporte Eletrônico) utilizando dados simplificados. Este processo é **assíncrono**. Ou seja, após a emissão a nota será enfileirada para processamento.
+* Emitir MDF-e (Conhecimento de Transporte Eletrônico) utilizando dados simplificados. Este processo por padrão é **assíncrono**. Ou seja, após a emissão a nota será enfileirada para processamento. É possível também configurar a empresa para emitir de forma **síncrona**.
 * Cancelar uma MDF-e
 * Consultar o status de MDF-e emitidas.
 * Emitir os eventos: inclusão de condutor, inclusão de DFe e encerramento.
@@ -146,6 +146,17 @@ Para enviar uma MDF-e em contingência offline utilize a URL abaixo, alterando o
 `https://api.focusnfe.com.br/v2/mdfe?ref=REFERENCIA&contingencia=1`
 
 É importante ressaltar que atualmente não há a possibilidade de envio de MDF-e em contingência offline de forma automática, apenas de forma manual, utilizando o parâmetro **contingencia=1**.
+
+### Envio síncrono
+
+É possível configurar a empresa para realizar a emissão síncrona.
+
+Quando a emissão é síncrona, será feita uma tentativa de envio e caso a nota tenha sido autorizada será devolvido o resultado do processamento na mesma requisição com o código de status HTTP 201 (Created). Caso ocorra algum erro, como por exemplo se o servidor da SEFAZ estiver fora do ar, a nota é enfileirada da mesma forma que o envio assíncrono.
+
+Tipo de Emissão | Status HTTP se sucesso | Resposta | Observações
+-------|-------|-----|------
+assíncrona (default) | 202 - Accepted | Dados da nota com status processando_autorizacao | Necessário consultar a nota posteriormente ou utilizar webhooks para receber o resultado do processamento
+síncrona | 201 - Created | Dados da nota autorizada ou mensagem de erro | A resposta será devolvida na mesma requisição
 
 ## Consulta
 
