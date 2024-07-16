@@ -151,7 +151,7 @@ Para enviar uma MDF-e em contingência offline utilize a URL abaixo, alterando o
 
 É possível configurar a empresa para realizar a emissão síncrona.
 
-Quando a emissão é síncrona, será feita uma tentativa de envio e caso a nota tenha sido autorizada será devolvido o resultado do processamento na mesma requisição com o código de status HTTP 201 (Created).
+Quando a emissão for síncrona, uma tentativa de envio será realizada. Se a nota for autorizada, o resultado do processamento será retornado na mesma requisição, acompanhado do código de status HTTP 201 (Created).
 
 Tipo de Emissão | Status HTTP se sucesso | Resposta | Observações
 -------|-------|-----|------
