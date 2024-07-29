@@ -2750,7 +2750,7 @@ r = requests.delete(url+ref+"/insucesso_entrega", auth=(token,""))
 # Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
 print(r.status_code, r.text)
 ```
-> Exemplos de respostas da API por **status** para a requisição de ator interessado:
+> Exemplos de respostas da API por **status** para a requisição de cancelamento do insucesso na entrega:
 
 > autorizado
 
