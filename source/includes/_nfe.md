@@ -19,6 +19,8 @@ GET  | /v2/nfe/REFERENCIA | Consulta a nota fiscal com a referência informada e
 DELETE |  /v2/nfe/REFERENCIA  | Cancela uma nota fiscal com a referência informada
 POST |  /v2/nfe/REFERENCIA/carta_correcao | Cria uma carta de correção para a nota fiscal com a referência informada.
 POST |  /v2/nfe/REFERENCIA/ator_interessado | Adiciona um ator interessado para a nota fiscal com a referência informada.
+POST |  /v2/nfe/REFERENCIA/insucesso_entrega | Indica o insucesso na entrega da carga pelo emitente da NF-e.
+DELETE |  /v2/nfe/REFERENCIA/insucesso_entrega | Cancela o evento de insucesso na entrega da carga pelo emitente da NF-e.
 POST |  /v2/nfe/REFERENCIA/email  | Envia um email com uma cópia da nota fiscal com a referência informada
 POST |  /v2/nfe/inutilizacao  | Inutiliza uma numeração da nota fiscal
 POST |  /v2/nfe/importacao?ref=REFERENCIA | Cria uma nota fiscal a partir da importação de um XML
@@ -2255,6 +2257,539 @@ A API irá em seguida devolver os seguintes campos:
 
 ### Prazo para o registro do Ator Interessado
 Este evento somente pode ser gerado no prazo de 6 meses após a data de autorização da NF-e.
+
+## Insucesso na Entrega da NF-e
+
+```shell
+curl -u "token obtido no cadastro da empresa:" \
+  -X POST -T arquivo.json https://homologacao.focusnfe.com.br/v2/nfe/12345/insucesso_entrega
+```
+
+```php
+<?php
+/* Você deve definir isso globalmente para sua aplicação.
+Para ambiente de produção utilize e a variável abaixo:
+$server = "https://api.focusnfe.com.br"; */
+$server = "https://homologacao.focusnfe.com.br";
+// Substituir a variável, ref, pela sua identificação interna de nota.
+$ref = "12345";
+$login = "token obtido no cadastro da empresa";
+$password = "";
+$insucesso_entrega = array (
+  "data_tentativa_entrega" => "2024-07-24T10:30:56-0300",
+  "numero_tentativas" => 4,
+  "motivo_insucesso" => 4,
+  "justificativa_insucesso" => "Não foi possível realizar a entrega da NF-e por erro no cadastro do endereço.",
+  "latitude_entrega" => "-25.428400",
+  "longitude_entrega" => "-49.273300",
+  "hash_tentativa_entrega" => "yzmPGyT1YM5KqilP56w+oPlVkx8=",
+  "data_hash_tentativa" => "2024-07-24T10:55:56-0300"
+);
+// Inicia o processo de envio das informações usando o cURL.
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $server . "/v2/nfe/" . $ref  . "/insucesso_entrega");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_POST, 1);
+curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($insucesso_entrega));
+curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
+$body = curl_exec($ch);
+$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+// As próximas três linhas são um exemplo de como imprimir as informações de retorno da API.
+print($http_code."\n");
+print($body."\n\n");
+print("");
+curl_close($ch);
+?>
+```
+
+```java
+import java.util.HashMap;
+import org.codehaus.jettison.json.JSONObject;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+
+public class NFeInsucessoEntrega {
+
+  public static void main(String[] args){
+
+    String login = "Token_obtido_no_cadastro_da_empresa";
+
+    /* Substituir pela sua identificação interna da nota. */
+    String ref = "12345";
+
+    /* Para ambiente de produção use a variável abaixo:
+    String server = "https://api.focusnfe.com.br/"; */
+    String server = "https://homologacao.focusnfe.com.br/";
+
+    String url = server.concat("v2/nfe/"+ref+"/insucesso_entrega");
+
+    /* Aqui criamos um hashmap para receber a chave "insucesso_entrega" e os valores desejados. */
+    HashMap<String, String> insucesso_entrega = new HashMap<String, String>();
+    insucesso_entrega.put("data_tentativa_entrega", "2024-07-24T10:30:56-0300");
+    insucesso_entrega.put("numero_tentativas", "4");
+    insucesso_entrega.put("motivo_insucesso", "4");
+    insucesso_entrega.put("justificativa_insucesso", "Não foi possível realizar a entrega da NF-e por erro no cadastro do endereço.");
+    insucesso_entrega.put("latitude_entrega", "-25.428400");
+    insucesso_entrega.put("longitude_entrega", "-49.273300");
+    insucesso_entrega.put("hash_tentativa_entrega", "yzmPGyT1YM5KqilP56w+oPlVkx8=");
+    insucesso_entrega.put("data_hash_tentativa", "2024-07-24T10:55:56-0300");
+
+    /* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
+    JSONObject json = new JSONObject(insucesso_entrega);
+
+    /* Configuração para realizar o HTTP BasicAuth. */
+    Object config = new DefaultClientConfig();
+    Client client = Client.create((ClientConfig) config);
+    client.addFilter(new HTTPBasicAuthFilter(login, ""));
+
+    WebResource request = client.resource(url);
+
+    ClientResponse resposta = request.post(ClientResponse.class, json);
+
+    int httpCode = resposta.getStatus();
+
+    String body = resposta.getEntity(String.class);
+
+     /* As três linhas abaixo imprimem as informações retornadas pela API.
+    * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+    System.out.print("HTTP Code: ");
+    System.out.print(httpCode);
+    System.out.printf(body);
+  }
+}
+```
+
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+require "json"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# referência da nota - deve ser única para cada nota enviada
+ref = "id_referencia_nota"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/nfe/" + ref + "/insucesso_entrega"
+
+# altere os campos conforme a nota que será enviada
+insucesso_entrega = {
+  data_tentativa_entrega: "2024-07-24T10:30:56-0300",
+  numero_tentativas: 4,
+  motivo_insucesso: 4,
+  justificativa_insucesso: "Não foi possível realizar a entrega da NF-e por erro no cadastro do endereço.",
+  latitude_entrega: "-25.428400",
+  longitude_entrega: "-49.273300",
+  hash_tentativa_entrega: "yzmPGyT1YM5KqilP56w+oPlVkx8=",
+  data_hash_tentativa: "2024-07-24T10:55:56-0300"
+}
+
+# criamos um objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Post a partir da uri de requisição
+requisicao = Net::HTTP::Post.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# convertemos a hash da requisição para o formato JSON e adicionamos ao corpo da requisição
+requisicao.body = insucesso_entrega.to_json
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
+
+```
+
+```javascript
+
+/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var request = new XMLHttpRequest();
+
+var token = "Token_obtido_no_cadastro_da_empresa";
+
+// Substituir pela sua identificação interna da nota.
+var ref = "12345";
+
+/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/
+var url = "https://homologacao.focusnfe.com.br/v2/nfe/"+ ref + "/insucesso_entrega";
+
+/*
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/
+request.open('POST', url, false, token);
+
+var insucesso_entrega = {
+  "data_tentativa_entrega": "2024-07-24T10:30:56-0300",
+  "numero_tentativas": "4",
+  "motivo_insucesso": "4",
+  "justificativa_insucesso": "Não foi possível realizar a entrega da NF-e por erro no cadastro do endereço.",
+  "latitude_entrega": "-25.428400",
+  "longitude_entrega": "-49.273300",
+  "hash_tentativa_entrega": "yzmPGyT1YM5KqilP56w+oPlVkx8=",
+  "data_hash_tentativa": "2024-07-24T10:55:56-0300"
+};
+
+// Aqui fazermos a serializacao do JSON com os dados da requisição e enviamos atraves do metodo usado.
+request.send(JSON.stringify(insucesso_entrega));
+
+// Sua aplicacao tera que ser capaz de tratar as respostas da API.
+console.log("HTTP code: " + request.status);
+console.log("Corpo: " + request.responseText);
+
+```
+
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import json
+import requests
+
+'''
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "https://homologacao.focusnfe.com.br/v2/nfe/"
+
+# Substituir pela sua identificação interna da nota
+ref = "12345"
+
+token="token obtido no cadastro da empresa"
+
+'''
+Usamos um dicionario para armazenar os campos e valores que em seguida,
+serao convertidos a JSON e enviados para nossa API
+'''
+insucesso_entrega={}
+insucesso_entrega["data_tentativa_entrega"] = "2024-07-24T10:30:56-0300"
+insucesso_entrega["numero_tentativas"] = "4"
+insucesso_entrega["motivo_insucesso"] = "4"
+insucesso_entrega["justificativa_insucesso"] = "Não foi possível realizar a entrega da NF-e por erro no cadastro do endereço."
+insucesso_entrega["latitude_entrega"] = "-25.428400"
+insucesso_entrega["longitude_entrega"] = "-49.273300"
+insucesso_entrega["hash_tentativa_entrega"] = "yzmPGyT1YM5KqilP56w+oPlVkx8="
+insucesso_entrega["data_hash_tentativa"] = "2024-07-24T10:55:56-0300"
+
+r = requests.post(url+ref+"/insucesso_entrega", data=json.dumps(insucesso_entrega), auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+```
+> Exemplos de respostas da API por **status** para a requisição de insucesso na entrega:
+
+> autorizado
+
+```json
+{
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "status": "autorizado",
+  "caminho_xml_insucesso_entrega": "/arquivos_development/36405184000117_496/202407/XMLs/42240736405184000117550010000000041399297360-ie.xml",
+  "numero_insucesso_entrega": 1
+}
+```
+
+> requisicao_invalida
+
+```json
+{
+  "codigo": "requisicao_invalida",
+  "mensagem": "Por favor, informe a data da tentativa de entrega."
+}
+```
+
+O objetivo do evento **Insucesso na Entrega da NF-e** é permitir ao remetente, quando a entrega for realizada acobertada pela NF-e, registrar, por meio de um evento fiscal, na respectiva nota fiscal eletrônica que acoberta a entrega da mercadoria os motivos que impediram a entrega.
+
+Para registrar um Insucesso na Entrega da NF-e a uma NFe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+
+Registrar um Insucesso na Entrega da NF-e a uma NFe já autorizada:
+
+`https://api.focusnfe.com.br/v2/nfe/REFERENCIA/insucesso_entrega`
+
+Utilize o comando **HTTP POST** para registrar um insucesso na entrega a sua nota através de nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
+
+Os parâmetros disponiveis para o registro do evento segue abaixo. Aqueles denotados com (*) são obrigatórios.
+
+* **data_tentativa_entrega**(*): (Data) Data e hora da tentativa de entrega. Formato padrão ISO, exemplo: “2024-07-24T12:00-0300”.
+* **numero_tentativas**: (String) Número da tentativa de entrega que não teve sucesso.
+* **motivo_insucesso**(*): (String) Motivo do insucesso.
+  - **1**: Recebedor não encontrado;
+  - **2**: Recusa do recebedor;
+  - **3**: Endereço inexistente;
+  - **4**: Outros (exige informar justificativa);
+* **justificativa_insucesso**: (String) Justificativa do motivo do insucesso. Informar apenas para *motivo_insucesso* = 4.
+* **latitude_entrega**: (String) Latitude do ponto de entrega.
+* **longitude_entrega**: (String) Longitude do ponto de entrega.
+* **hash_tentativa_entrega**(*): (String) Hash SHA-1, no formato Base64, resultante da concatenação de: Chave de Acesso da NF-e + Base64 da imagem capturada na tentativa da entrega (ex: imagem capturada da assinatura eletrônica, digital do recebedor, foto,etc).
+* **data_hash_tentativa**: (Data) Data e hora da geração do hash da tentativa de entrega. Formato padrão ISO, exemplo: “2024-07-24T12:00-0300”.
+
+A API irá em seguida devolver os seguintes campos:
+
+* **status_sefaz**: O status do evento na SEFAZ.
+* **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
+* **status**: autorizado, se o evento for registrado com sucesso, ou erro_autorizacao, se houve algum erro no registro do evento.
+* **caminho_xml_insucesso_entrega**: Caso a evento tenha sido registrado, será informado aqui o caminho para download do XML do evento de insucesso na entrega.
+* **numero_insucesso_entrega**: O número sequencial do evento.
+
+## Cancelamento Insucesso na Entrega da NF-e
+
+```shell
+curl -u "token obtido no cadastro da empresa:" \
+  -X DELETE https://homologacao.focusnfe.com.br/v2/nfe/12345/insucesso_entrega
+```
+
+```php
+<?php
+/* Você deve definir isso globalmente para sua aplicação.
+Para ambiente de produção utilize e a variável abaixo:
+$server = "https://api.focusnfe.com.br"; */
+$server = "https://homologacao.focusnfe.com.br";
+// Substituir a variável, ref, pela sua identificação interna de nota.
+$ref = "12345";
+$login = "token obtido no cadastro da empresa";
+$password = "";
+// Inicia o processo de envio das informações usando o cURL.
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, $server . "/v2/nfe/" . $ref  . "/insucesso_entrega");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
+$body = curl_exec($ch);
+$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+// As próximas três linhas são um exemplo de como imprimir as informações de retorno da API.
+print($http_code."\n");
+print($body."\n\n");
+print("");
+curl_close($ch);
+?>
+```
+
+```java
+import java.util.HashMap;
+import org.codehaus.jettison.json.JSONObject;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
+import com.sun.jersey.api.client.config.ClientConfig;
+import com.sun.jersey.api.client.config.DefaultClientConfig;
+import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+
+public class NFeCancelamentoInsucessoEntrega {
+
+  public static void main(String[] args){
+
+    String login = "Token_obtido_no_cadastro_da_empresa";
+
+    /* Substituir pela sua identificação interna da nota. */
+    String ref = "12345";
+
+    /* Para ambiente de produção use a variável abaixo:
+    String server = "https://api.focusnfe.com.br/"; */
+    String server = "https://homologacao.focusnfe.com.br/";
+
+    String url = server.concat("v2/nfe/"+ref+"/insucesso_entrega");
+
+    /* Configuração para realizar o HTTP BasicAuth. */
+    Object config = new DefaultClientConfig();
+    Client client = Client.create((ClientConfig) config);
+    client.addFilter(new HTTPBasicAuthFilter(login, ""));
+
+    WebResource request = client.resource(url);
+
+    ClientResponse resposta = request.delete(ClientResponse.class);
+
+    int httpCode = resposta.getStatus();
+
+    String body = resposta.getEntity(String.class);
+
+     /* As três linhas abaixo imprimem as informações retornadas pela API.
+        * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
+    System.out.print("HTTP Code: ");
+    System.out.print(httpCode);
+    System.out.printf(body);
+  }
+}
+```
+
+```ruby
+
+# encoding: UTF-8
+
+require "net/http"
+require "net/https"
+
+# token enviado pelo suporte
+token = "codigo_alfanumerico_token"
+
+# referência da nota - deve ser única para cada nota enviada
+ref = "id_referencia_nota"
+
+# endereço da api que deve ser usado conforme o ambiente: produção ou homologação
+servidor_producao = "https://api.focusnfe.com.br/"
+servidor_homologacao = "https://homologacao.focusnfe.com.br/"
+
+# no caso do ambiente de envio ser em produção, utilizar servidor_producao
+url_envio = servidor_homologacao + "v2/nfe/" + ref + "/insucesso_entrega"
+
+# criamos um objeto uri para envio da nota
+uri = URI(url_envio)
+
+# também criamos um objeto da classe HTTP a partir do host da uri
+http = Net::HTTP.new(uri.hostname, uri.port)
+
+# aqui criamos um objeto da classe Delete a partir da uri de requisição
+requisicao = Net::HTTP::Delete.new(uri.request_uri)
+
+# adicionando o token à requisição
+requisicao.basic_auth(token, '')
+
+# no envio de notas em produção, é necessário utilizar o protocolo ssl
+# para isso, basta retirar o comentário da linha abaixo
+# http.use_ssl = true
+
+# aqui enviamos a requisição ao servidor e obtemos a resposta
+resposta = http.request(requisicao)
+
+# imprimindo o código HTTP da resposta
+puts "Código retornado pela requisição: " + resposta.code
+
+# imprimindo o corpo da resposta
+puts "Corpo da resposta: " + resposta.body
+
+```
+
+```javascript
+
+/*
+As orientacoes a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
+Here's how to include the module in your project and use as the browser-based XHR object.
+Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work.
+*/
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+
+var request = new XMLHttpRequest();
+
+var token = "Token_obtido_no_cadastro_da_empresa";
+
+// Substituir pela sua identificação interna da nota.
+var ref = "12345";
+
+/*
+Para ambiente de producao use a URL abaixo:
+"https://api.focusnfe.com.br"
+*/
+var url = "https://homologacao.focusnfe.com.br/v2/nfe/"+ ref + "/insucesso_entrega";
+
+/*
+Use o valor 'false', como terceiro parametro para que a requisicao aguarde a resposta da API
+Passamos o token como quarto parametro deste metodo, como autenticador do HTTP Basic Authentication.
+*/
+request.open('DELETE', url, false, token);
+
+request.send();
+
+// Sua aplicacao tera que ser capaz de tratar as respostas da API.
+console.log("HTTP code: " + request.status);
+console.log("Corpo: " + request.responseText);
+
+```
+
+```python
+# Faça o download e instalação da biblioteca requests, através do python-pip.
+import requests
+
+'''
+Para ambiente de produção use a variável abaixo:
+url = "https://api.focusnfe.com.br"
+'''
+url = "https://homologacao.focusnfe.com.br/v2/nfe/"
+
+# Substituir pela sua identificação interna da nota
+ref = "12345"
+
+token="token obtido no cadastro da empresa"
+
+r = requests.delete(url+ref+"/insucesso_entrega", auth=(token,""))
+
+# Mostra na tela o codigo HTTP da requisicao e a mensagem de retorno da API
+print(r.status_code, r.text)
+```
+> Exemplos de respostas da API por **status** para a requisição de cancelamento do insucesso na entrega:
+
+> autorizado
+
+```json
+{
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "status": "autorizado",
+  "caminho_xml_cancelamento_insucesso_entrega": "/arquivos_development/36405184000117_496/202407/XMLs/42240736405184000117550010000000041399297360-ie-can.xml",
+  "numero_cancelamento_insucesso_entrega": 1
+}
+```
+
+> requisicao_invalida
+
+```json
+{
+  "codigo": "pending_operation",
+  "mensagem": "Nota não possui evento de insucesso de entrega."
+}
+```
+
+O objetivo do evento **Cancelamento Insucesso na Entrega da NF-e** é permitir que remetente cancele o evento *Insucesso na Entrega da NF-e* já registrado a uma nota.
+
+Para **CANCELAR** um Insucesso na Entrega da NF-e de uma NFe, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+
+Cancelar um Insucesso na Entrega da NF-e:
+
+`https://api.focusnfe.com.br/v2/nfe/REFERENCIA/insucesso_entrega`
+
+Utilize o comando **HTTP DELETE** para cancelar um insucesso na entrega através de nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
+
+A API irá em seguida devolver os seguintes campos:
+
+* **status_sefaz**: O status do evento na SEFAZ.
+* **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
+* **status**: autorizado, se o evento for registrado com sucesso, ou erro_autorizacao, se houve algum erro no registro do evento.
+* **caminho_xml_cancelamento_insucesso_entrega**: Caso a evento tenha sido registrado, será informado aqui o caminho para download do XML do evento de cancelamento do insucesso na entrega.
+* **numero_cancelamento_insucesso_entrega**: O número sequencial do evento.
 
 ## Reenvio de e-mail
 
