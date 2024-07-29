@@ -2519,7 +2519,7 @@ print(r.status_code, r.text)
   "status_sefaz": "135",
   "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
   "status": "autorizado",
-  "caminho_xml_evento_ator_interessado": "/arquivos_development/36405184000117_496/202407/XMLs/42240736405184000117550010000000041399297360-ie.xml",
+  "caminho_xml_insucesso_entrega": "/arquivos_development/36405184000117_496/202407/XMLs/42240736405184000117550010000000041399297360-ie.xml",
   "numero_insucesso_entrega": 1
 }
 ```
