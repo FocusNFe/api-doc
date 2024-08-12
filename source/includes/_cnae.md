@@ -246,6 +246,7 @@ Para cada consulta à nossa API de códigos CNAE a resposta trará um ou mais ob
 * **descricao_classe**: Representa a descrição da classe da atividade econômica à qual o código faz referência.
 * **subclasse**: Representa a subclasse à qual o código CNAE pertence.
 * **descricao_subclasse**: Representa a descrição da subclasse da atividade econômica à qual o código faz referência.
+* **codigo_formatado**: Representa o código CNAE formatado frente ao IBGE.
 
 ## Paginação
 
