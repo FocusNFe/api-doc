@@ -183,7 +183,7 @@ Os parâmetros disponíveis para consulta dos códigos CNAE são atualmente os s
 * divisao: Busca pelo código exato da divisão.
 * descricao_divisao: Busca pela descrição da divisão ou pelo trecho da descrição.
 * grupo: Busca pelo código exato da grupo.
-* descricao_grupo: Busca pela descrição da grupo ou pelo trecho da descrição.
+* descricao_grupo: Busca pela descrição do grupo ou pelo trecho da descrição.
 * classe: Busca pelo código exato da classe.
 * descricao_classe: Busca pela descrição da classe ou pelo trecho da descrição.
 * subclasse: Busca pelo código exato da subclasse.
