@@ -178,6 +178,16 @@ Os parâmetros disponíveis para consulta dos códigos CNAE são atualmente os s
 
 * codigo: Busca pela código ou trecho do código CNAE.
 * descricao: Busca pela descrição ou pelo trecho da descrição.
+* secao: Busca pelo código exato da seção.
+* descricao_secao: Busca pela descrição da seção ou pelo trecho da descrição.
+* divisao: Busca pelo código exato da divisão.
+* descricao_divisao: Busca pela descrição da divisão ou pelo trecho da descrição.
+* grupo: Busca pelo código exato da grupo.
+* descricao_grupo: Busca pela descrição do grupo ou pelo trecho da descrição.
+* classe: Busca pelo código exato da classe.
+* descricao_classe: Busca pela descrição da classe ou pelo trecho da descrição.
+* subclasse: Busca pelo código exato da subclasse.
+* descricao_subclasse: Busca pela descrição da subclasse ou pelo trecho da descrição.
 
 Caso já saiba o código CNAE exato, você pode efetuar a busca diretamente em:
 
@@ -189,18 +199,36 @@ Caso já saiba o código CNAE exato, você pode efetuar a busca diretamente em:
 
 ```json
 [
-  {
-    "codigo": "8599603",
-    "descricao": "Treinamento em informática"
-  },
-  {
-    "codigo": "4757100",
-    "descricao": "Comércio varejista especializado de peças e acessórios para aparelhos eletroeletrônicos para uso doméstico, exceto informática e comunicação"
-  },
-  {
-    "codigo": "4751202",
-    "descricao": "Recarga de cartuchos para equipamentos de informática"
-  }
+    {
+        "codigo": "8599603",
+        "descricao": "Treinamento em informática",
+        "secao": "P",
+        "descricao_secao": "EDUCAÇÃO",
+        "divisao": "85",
+        "descricao_divisao": "EDUCAÇÃO",
+        "grupo": "9",
+        "descricao_grupo": "Outras atividades de ensino",
+        "classe": "9",
+        "descricao_classe": "Atividades de ensino não especificadas anteriormente",
+        "subclasse": "03",
+        "descricao_subclasse": "Treinamento em informática",
+        "codigo_formatado": "8599-6/03"
+    },
+    {
+        "codigo": "4757100",
+        "descricao": "Comércio varejista especializado de peças e acessórios para aparelhos eletroeletrônicos para uso doméstico, exceto informática e comunicação",
+        "secao": "G",
+        "descricao_secao": "COMÉRCIO; REPARAÇÃO DE VEÍCULOS AUTOMOTORES E MOTOCICLETAS",
+        "divisao": "47",
+        "descricao_divisao": "COMÉRCIO VAREJISTA",
+        "grupo": "5",
+        "descricao_grupo": "Comércio varejista de equipamentos de informática e comunicação; equipamentos e artigos de uso doméstico",
+        "classe": "7",
+        "descricao_classe": "Comércio varejista especializado de peças e acessórios para aparelhos eletroeletrônicos para uso doméstico, exceto informática e comunicação",
+        "subclasse": "00",
+        "descricao_subclasse": "Comércio varejista especializado de peças e acessórios para aparelhos eletroeletrônicos para uso doméstico, exceto informática e comunicação",
+        "codigo_formatado": "4757-1/00"
+    }
 ]
 ```
 
@@ -208,7 +236,17 @@ Para cada consulta à nossa API de códigos CNAE a resposta trará um ou mais ob
 
 * **codigo**: Representa o código CNAE frente ao IBGE
 * **descricao**: Representa a descrição da atividade econômica à qual o código faz referência.
-
+* **secao**: Representa a seção à qual o código CNAE pertence.
+* **descricao_secao**: Representa a descrição da seção da atividade econômica à qual o código faz referência.
+* **divisao**: Representa a divisão à qual o código CNAE pertence.
+* **descricao_divisao**: Representa a descrição da divisão da atividade econômica à qual o código faz referência.
+* **grupo**: Representa o grupo ao qual o código CNAE pertence.
+* **descricao_grupo**: Representa a descrição do grupo da atividade econômica à qual o código faz referência.
+* **classe**: Representa a classe à qual o código CNAE pertence.
+* **descricao_classe**: Representa a descrição da classe da atividade econômica à qual o código faz referência.
+* **subclasse**: Representa a subclasse à qual o código CNAE pertence.
+* **descricao_subclasse**: Representa a descrição da subclasse da atividade econômica à qual o código faz referência.
+* **codigo_formatado**: Representa o código CNAE formatado frente ao IBGE.
 
 ## Paginação
 
