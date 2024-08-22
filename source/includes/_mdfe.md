@@ -430,7 +430,7 @@ Encerrar uma MDF-e autorizada:
 
 `https://api.focusnfe.com.br/v2/mdfe/REFERENCIA/encerrar`
 
-Utilize o comando **HTTP POST** para incluir um condutor. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
+Utilize o comando **HTTP POST** para encerrar o MDFe. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
 
 Os parâmetros de encerramento deverão ser enviados da seguinte forma:
 
