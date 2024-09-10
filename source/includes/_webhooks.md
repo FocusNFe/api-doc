@@ -317,7 +317,10 @@ Desta forma você poderá por exemplo informar um token secreto para garantir qu
 
 A API irá devolver como resposta o gatilho criado. É possível ter mais de um gatilho por evento. Note que o gatilho pode ser por empresa ou um gatilho genérico para todas as emissões feitas usando o token informado.
 
-**OBS**: Os campos **cpf** e **cnpj** são mutuamente excludentes. No caso de informar um deles não informar o outro.
+**Observações**:
+
+* Os campos **cpf** e **cnpj** são mutuamente excludentes. No caso de informar um deles não informar o outro.
+* É permitido criar apenas 5 webhooks por empresa para o mesmo evento.
 
 **Dicas para uso do campo authorization**: O propósito deste campo é garantir que a sua URL não seja acessada por nenhum outro serviço que não o nosso. Sugerimos duas formas de usar este campo: você pode usar um token secreto, por exemplo: "lFNVw8q5WMeR3U9FOVOABTp36zrkvtaa". Desta forma, nossa API irá enviar sempre o seguinte cabeçalho ao acionar o gatilho:
 
