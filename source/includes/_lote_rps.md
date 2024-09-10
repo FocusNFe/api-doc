@@ -879,7 +879,6 @@ Algumas prefeituras disponibilizam um arquivo de resposta, que poderá informar 
   "numero":"9999",
   "codigo_verificacao":"311299647",
   "data_emissao":"2017-09-09T10:20:00-03:00",
-  "uri":"https://www.barueri.sp.gov.br/nfe/",
-  "caminho_xml_nota_fiscal":"/notas_fiscais_servico/NFSe191517072001883518800-1898781-9999-312276647.xml"
+  "uri":"https://www.barueri.sp.gov.br/nfe/"
 }
 ```

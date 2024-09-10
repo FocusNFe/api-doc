@@ -743,7 +743,7 @@ Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
 
 Após a autorização da nota fiscal de serviço eletrônica será disponibilizado os campos:
 
-*  **caminho_xml_nota_fiscal** - Representa o caminho para montar a URL para download do XML. Por exemplo, se você utilizou o servidor api.focusnfe.com.br e o caminho_xml_nota_fiscal contém o caminho "/notas_fiscais_servico/NFSe075045050001324106902-004940940-428-DUMMY.xml" você poderá acessar o XML pela URL completa https://api.focusnfe.com.br/notas_fiscais_servico/NFSe075045050001324106902-004940940-428-DUMMY.xml
+*  **caminho_xml_nota_fiscal** - Representa o caminho para montar a URL para download do XML. Por exemplo, se você utilizou o servidor api.focusnfe.com.br e o caminho_xml_nota_fiscal contém o caminho "/arquivos/18765499000199_166/202405/XMLsNFSe/187654990001994106902-14018919393-43-12345678901234567890123456789012345678901234567890-nfse.xml" você poderá acessar o XML pela URL completa https://api.focusnfe.com.br/arquivos/18765499000199_166/202405/XMLsNFSe/187654990001994106902-14018919393-43-12345678901234567890123456789012345678901234567890-nfse.xml
 * **url**. A URL para consultar a NFSe direto no portal do Ambiente Nacional.
 
 Utilize o método **HTTP GET** para ambas as consultas.
