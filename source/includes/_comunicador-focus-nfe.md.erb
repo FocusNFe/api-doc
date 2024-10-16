@@ -92,6 +92,12 @@ O arquivo com os dados do CFe S@T deve seguir a estrutura de um arquivo do forma
             "unidade_comercial": "un",
             "icms_situacao_tributaria": "40"
         }
+    ],
+    "formas_pagamento":[
+      {
+        "forma_pagamento": "01",
+        "valor_pagamento": "0.01"
+      }
     ]
 }
 ```
@@ -151,6 +157,7 @@ valor_unitario | valor unitário da produto.
 valor_bruto | valor bruto do produto.
 unidade_comercial | unidade de medida comercial do produto.
 icms_situacao_tributaria | código da situação tributário do ICMS. Valores possíveis: 00, 20, 40, 60, 102, 103, 300, 500 ou 900.
+formas_pagamento | formas de pagamento utilizadas na venda.
 
 Para mais detalhes sobre os valores possívels em **icms_situacao_tributaria** consulte nossa documentação de campos da API NFe/NFCe [aqui](https://campos.focusnfe.com.br/nfe/ItemNotaFiscalXML.html).
 
@@ -180,7 +187,6 @@ cofins_aliquota_porcentual | alíquota do COFINS. | 0.00
 
 Campos do grupo '**formas_pagamento**':
 
-Quando omitido, será considerado a forma de pagamento dinheiro e o valor total do cupom.
 Para emissão de CFe/NFCe no Ceará o campo **nome_credenciadora** é obrigatório se forma_pagamento for 03 ou 04 (pagamentos com cartões de crédito ou débito).
 
 Campo | Descrição
@@ -249,6 +255,12 @@ OUTROS | Outros
             "unidade_comercial": "un",
             "icms_situacao_tributaria": "40"
         }
+    ],
+    "formas_pagamento":[
+      {
+        "forma_pagamento": "01",
+        "valor_pagamento": "0.01"
+      }
     ]
 }
 ```
