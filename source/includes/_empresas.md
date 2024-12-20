@@ -93,6 +93,7 @@ Abaixo são listados todos os campos de uma empresa.
 | exibe_sempre_ipi_danfe                             | booleano         | Não        | N/A         | N/A         | Informa se empresa será habilitada para imprimir sempre colunas do IPI
 | exibe_issqn_danfe                                  | booleano         | Não        | N/A         | N/A         | Informa se empresa será habilitada para mostra dados do ISSQN
 | exibe_impostos_adicionais_danfe                    | booleano         | Não        | N/A         | N/A         | Informa se empresa será habilitada para imprimir impostos adicionais na DANFe (II, PIS, COFINS, ICMS UF Destino, ICMS UF Remetente, valor total tributos)
+| exibe_unidade_tributaria_danfe                     | booleano         | Não        | N/A         | N/A         | Informa se empresa será habilitada para exibir unidade tributária na DANFe
 | exibe_sempre_volumes_danfe                         | booleano         | Não        | N/A         | N/A         | Informa se empresa será habilitada para sempre mostrar volumes na DANFe
 | exibe_composicao_carga_mdfe                        | booleano         | Não        | N/A         | N/A         | Informa se empresa será habilitada para mostrar composição da carga na MDFe
 | enviar_email_destinatario                          | booleano         |            |             |             | Informa se empresa será habilitada para enviar email ao destinatário em produção
