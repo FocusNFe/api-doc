@@ -945,7 +945,7 @@ Retorna todos os dados da empresa. Além dos campos utilizados para criação da
 
 O ID é o identificador único da empresa fornecido no momento da criação.
 
-## Listagem Empresas
+## Listagem de Empresas
 
 ```shell
 curl -u "token obtido no cadastro da empresa:" \
