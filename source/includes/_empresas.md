@@ -387,7 +387,10 @@ Caso queira apenas testar a criação de uma empresa, utilize o endereço abaixo
 
 **URL:** `https://api.focusnfe.com.br/v2/empresas?dry_run=1`
 
-O conteúdo do POST deverá conter os dados da empresa. O resultado será os dados da empresa criados ou uma mensagem de erro de validação. É importante salvar o campo id gerado para posterior consulta ou alteração da empresa. Considere o campo "id" como sendo alfanumérico, pois no futuro o formato deverá ser alterado para permitir letras e números na identificação.
+O conteúdo do POST deverá conter os dados da empresa.
+O resultado será os dados da empresa criados ou uma mensagem de erro de validação.
+É importante salvar o campo id gerado para posterior consulta ou alteração da empresa.
+Considere o campo "id" como sendo alfanumérico, pois no futuro o formato deverá ser alterado para permitir letras e números na identificação.
 
 ## Alteração de empresa
 
