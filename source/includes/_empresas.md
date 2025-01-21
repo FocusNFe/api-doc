@@ -608,7 +608,11 @@ Caso queira apenas testar a criação de uma empresa, utilize o endereço abaixo
 
 **URL:** `https://api.focusnfe.com.br/v2/empresas/ID?dry_run=1`
 
-Onde ID é o id da empresa fornecido no momento da criação. O conteúdo do PUT deverá conter os dados da empresa que serão alterados. Os demais dados permanecerão inalterados. O resultado será todos os dados da empresa criados ou uma mensagem de erro de validação. Os dados devem seguir o mesmo formato para criação da empresa.
+Onde ID é o id da empresa fornecido no momento da criação.
+O conteúdo do PUT deverá conter os dados da empresa que serão alterados.
+Os demais dados permanecerão inalterados.
+O resultado será todos os dados da empresa criados ou uma mensagem de erro de validação.
+Os dados devem seguir o mesmo formato para criação da empresa.
 
 Atributos que não serão modificados podem ser omitidos.
 
