@@ -326,7 +326,10 @@ curl -u "token obtido no cadastro da empresa:" \
 ```
 
 > Exemplos de respostas da API por **status**:
-> **sucesso**
+>
+> **Sucesso**
+>
+> Código HTTP: `200 OK`
 
 ```json
 {
@@ -446,7 +449,9 @@ curl -u "token obtido no cadastro da empresa:" \
 }
 ```
 
-> **nao_encontrado**
+> **Empresa não encontrada**
+>
+> Código HTTP: `404 Not Found`
 
 ```json
 {
@@ -476,6 +481,10 @@ curl -u "token obtido no cadastro da empresa:" \
 ```
 
 > Exemplo de resposta da API:
+>
+> **Sucesso**
+>
+> Código HTTP: `200 OK`
 
 ```json
 [
