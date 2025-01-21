@@ -130,6 +130,8 @@ Abaixo são listados todos os campos de uma empresa.
 | proximo_numero_mdfe_homologacao                    | numérico         |            | N/A         | N/A         | Próximo número da MDFe a ser emitida em homologação. Calculado automaticamente.
 | serie_mdfe_producao                                | numérico         |            | N/A         | N/A         | Série da MDFe a ser emitida em produção. Valor padrão: 1
 | serie_mdfe_homologacao                             | numérico         |            | N/A         | N/A         | Série da MDFe a ser emitida em homologação. Valor padrão: 1
+| nfe_sincrono                                      | booleano         |            | N/A         | N/A         | Informa se a NFe será emitida de forma síncrona ou assíncrona. Se verdadeiro, a NFe será emitida de forma síncrona. Se falso, a NFe será emitida de forma assíncrona. Por padrão, será emitida de forma assíncrona.
+| nfe_sincrono_homologacao                          | booleano         |            | N/A         | N/A         | Informa se a NFe será emitida de forma síncrona ou assíncrona em homologação. Se verdadeiro, a NFe será emitida de forma síncrona. Se falso, a NFe será emitida de forma assíncrona. Por padrão, será emitida de forma assíncrona.
 | mdfe_sincrono                                      | booleano         |            | N/A         | N/A         | Informa se a MDFe será emitida de forma síncrona ou assíncrona. Se verdadeiro, a MDFe será emitida de forma síncrona. Se falso, a MDFe será emitida de forma assíncrona. Por padrão, será emitida de forma assíncrona.
 | mdfe_sincrono_homologacao                          | booleano         |            | N/A         | N/A         | Informa se a MDFe será emitida de forma síncrona ou assíncrona em homologação. Se verdadeiro, a MDFe será emitida de forma síncrona. Se falso, a MDFe será emitida de forma assíncrona. Por padrão, será emitida de forma assíncrona.
 | arquivo_certificado_base64                         | texto em base 64 | Sim        | Sim         | Sim _*_     | Arquivo do certificado digital, em formato PFX ou P12, codificado em base64. _* Nem todas as prefeituras necessitam de certificado para emissão de NFSe_
@@ -180,66 +182,132 @@ curl -u "token obtido no cadastro da empresa:" \
 Uma empresa pode ser criada usando o seguinte endereço
 
 > Exemplos de respostas da API por **status** para a requisição de envio:
-
-> **sucesso**
+>
+> **Sucesso**
+>
+> Código HTTP: `200 OK`
 
 ```json
 {
-  "id": 17625,
-  "nome": "Nome da empresa Ltda",
-  "nome_fantasia": "Nome Fantasia",
-  "inscricao_estadual": "1234",
-  "inscricao_municipal": "46532",
-  "bairro": "Vila Isabel",
+  "id": 123,
+  "nome": "Razão social da empresa",
+  "nome_fantasia": "Nome fantasia da empresa",
+  "inscricao_estadual": "123456",
+  "inscricao_municipal": "123456",
+  "bairro": "Bairro",
   "cargo_responsavel": null,
-  "cep": "80210000",
-  "cnpj": "88776429000116",
-  "cpf": null,
-  "codigo_municipio": "4106902",
+  "cep": "12345-678",
+  "cnpj": "12345678000123",
+  "cpf": "",
+  "codigo_municipio": "12345678",
   "codigo_pais": "1058",
-  "codigo_uf": "41",
-  "complemento": "Loja 1",
-  "cpf_cnpj_contabilidade": null,
-  "cpf_responsavel": null,
-  "discrimina_impostos": true,
-  "email": "test@example.com",
-  "enviar_email_destinatario": true,
+  "codigo_uf": "26",
+  "complemento": "",
+  "cpf_cnpj_contabilidade": "",
+  "cpf_responsavel": "",
+  "discrimina_impostos": false,
+  "email": "",
+  "enviar_email_destinatario": false,
+  "enviar_email_homologacao": false,
   "habilita_nfce": false,
-  "habilita_nfe": true,
+  "habilita_nfe": false,
   "habilita_nfse": false,
-  "logradouro": "Rua João da Silva",
-  "municipio": "Curitiba",
-  "nome_responsavel": null,
-  "numero": "153",
-  "pais": "Brasil",
-  "regime_tributario": "1",
-  "telefone": "4130333333",
-  "uf": "PR",
+  "habilita_nfsen_producao": false,
+  "habilita_nfsen_homologacao": false,
+  "habilita_cte": false,
+  "habilita_mdfe": false,
+  "habilita_manifestacao": false,
+  "habilita_manifestacao_homologacao": false,
+  "habilita_manifestacao_cte": false,
+  "habilita_manifestacao_cte_homologacao": false,
+  "logradouro": "Logradouro",
+  "municipio": "Municipio",
+  "nome_responsavel": "",
+  "numero": "1234",
+  "pais": "Pais",
+  "regime_tributario": "3",
+  "telefone": "",
+  "uf": "UF",
+  "habilita_contingencia_offline_nfce": false,
+  "habilita_contingencia_epec_nfce": false,
+  "reaproveita_numero_nfce_contingencia": false,
+  "mostrar_danfse_badge": true,
   "csc_nfce_producao": null,
   "id_token_nfce_producao": null,
   "csc_nfce_homologacao": null,
   "id_token_nfce_homologacao": null,
-  "proximo_numero_nfe_producao": 1,
-  "proximo_numero_nfe_homologacao": 1,
-  "serie_nfe_producao": "1",
-  "serie_nfe_homologacao": "1",
+  "proximo_numero_nfe_producao": null,
+  "proximo_numero_nfe_homologacao": null,
+  "serie_nfe_producao": null,
+  "serie_nfe_homologacao": null,
   "proximo_numero_nfse_producao": null,
   "proximo_numero_nfse_homologacao": null,
+  "proximo_numero_nfsen_producao": null,
+  "proximo_numero_nfsen_homologacao": null,
   "serie_nfse_producao": null,
   "serie_nfse_homologacao": null,
+  "serie_nfsen_producao": null,
+  "serie_nfsen_homologacao": null,
   "proximo_numero_nfce_producao": null,
   "proximo_numero_nfce_homologacao": null,
   "serie_nfce_producao": null,
   "serie_nfce_homologacao": null,
-  "certificado_valido_ate": null,
-  "certificado_valido_de": null,
-  "certificado_cnpj": null,
+  "proximo_numero_cte_producao": null,
+  "proximo_numero_cte_homologacao": null,
+  "serie_cte_producao": null,
+  "serie_cte_homologacao": null,
+  "proximo_numero_cte_os_producao": null,
+  "proximo_numero_cte_os_homologacao": null,
+  "serie_cte_os_producao": null,
+  "serie_cte_os_homologacao": null,
+  "proximo_numero_mdfe_producao": null,
+  "proximo_numero_mdfe_homologacao": null,
+  "serie_mdfe_producao": null,
+  "serie_mdfe_homologacao": null,
+  "certificado_valido_ate": "2025-04-01T15:03:25-03:00",
+  "certificado_valido_de": "2024-04-01T15:03:25-03:00",
+  "certificado_cnpj": "12345678000123",
+  "certificado_especifico": false,
   "data_ultima_emissao": null,
-  "caminho_logo": null
+  "caminho_logo": null,
+  "login_responsavel": "",
+  "senha_responsavel_preenchida": false,
+  "orientacao_danfe": "portrait",
+  "recibo_danfe": true,
+  "exibe_sempre_ipi_danfe": false,
+  "exibe_issqn_danfe": false,
+  "exibe_impostos_adicionais_danfe": false,
+  "exibe_fatura_danfe": false,
+  "exibe_unidade_tributaria_danfe": false,
+  "exibe_desconto_itens": false,
+  "exibe_sempre_volumes_danfe": false,
+  "exibe_composicao_carga_mdfe": false,
+  "data_inicio_recebimento_nfe": null,
+  "data_inicio_recebimento_cte": null,
+  "habilita_csrt_nfe": true,
+  "nfe_sincrono": false,
+  "nfe_sincrono_homologacao": false,
+  "mdfe_sincrono": false,
+  "mdfe_sincrono_homologacao": false,
+  "smtp_endereco": null,
+  "smtp_dominio": null,
+  "smtp_autenticacao": null,
+  "smtp_porta": null,
+  "smtp_login": null,
+  "smtp_remetente": null,
+  "smtp_responder_para": null,
+  "smtp_modo_verificacao_openssl": null,
+  "smtp_habilita_starttlls": true,
+  "smtp_ssl": false,
+  "smtp_tls": false,
+  "token_producao": "",
+  "token_homologacao": ""
 }
 ```
 
-> **erro_validacao** (certificado inválido)
+> **Erro de validação (certificado inválido)**
+>
+> Código HTTP: `422 Unprocessable Content`
 
 ```json
 {
@@ -255,7 +323,9 @@ Uma empresa pode ser criada usando o seguinte endereço
 }
 ```
 
-> **erro_validacao** (senha do certificado inválida)
+> **Erro de validação (senha do certificado inválida)**
+>
+> Código HTTP: `422 Unprocessable Content`
 
 ```json
 {
@@ -271,7 +341,9 @@ Uma empresa pode ser criada usando o seguinte endereço
 }
 ```
 
-> **erro_validacao** (certificado de outra empresa)
+> **Erro de validação (certificado de outra empresa)**
+>
+> Código HTTP: `422 Unprocessable Content`
 
 ```json
 {
@@ -287,7 +359,9 @@ Uma empresa pode ser criada usando o seguinte endereço
 }
 ```
 
-> **erro_validacao** (certificado vencido)
+> **Erro de validação (certificado vencido)**
+>
+> Código HTTP: `422 Unprocessable Content`
 
 ```json
 {
@@ -303,13 +377,14 @@ Uma empresa pode ser criada usando o seguinte endereço
 }
 ```
 
-`https://api.focusnfe.com.br/v2/empresas`
+**Método HTTP:** `POST`
+**URL:** `https://api.focusnfe.com.br/v2/empresas`
 
 Caso queira apenas testar a criação de uma empresa, utilize o endereço abaixo:
 
-`https://api.focusnfe.com.br/v2/empresas?dry_run=1`
+**Método HTTP:** `POST`
+**URL:** `https://api.focusnfe.com.br/v2/empresas?dry_run=1`
 
-Utilize o comando **HTTP POST**.
 O conteúdo do POST deverá conter os dados da empresa. O resultado será os dados da empresa criados ou uma mensagem de erro de validação. É importante salvar o campo id gerado para posterior consulta ou alteração da empresa. Considere o campo "id" como sendo alfanumérico, pois no futuro o formato deverá ser alterado para permitir letras e números na identificação.
 
 ## Consulta de empresas
