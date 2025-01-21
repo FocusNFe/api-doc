@@ -1091,7 +1091,7 @@ Filtra as empresas de acordo com os campos informados por parâmetro. O retorno 
  cnpj  | Texto  | não         | Número do CNPJ da empresa (somente números)
  cpf   | Texto  | não         | Número do CPF da empresa (somente números)
 
-## Paginação
+### Paginação
 
 Ao fazer uma pesquisa, a API irá devolver o cabeçalho HTTP *X-Total-Count* que representa
 o número total de ocorrências da pesquisa, porém a API devolve apenas 50 registros por vez.
