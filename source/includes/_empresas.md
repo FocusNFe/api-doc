@@ -790,7 +790,10 @@ Uma empresa pode ser cancelada usando o seguinte endereço
 
 **URL:** `https://api.focusnfe.com.br/v2/empresas/ID`
 
-Onde ID é o id da empresa fornecido no momento da criação. O resultado será todos os dados da empresa excluída. Após esta operação você não terá mais acesso aos dados da empresa ou aos documentos emitidos. Esta operação não é reversível, mas você poderá cadastrar a empresa novamente no futuro se for necessário.
+Onde ID é o id da empresa fornecido no momento da criação.
+O resultado será todos os dados da empresa excluída.
+Após esta operação você não terá mais acesso aos dados da empresa ou aos documentos emitidos.
+Esta operação não é reversível, mas você poderá cadastrar a empresa novamente no futuro se for necessário.
 
 ## Consulta de empresa
 
