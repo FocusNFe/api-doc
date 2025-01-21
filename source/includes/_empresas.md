@@ -378,11 +378,13 @@ Uma empresa pode ser criada usando o seguinte endereço
 ```
 
 **Método HTTP:** `POST`
+
 **URL:** `https://api.focusnfe.com.br/v2/empresas`
 
 Caso queira apenas testar a criação de uma empresa, utilize o endereço abaixo:
 
 **Método HTTP:** `POST`
+
 **URL:** `https://api.focusnfe.com.br/v2/empresas?dry_run=1`
 
 O conteúdo do POST deverá conter os dados da empresa. O resultado será os dados da empresa criados ou uma mensagem de erro de validação. É importante salvar o campo id gerado para posterior consulta ou alteração da empresa. Considere o campo "id" como sendo alfanumérico, pois no futuro o formato deverá ser alterado para permitir letras e números na identificação.
@@ -594,14 +596,16 @@ curl -X PUT -u "token obtido no cadastro da empresa:" \
 Uma empresa pode ser alterada usando o seguinte endereço.
 
 **Método HTTP:** `PUT`
+
 **URL:** `https://api.focusnfe.com.br/v2/empresas/ID`
 
 Caso queira apenas testar a criação de uma empresa, utilize o endereço abaixo:
 
 **Método HTTP:** `PUT`
+
 **URL:** `https://api.focusnfe.com.br/v2/empresas/ID?dry_run=1`
 
-Onde ID é o id da empresa fornecido no momento da criação Utilize o comando **HTTP PUT** para alterar a empresa. O conteúdo do PUT deverá conter os dados da empresa que serão alterados. Os demais dados permanecerão inalterados. O resultado será todos os dados da empresa criados ou uma mensagem de erro de validação. Os dados devem seguir o mesmo formato para criação da empresa.
+Onde ID é o id da empresa fornecido no momento da criação. O conteúdo do PUT deverá conter os dados da empresa que serão alterados. Os demais dados permanecerão inalterados. O resultado será todos os dados da empresa criados ou uma mensagem de erro de validação. Os dados devem seguir o mesmo formato para criação da empresa.
 
 Atributos que não serão modificados podem ser omitidos.
 
@@ -776,15 +780,12 @@ curl -X DELETE -u "token obtido no cadastro da empresa:" \
 Uma empresa pode ser cancelada usando o seguinte endereço
 
 **Método HTTP:** `DELETE`
+
 **URL:** `https://api.focusnfe.com.br/v2/empresas/ID`
 
 Onde ID é o id da empresa fornecido no momento da criação. O resultado será todos os dados da empresa excluída. Após esta operação você não terá mais acesso aos dados da empresa ou aos documentos emitidos. Esta operação não é reversível, mas você poderá cadastrar a empresa novamente no futuro se for necessário.
 
-## Consulta de empresas
-
-A API permite a busca de uma única empresa usando respectivo ID, ou a filtragem de empresas por diversos campos.
-
-### Pesquisar Empresa por ID
+## Consulta de empresa
 
 ```shell
 curl -u "token obtido no cadastro da empresa:" \
@@ -929,17 +930,12 @@ curl -u "token obtido no cadastro da empresa:" \
 Retorna todos os dados da empresa. Além dos campos utilizados para criação da empresa, a consulta retornará também os campos `token_producao` e `token_homologacao` que são gerados pela API para interações nos ambientes de produção e homologação.
 
 **Método HTTP:** `GET`
+
 **URL:** `https://api.focusnfe.com.br/v2/empresas/ID`
 
-**Parâmetros de Requisição**:
+O ID é o identificador único da empresa fornecido no momento da criação.
 
- Campo | Tipo   | Obrigatório | Descrição
--------|--------|-------------|-----------------------------
- id    | Texto  | Sim         | Identificador único da empresa*
-
-* O ID é o identificador único da empresa fornecido no momento da criação.
-
-### Filtrar Empresas
+## Listagem Empresas
 
 ```shell
 curl -u "token obtido no cadastro da empresa:" \
@@ -1075,9 +1071,10 @@ curl -u "token obtido no cadastro da empresa:" \
 Filtra as empresas de acordo com os campos informados por parâmetro. O retorno esperado será o mesmo da pesquisa de empresa por ID.
 
 **Método HTTP:** `GET`
+
 **URL:** `https://api.focusnfe.com.br/v2/empresas`
 
-**Parâmetros de Requisição**:
+### Parâmetros de Requisição
 
  Campo | Tipo   | Obrigatório | Descrição
 -------|--------|-------------|-----------------------------
