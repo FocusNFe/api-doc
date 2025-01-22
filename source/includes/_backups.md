@@ -1,4 +1,4 @@
-# Backups (NFe, NFCe, CTe e MDFe)
+# Backups (NFe, NFCe, CTe e MDFe) 
 
 Atualmente, realizamos o backup de todos os arquivos XML’s das notas fiscais emitidas pela nossa API. Vale lembrar que o XML é um arquivo com validade legal e deve ser armazenado pelos emitentes, para fins fiscais, por no mínimo 5 anos após a emissão.
 
