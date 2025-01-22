@@ -130,6 +130,8 @@ Abaixo são listados todos os campos de uma empresa.
 | proximo_numero_mdfe_homologacao                    | numérico         |            | N/A         | N/A         | Próximo número da MDFe a ser emitida em homologação. Calculado automaticamente.
 | serie_mdfe_producao                                | numérico         |            | N/A         | N/A         | Série da MDFe a ser emitida em produção. Valor padrão: 1
 | serie_mdfe_homologacao                             | numérico         |            | N/A         | N/A         | Série da MDFe a ser emitida em homologação. Valor padrão: 1
+| nfe_sincrono                                       | booleano         |            | N/A         | N/A         | Informa se a NFe será emitida de forma síncrona ou assíncrona. Se verdadeiro, a NFe será emitida de forma síncrona. Se falso, a NFe será emitida de forma assíncrona. Por padrão, será emitida de forma assíncrona.
+| nfe_sincrono_homologacao                           | booleano         |            | N/A         | N/A         | Informa se a NFe será emitida de forma síncrona ou assíncrona em homologação. Se verdadeiro, a NFe será emitida de forma síncrona. Se falso, a NFe será emitida de forma assíncrona. Por padrão, será emitida de forma assíncrona.
 | mdfe_sincrono                                      | booleano         |            | N/A         | N/A         | Informa se a MDFe será emitida de forma síncrona ou assíncrona. Se verdadeiro, a MDFe será emitida de forma síncrona. Se falso, a MDFe será emitida de forma assíncrona. Por padrão, será emitida de forma assíncrona.
 | mdfe_sincrono_homologacao                          | booleano         |            | N/A         | N/A         | Informa se a MDFe será emitida de forma síncrona ou assíncrona em homologação. Se verdadeiro, a MDFe será emitida de forma síncrona. Se falso, a MDFe será emitida de forma assíncrona. Por padrão, será emitida de forma assíncrona.
 | arquivo_certificado_base64                         | texto em base 64 | Sim        | Sim         | Sim _*_     | Arquivo do certificado digital, em formato PFX ou P12, codificado em base64. _* Nem todas as prefeituras necessitam de certificado para emissão de NFSe_
@@ -180,66 +182,132 @@ curl -u "token obtido no cadastro da empresa:" \
 Uma empresa pode ser criada usando o seguinte endereço
 
 > Exemplos de respostas da API por **status** para a requisição de envio:
-
-> **sucesso**
+>
+> **Sucesso**
+>
+> Código HTTP: `200 OK`
 
 ```json
 {
-  "id": 17625,
-  "nome": "Nome da empresa Ltda",
-  "nome_fantasia": "Nome Fantasia",
-  "inscricao_estadual": "1234",
-  "inscricao_municipal": "46532",
-  "bairro": "Vila Isabel",
+  "id": 123,
+  "nome": "Razão social da empresa",
+  "nome_fantasia": "Nome fantasia da empresa",
+  "inscricao_estadual": "123456",
+  "inscricao_municipal": "123456",
+  "bairro": "Bairro",
   "cargo_responsavel": null,
-  "cep": "80210000",
-  "cnpj": "88776429000116",
-  "cpf": null,
-  "codigo_municipio": "4106902",
+  "cep": "12345-678",
+  "cnpj": "12345678000123",
+  "cpf": "",
+  "codigo_municipio": "12345678",
   "codigo_pais": "1058",
-  "codigo_uf": "41",
-  "complemento": "Loja 1",
-  "cpf_cnpj_contabilidade": null,
-  "cpf_responsavel": null,
-  "discrimina_impostos": true,
-  "email": "test@example.com",
-  "enviar_email_destinatario": true,
+  "codigo_uf": "26",
+  "complemento": "",
+  "cpf_cnpj_contabilidade": "",
+  "cpf_responsavel": "",
+  "discrimina_impostos": false,
+  "email": "",
+  "enviar_email_destinatario": false,
+  "enviar_email_homologacao": false,
   "habilita_nfce": false,
-  "habilita_nfe": true,
+  "habilita_nfe": false,
   "habilita_nfse": false,
-  "logradouro": "Rua João da Silva",
-  "municipio": "Curitiba",
-  "nome_responsavel": null,
-  "numero": "153",
-  "pais": "Brasil",
-  "regime_tributario": "1",
-  "telefone": "4130333333",
-  "uf": "PR",
+  "habilita_nfsen_producao": false,
+  "habilita_nfsen_homologacao": false,
+  "habilita_cte": false,
+  "habilita_mdfe": false,
+  "habilita_manifestacao": false,
+  "habilita_manifestacao_homologacao": false,
+  "habilita_manifestacao_cte": false,
+  "habilita_manifestacao_cte_homologacao": false,
+  "logradouro": "Logradouro",
+  "municipio": "Municipio",
+  "nome_responsavel": "",
+  "numero": "1234",
+  "pais": "Pais",
+  "regime_tributario": "3",
+  "telefone": "",
+  "uf": "UF",
+  "habilita_contingencia_offline_nfce": false,
+  "habilita_contingencia_epec_nfce": false,
+  "reaproveita_numero_nfce_contingencia": false,
+  "mostrar_danfse_badge": true,
   "csc_nfce_producao": null,
   "id_token_nfce_producao": null,
   "csc_nfce_homologacao": null,
   "id_token_nfce_homologacao": null,
-  "proximo_numero_nfe_producao": 1,
-  "proximo_numero_nfe_homologacao": 1,
-  "serie_nfe_producao": "1",
-  "serie_nfe_homologacao": "1",
+  "proximo_numero_nfe_producao": null,
+  "proximo_numero_nfe_homologacao": null,
+  "serie_nfe_producao": null,
+  "serie_nfe_homologacao": null,
   "proximo_numero_nfse_producao": null,
   "proximo_numero_nfse_homologacao": null,
+  "proximo_numero_nfsen_producao": null,
+  "proximo_numero_nfsen_homologacao": null,
   "serie_nfse_producao": null,
   "serie_nfse_homologacao": null,
+  "serie_nfsen_producao": null,
+  "serie_nfsen_homologacao": null,
   "proximo_numero_nfce_producao": null,
   "proximo_numero_nfce_homologacao": null,
   "serie_nfce_producao": null,
   "serie_nfce_homologacao": null,
-  "certificado_valido_ate": null,
-  "certificado_valido_de": null,
-  "certificado_cnpj": null,
+  "proximo_numero_cte_producao": null,
+  "proximo_numero_cte_homologacao": null,
+  "serie_cte_producao": null,
+  "serie_cte_homologacao": null,
+  "proximo_numero_cte_os_producao": null,
+  "proximo_numero_cte_os_homologacao": null,
+  "serie_cte_os_producao": null,
+  "serie_cte_os_homologacao": null,
+  "proximo_numero_mdfe_producao": null,
+  "proximo_numero_mdfe_homologacao": null,
+  "serie_mdfe_producao": null,
+  "serie_mdfe_homologacao": null,
+  "certificado_valido_ate": "2025-04-01T15:03:25-03:00",
+  "certificado_valido_de": "2024-04-01T15:03:25-03:00",
+  "certificado_cnpj": "12345678000123",
+  "certificado_especifico": false,
   "data_ultima_emissao": null,
-  "caminho_logo": null
+  "caminho_logo": null,
+  "login_responsavel": "",
+  "senha_responsavel_preenchida": false,
+  "orientacao_danfe": "portrait",
+  "recibo_danfe": true,
+  "exibe_sempre_ipi_danfe": false,
+  "exibe_issqn_danfe": false,
+  "exibe_impostos_adicionais_danfe": false,
+  "exibe_fatura_danfe": false,
+  "exibe_unidade_tributaria_danfe": false,
+  "exibe_desconto_itens": false,
+  "exibe_sempre_volumes_danfe": false,
+  "exibe_composicao_carga_mdfe": false,
+  "data_inicio_recebimento_nfe": null,
+  "data_inicio_recebimento_cte": null,
+  "habilita_csrt_nfe": true,
+  "nfe_sincrono": false,
+  "nfe_sincrono_homologacao": false,
+  "mdfe_sincrono": false,
+  "mdfe_sincrono_homologacao": false,
+  "smtp_endereco": null,
+  "smtp_dominio": null,
+  "smtp_autenticacao": null,
+  "smtp_porta": null,
+  "smtp_login": null,
+  "smtp_remetente": null,
+  "smtp_responder_para": null,
+  "smtp_modo_verificacao_openssl": null,
+  "smtp_habilita_starttlls": true,
+  "smtp_ssl": false,
+  "smtp_tls": false,
+  "token_producao": "",
+  "token_homologacao": ""
 }
 ```
 
-> **erro_validacao** (certificado inválido)
+> **Erro de validação (certificado inválido)**
+>
+> Código HTTP: `422 Unprocessable Content`
 
 ```json
 {
@@ -255,7 +323,9 @@ Uma empresa pode ser criada usando o seguinte endereço
 }
 ```
 
-> **erro_validacao** (senha do certificado inválida)
+> **Erro de validação (senha do certificado inválida)**
+>
+> Código HTTP: `422 Unprocessable Content`
 
 ```json
 {
@@ -271,7 +341,9 @@ Uma empresa pode ser criada usando o seguinte endereço
 }
 ```
 
-> **erro_validacao** (certificado de outra empresa)
+> **Erro de validação (certificado de outra empresa)**
+>
+> Código HTTP: `422 Unprocessable Content`
 
 ```json
 {
@@ -287,7 +359,9 @@ Uma empresa pode ser criada usando o seguinte endereço
 }
 ```
 
-> **erro_validacao** (certificado vencido)
+> **Erro de validação (certificado vencido)**
+>
+> Código HTTP: `422 Unprocessable Content`
 
 ```json
 {
@@ -303,100 +377,20 @@ Uma empresa pode ser criada usando o seguinte endereço
 }
 ```
 
-`https://api.focusnfe.com.br/v2/empresas`
+**Método HTTP:** `POST`
+
+**URL:** `https://api.focusnfe.com.br/v2/empresas`
 
 Caso queira apenas testar a criação de uma empresa, utilize o endereço abaixo:
 
-`https://api.focusnfe.com.br/v2/empresas?dry_run=1`
+**Método HTTP:** `POST`
 
-Utilize o comando **HTTP POST**.
-O conteúdo do POST deverá conter os dados da empresa. O resultado será os dados da empresa criados ou uma mensagem de erro de validação. É importante salvar o campo id gerado para posterior consulta ou alteração da empresa. Considere o campo "id" como sendo alfanumérico, pois no futuro o formato deverá ser alterado para permitir letras e números na identificação.
+**URL:** `https://api.focusnfe.com.br/v2/empresas?dry_run=1`
 
-
-## Consulta de empresas
-
-```shell
-curl -u "token obtido no cadastro da empresa:" \
-  https://api.focusnfe.com.br/v2/empresas/123
-```
-
-> Exemplos de respostas da API por **status** para a requisição de envio:
-
-> **sucesso**
-
-```json
-{
-  "id": 17625,
-  "nome": "Nome da empresa Ltda",
-  "nome_fantasia": "Nome Fantasia",
-  "inscricao_estadual": 1234,
-  "inscricao_municipal": 46532,
-  "bairro": "Vila Isabel",
-  "cargo_responsavel": null,
-  "cep": 80210000,
-  "cnpj": "88776429000116",
-  "cpf": null,
-  "codigo_municipio": "4106902",
-  "codigo_pais": "1058",
-  "codigo_uf": "41",
-  "complemento": "Loja 1",
-  "cpf_cnpj_contabilidade": null,
-  "cpf_responsavel": null,
-  "discrimina_impostos": true,
-  "email": "test@example.com",
-  "enviar_email_destinatario": true,
-  "habilita_nfce": false,
-  "habilita_nfe": true,
-  "habilita_nfse": false,
-  "logradouro": "Rua João da Silva",
-  "municipio": "Curitiba",
-  "nome_responsavel": null,
-  "numero": 153,
-  "pais": "Brasil",
-  "regime_tributario": 1,
-  "telefone": "4130333333",
-  "uf": "PR",
-  "csc_nfce_producao": null,
-  "id_token_nfce_producao": null,
-  "csc_nfce_homologacao": null,
-  "id_token_nfce_homologacao": null,
-  "proximo_numero_nfe_producao": 1,
-  "proximo_numero_nfe_homologacao": 1,
-  "serie_nfe_producao": "1",
-  "serie_nfe_homologacao": "1",
-  "proximo_numero_nfse_producao": null,
-  "proximo_numero_nfse_homologacao": null,
-  "serie_nfse_producao": null,
-  "serie_nfse_homologacao": null,
-  "proximo_numero_nfce_producao": null,
-  "proximo_numero_nfce_homologacao": null,
-  "serie_nfce_producao": null,
-  "serie_nfce_homologacao": null,
-  "certificado_valido_ate": null,
-  "certificado_valido_de": null,
-  "certificado_cnpj": null,
-  "data_ultima_emissao": null,
-  "caminho_logo": null,
-  "token_producao": null,
-  "token_homologacao": null
-}
-```
-
-> **nao_encontrado**
-
-```
-{
-  "codigo": "nao_encontrado",
-  "mensagem": "Empresa não encontrada"
-}
-```
-
-Uma empresa pode ser visualizada usando o seguinte endereço
-
-`https://api.focusnfe.com.br/v2/empresas/ID`
-
-Onde ID é o id da empresa fornecido no momento da criação. Utilize o comando **HTTP GET**. O resultado será todos os dados da empresa.
-Além dos campos utilizados para criação da empresa, a consulta retornará também os campos `token_producao` e `token_homologacao` que são gerados pela API para interações nos ambientes de produção e homologação.
+O conteúdo do POST deverá conter os dados da empresa.
+O resultado será os dados da empresa criados ou uma mensagem de erro de validação.
+É importante salvar o campo id gerado para posterior consulta ou alteração da empresa.
+Considere o campo "id" como sendo alfanumérico, pois no futuro o formato deverá ser alterado para permitir letras e números na identificação.
 
 ## Alteração de empresa
 
@@ -407,66 +401,132 @@ curl -X PUT -u "token obtido no cadastro da empresa:" \
 ```
 
 > Exemplos de respostas da API por **status** para a requisição de envio:
-
-> **sucesso**
+>
+> **Sucesso**
+>
+> Código HTTP: `200 OK`
 
 ```json
 {
-  "id": 17625,
-  "nome": "Nome da empresa Ltda",
-  "nome_fantasia": "Nome Fantasia",
-  "inscricao_estadual": 1234,
-  "inscricao_municipal": 46532,
-  "bairro": "Vila Isabel",
+  "id": 123,
+  "nome": "Razão social da empresa",
+  "nome_fantasia": "Nome fantasia da empresa",
+  "inscricao_estadual": "123456",
+  "inscricao_municipal": "123456",
+  "bairro": "Bairro",
   "cargo_responsavel": null,
-  "cep": 80210000,
-  "cnpj": "88776429000116",
-  "cpf": null,
-  "codigo_municipio": "4106902",
+  "cep": "12345-678",
+  "cnpj": "12345678000123",
+  "cpf": "",
+  "codigo_municipio": "12345678",
   "codigo_pais": "1058",
-  "codigo_uf": "41",
-  "complemento": "Loja 1",
-  "cpf_cnpj_contabilidade": null,
-  "cpf_responsavel": null,
-  "discrimina_impostos": true,
-  "email": "test@example.com",
-  "enviar_email_destinatario": true,
+  "codigo_uf": "26",
+  "complemento": "",
+  "cpf_cnpj_contabilidade": "",
+  "cpf_responsavel": "",
+  "discrimina_impostos": false,
+  "email": "",
+  "enviar_email_destinatario": false,
+  "enviar_email_homologacao": false,
   "habilita_nfce": false,
-  "habilita_nfe": true,
+  "habilita_nfe": false,
   "habilita_nfse": false,
-  "logradouro": "Rua João da Silva",
-  "municipio": "Curitiba",
-  "nome_responsavel": null,
-  "numero": 153,
-  "pais": "Brasil",
-  "regime_tributario": 1,
-  "telefone": "4130333333",
-  "uf": "PR",
+  "habilita_nfsen_producao": false,
+  "habilita_nfsen_homologacao": false,
+  "habilita_cte": false,
+  "habilita_mdfe": false,
+  "habilita_manifestacao": false,
+  "habilita_manifestacao_homologacao": false,
+  "habilita_manifestacao_cte": false,
+  "habilita_manifestacao_cte_homologacao": false,
+  "logradouro": "Logradouro",
+  "municipio": "Municipio",
+  "nome_responsavel": "",
+  "numero": "1234",
+  "pais": "Pais",
+  "regime_tributario": "3",
+  "telefone": "",
+  "uf": "UF",
+  "habilita_contingencia_offline_nfce": false,
+  "habilita_contingencia_epec_nfce": false,
+  "reaproveita_numero_nfce_contingencia": false,
+  "mostrar_danfse_badge": true,
   "csc_nfce_producao": null,
   "id_token_nfce_producao": null,
   "csc_nfce_homologacao": null,
   "id_token_nfce_homologacao": null,
-  "proximo_numero_nfe_producao": 1,
-  "proximo_numero_nfe_homologacao": 1,
-  "serie_nfe_producao": "1",
-  "serie_nfe_homologacao": "1",
+  "proximo_numero_nfe_producao": null,
+  "proximo_numero_nfe_homologacao": null,
+  "serie_nfe_producao": null,
+  "serie_nfe_homologacao": null,
   "proximo_numero_nfse_producao": null,
   "proximo_numero_nfse_homologacao": null,
+  "proximo_numero_nfsen_producao": null,
+  "proximo_numero_nfsen_homologacao": null,
   "serie_nfse_producao": null,
   "serie_nfse_homologacao": null,
+  "serie_nfsen_producao": null,
+  "serie_nfsen_homologacao": null,
   "proximo_numero_nfce_producao": null,
   "proximo_numero_nfce_homologacao": null,
   "serie_nfce_producao": null,
   "serie_nfce_homologacao": null,
-  "certificado_valido_ate": null,
-  "certificado_valido_de": null,
-  "certificado_cnpj": null,
+  "proximo_numero_cte_producao": null,
+  "proximo_numero_cte_homologacao": null,
+  "serie_cte_producao": null,
+  "serie_cte_homologacao": null,
+  "proximo_numero_cte_os_producao": null,
+  "proximo_numero_cte_os_homologacao": null,
+  "serie_cte_os_producao": null,
+  "serie_cte_os_homologacao": null,
+  "proximo_numero_mdfe_producao": null,
+  "proximo_numero_mdfe_homologacao": null,
+  "serie_mdfe_producao": null,
+  "serie_mdfe_homologacao": null,
+  "certificado_valido_ate": "2025-04-01T15:03:25-03:00",
+  "certificado_valido_de": "2024-04-01T15:03:25-03:00",
+  "certificado_cnpj": "12345678000123",
+  "certificado_especifico": false,
   "data_ultima_emissao": null,
-  "caminho_logo": null
+  "caminho_logo": null,
+  "login_responsavel": "",
+  "senha_responsavel_preenchida": false,
+  "orientacao_danfe": "portrait",
+  "recibo_danfe": true,
+  "exibe_sempre_ipi_danfe": false,
+  "exibe_issqn_danfe": false,
+  "exibe_impostos_adicionais_danfe": false,
+  "exibe_fatura_danfe": false,
+  "exibe_unidade_tributaria_danfe": false,
+  "exibe_desconto_itens": false,
+  "exibe_sempre_volumes_danfe": false,
+  "exibe_composicao_carga_mdfe": false,
+  "data_inicio_recebimento_nfe": null,
+  "data_inicio_recebimento_cte": null,
+  "habilita_csrt_nfe": true,
+  "nfe_sincrono": false,
+  "nfe_sincrono_homologacao": false,
+  "mdfe_sincrono": false,
+  "mdfe_sincrono_homologacao": false,
+  "smtp_endereco": null,
+  "smtp_dominio": null,
+  "smtp_autenticacao": null,
+  "smtp_porta": null,
+  "smtp_login": null,
+  "smtp_remetente": null,
+  "smtp_responder_para": null,
+  "smtp_modo_verificacao_openssl": null,
+  "smtp_habilita_starttlls": true,
+  "smtp_ssl": false,
+  "smtp_tls": false,
+  "token_producao": "",
+  "token_homologacao": ""
 }
 ```
 
-> **erro_validacao** (certificado inválido)
+> **Erro de validação (certificado inválido)**
+>
+> Código HTTP: `422 Unprocessable Content`
 
 ```json
 {
@@ -482,7 +542,9 @@ curl -X PUT -u "token obtido no cadastro da empresa:" \
 }
 ```
 
-> **erro_validacao** (senha do certificado inválida)
+> **Erro de validação (senha do certificado inválida)**
+>
+> Código HTTP: `422 Unprocessable Content`
 
 ```json
 {
@@ -498,7 +560,9 @@ curl -X PUT -u "token obtido no cadastro da empresa:" \
 }
 ```
 
-> **erro_validacao** (certificado de outra empresa)
+> **Erro de validação (certificado de outra empresa)**
+>
+> Código HTTP: `422 Unprocessable Content`
 
 ```json
 {
@@ -514,7 +578,9 @@ curl -X PUT -u "token obtido no cadastro da empresa:" \
 }
 ```
 
-> **erro_validacao** (certificado vencido)
+> **Erro de validação (certificado vencido)**
+>
+> Código HTTP: `422 Unprocessable Content`
 
 ```json
 {
@@ -532,13 +598,21 @@ curl -X PUT -u "token obtido no cadastro da empresa:" \
 
 Uma empresa pode ser alterada usando o seguinte endereço.
 
-`https://api.focusnfe.com.br/v2/empresas/ID`
+**Método HTTP:** `PUT`
 
-Caso queira apenas testar a alteração de uma empresa, utilize o endereço abaixo:
+**URL:** `https://api.focusnfe.com.br/v2/empresas/ID`
 
-`https://api.focusnfe.com.br/v2/empresas?dry_run=1`
+Caso queira apenas testar a criação de uma empresa, utilize o endereço abaixo:
 
-Onde ID é o id da empresa fornecido no momento da criação Utilize o comando **HTTP PUT** para alterar a empresa. O conteúdo do PUT deverá conter os dados da empresa que serão alterados. Os demais dados permanecerão inalterados. O resultado será todos os dados da empresa criados ou uma mensagem de erro de validação. Os dados devem seguir o mesmo formato para criação da empresa.
+**Método HTTP:** `PUT`
+
+**URL:** `https://api.focusnfe.com.br/v2/empresas/ID?dry_run=1`
+
+Onde ID é o id da empresa fornecido no momento da criação.
+O conteúdo do PUT deverá conter os dados da empresa que serão alterados.
+Os demais dados permanecerão inalterados.
+O resultado será todos os dados da empresa criados ou uma mensagem de erro de validação.
+Os dados devem seguir o mesmo formato para criação da empresa.
 
 Atributos que não serão modificados podem ser omitidos.
 
@@ -550,66 +624,132 @@ curl -X DELETE -u "token obtido no cadastro da empresa:" \
 ```
 
 > Exemplos de respostas da API por **status** para a requisição de envio:
-
-> **sucesso**
+>
+> **Sucesso**
+>
+> Código HTTP: `200 OK`
 
 ```json
 {
-  "id": 17625,
-  "nome": "Nome da empresa Ltda",
-  "nome_fantasia": "Nome Fantasia",
-  "inscricao_estadual": 1234,
-  "inscricao_municipal": 46532,
-  "bairro": "Vila Isabel",
+  "id": 123,
+  "nome": "Razão social da empresa",
+  "nome_fantasia": "Nome fantasia da empresa",
+  "inscricao_estadual": "123456",
+  "inscricao_municipal": "123456",
+  "bairro": "Bairro",
   "cargo_responsavel": null,
-  "cep": 80210000,
-  "cnpj": "88776429000116",
-  "cpf": null,
-  "codigo_municipio": "4106902",
+  "cep": "12345-678",
+  "cnpj": "12345678000123",
+  "cpf": "",
+  "codigo_municipio": "12345678",
   "codigo_pais": "1058",
-  "codigo_uf": "41",
-  "complemento": "Loja 1",
-  "cpf_cnpj_contabilidade": null,
-  "cpf_responsavel": null,
-  "discrimina_impostos": true,
-  "email": "test@example.com",
-  "enviar_email_destinatario": true,
+  "codigo_uf": "26",
+  "complemento": "",
+  "cpf_cnpj_contabilidade": "",
+  "cpf_responsavel": "",
+  "discrimina_impostos": false,
+  "email": "",
+  "enviar_email_destinatario": false,
+  "enviar_email_homologacao": false,
   "habilita_nfce": false,
-  "habilita_nfe": true,
+  "habilita_nfe": false,
   "habilita_nfse": false,
-  "logradouro": "Rua João da Silva",
-  "municipio": "Curitiba",
-  "nome_responsavel": null,
-  "numero": 153,
-  "pais": "Brasil",
-  "regime_tributario": 1,
-  "telefone": "4130333333",
-  "uf": "PR",
+  "habilita_nfsen_producao": false,
+  "habilita_nfsen_homologacao": false,
+  "habilita_cte": false,
+  "habilita_mdfe": false,
+  "habilita_manifestacao": false,
+  "habilita_manifestacao_homologacao": false,
+  "habilita_manifestacao_cte": false,
+  "habilita_manifestacao_cte_homologacao": false,
+  "logradouro": "Logradouro",
+  "municipio": "Municipio",
+  "nome_responsavel": "",
+  "numero": "1234",
+  "pais": "Pais",
+  "regime_tributario": "3",
+  "telefone": "",
+  "uf": "UF",
+  "habilita_contingencia_offline_nfce": false,
+  "habilita_contingencia_epec_nfce": false,
+  "reaproveita_numero_nfce_contingencia": false,
+  "mostrar_danfse_badge": true,
   "csc_nfce_producao": null,
   "id_token_nfce_producao": null,
   "csc_nfce_homologacao": null,
   "id_token_nfce_homologacao": null,
-  "proximo_numero_nfe_producao": 1,
-  "proximo_numero_nfe_homologacao": 1,
-  "serie_nfe_producao": "1",
-  "serie_nfe_homologacao": "1",
+  "proximo_numero_nfe_producao": null,
+  "proximo_numero_nfe_homologacao": null,
+  "serie_nfe_producao": null,
+  "serie_nfe_homologacao": null,
   "proximo_numero_nfse_producao": null,
   "proximo_numero_nfse_homologacao": null,
+  "proximo_numero_nfsen_producao": null,
+  "proximo_numero_nfsen_homologacao": null,
   "serie_nfse_producao": null,
   "serie_nfse_homologacao": null,
+  "serie_nfsen_producao": null,
+  "serie_nfsen_homologacao": null,
   "proximo_numero_nfce_producao": null,
   "proximo_numero_nfce_homologacao": null,
   "serie_nfce_producao": null,
   "serie_nfce_homologacao": null,
-  "certificado_valido_ate": null,
-  "certificado_valido_de": null,
-  "certificado_cnpj": null,
+  "proximo_numero_cte_producao": null,
+  "proximo_numero_cte_homologacao": null,
+  "serie_cte_producao": null,
+  "serie_cte_homologacao": null,
+  "proximo_numero_cte_os_producao": null,
+  "proximo_numero_cte_os_homologacao": null,
+  "serie_cte_os_producao": null,
+  "serie_cte_os_homologacao": null,
+  "proximo_numero_mdfe_producao": null,
+  "proximo_numero_mdfe_homologacao": null,
+  "serie_mdfe_producao": null,
+  "serie_mdfe_homologacao": null,
+  "certificado_valido_ate": "2025-04-01T15:03:25-03:00",
+  "certificado_valido_de": "2024-04-01T15:03:25-03:00",
+  "certificado_cnpj": "12345678000123",
+  "certificado_especifico": false,
   "data_ultima_emissao": null,
-  "caminho_logo": null
+  "caminho_logo": null,
+  "login_responsavel": "",
+  "senha_responsavel_preenchida": false,
+  "orientacao_danfe": "portrait",
+  "recibo_danfe": true,
+  "exibe_sempre_ipi_danfe": false,
+  "exibe_issqn_danfe": false,
+  "exibe_impostos_adicionais_danfe": false,
+  "exibe_fatura_danfe": false,
+  "exibe_unidade_tributaria_danfe": false,
+  "exibe_desconto_itens": false,
+  "exibe_sempre_volumes_danfe": false,
+  "exibe_composicao_carga_mdfe": false,
+  "data_inicio_recebimento_nfe": null,
+  "data_inicio_recebimento_cte": null,
+  "habilita_csrt_nfe": true,
+  "nfe_sincrono": false,
+  "nfe_sincrono_homologacao": false,
+  "mdfe_sincrono": false,
+  "mdfe_sincrono_homologacao": false,
+  "smtp_endereco": null,
+  "smtp_dominio": null,
+  "smtp_autenticacao": null,
+  "smtp_porta": null,
+  "smtp_login": null,
+  "smtp_remetente": null,
+  "smtp_responder_para": null,
+  "smtp_modo_verificacao_openssl": null,
+  "smtp_habilita_starttlls": true,
+  "smtp_ssl": false,
+  "smtp_tls": false,
+  "token_producao": "",
+  "token_homologacao": ""
 }
 ```
 
-> **nao_encontrado**
+> **Empresa não encontrada**
+>
+> Código HTTP: `404 Not Found`
 
 ```json
 {
@@ -618,7 +758,9 @@ curl -X DELETE -u "token obtido no cadastro da empresa:" \
 }
 ```
 
-> **permissao_negada** (empresa não pertencente ao domínio do cliente)
+> **Permissão negada (empresa não pertencente ao domínio do cliente)**
+>
+> Código HTTP: `422 Unprocessable Content`
 
 ```json
 {
@@ -627,7 +769,9 @@ curl -X DELETE -u "token obtido no cadastro da empresa:" \
 }
 ```
 
-> **parametros_invalidos**
+> **Parâmetros inválidos**
+>
+> Código HTTP: `400 Bad Request`
 
 ```json
 {
@@ -640,28 +784,314 @@ curl -X DELETE -u "token obtido no cadastro da empresa:" \
 }
 ```
 
-
 Uma empresa pode ser cancelada usando o seguinte endereço
 
-`https://api.focusnfe.com.br/v2/empresas/ID`
+**Método HTTP:** `DELETE`
 
-Onde ID é o id da empresa fornecido no momento da criação. Utilize o comando **HTTP DELETE**. O resultado será todos os dados da empresa excluída. Após esta operação você não terá mais acesso aos dados da empresa ou aos documentos emitidos. Esta operação não é reversível, mas você poderá cadastrar a empresa novamente no futuro se for necessário.
+**URL:** `https://api.focusnfe.com.br/v2/empresas/ID`
 
-## Listagem de empresas
+Onde ID é o id da empresa fornecido no momento da criação.
+O resultado será todos os dados da empresa excluída.
+Após esta operação você não terá mais acesso aos dados da empresa ou aos documentos emitidos.
+Esta operação não é reversível, mas você poderá cadastrar a empresa novamente no futuro se for necessário.
+
+## Consulta de empresa
 
 ```shell
 curl -u "token obtido no cadastro da empresa:" \
-  https://api.focusnfe.com.br/v2/empresas
+  https://api.focusnfe.com.br/v2/empresas/123
 ```
 
-É possível listar todas as empresas criadas usando o seguinte método HTTP:
+> Exemplos de respostas da API por **status**:
+>
+> **Sucesso**
+>
+> Código HTTP: `200 OK`
 
-`https://api.focusnfe.com.br/v2/empresas`
+```json
+{
+  "id": 123,
+  "nome": "Razão social da empresa",
+  "nome_fantasia": "Nome fantasia da empresa",
+  "inscricao_estadual": "123456",
+  "inscricao_municipal": "123456",
+  "bairro": "Bairro",
+  "cargo_responsavel": null,
+  "cep": "12345-678",
+  "cnpj": "12345678000123",
+  "cpf": "",
+  "codigo_municipio": "12345678",
+  "codigo_pais": "1058",
+  "codigo_uf": "26",
+  "complemento": "",
+  "cpf_cnpj_contabilidade": "",
+  "cpf_responsavel": "",
+  "discrimina_impostos": false,
+  "email": "",
+  "enviar_email_destinatario": false,
+  "enviar_email_homologacao": false,
+  "habilita_nfce": false,
+  "habilita_nfe": false,
+  "habilita_nfse": false,
+  "habilita_nfsen_producao": false,
+  "habilita_nfsen_homologacao": false,
+  "habilita_cte": false,
+  "habilita_mdfe": false,
+  "habilita_manifestacao": false,
+  "habilita_manifestacao_homologacao": false,
+  "habilita_manifestacao_cte": false,
+  "habilita_manifestacao_cte_homologacao": false,
+  "logradouro": "Logradouro",
+  "municipio": "Municipio",
+  "nome_responsavel": "",
+  "numero": "1234",
+  "pais": "Pais",
+  "regime_tributario": "3",
+  "telefone": "",
+  "uf": "UF",
+  "habilita_contingencia_offline_nfce": false,
+  "habilita_contingencia_epec_nfce": false,
+  "reaproveita_numero_nfce_contingencia": false,
+  "mostrar_danfse_badge": true,
+  "csc_nfce_producao": null,
+  "id_token_nfce_producao": null,
+  "csc_nfce_homologacao": null,
+  "id_token_nfce_homologacao": null,
+  "proximo_numero_nfe_producao": null,
+  "proximo_numero_nfe_homologacao": null,
+  "serie_nfe_producao": null,
+  "serie_nfe_homologacao": null,
+  "proximo_numero_nfse_producao": null,
+  "proximo_numero_nfse_homologacao": null,
+  "proximo_numero_nfsen_producao": null,
+  "proximo_numero_nfsen_homologacao": null,
+  "serie_nfse_producao": null,
+  "serie_nfse_homologacao": null,
+  "serie_nfsen_producao": null,
+  "serie_nfsen_homologacao": null,
+  "proximo_numero_nfce_producao": null,
+  "proximo_numero_nfce_homologacao": null,
+  "serie_nfce_producao": null,
+  "serie_nfce_homologacao": null,
+  "proximo_numero_cte_producao": null,
+  "proximo_numero_cte_homologacao": null,
+  "serie_cte_producao": null,
+  "serie_cte_homologacao": null,
+  "proximo_numero_cte_os_producao": null,
+  "proximo_numero_cte_os_homologacao": null,
+  "serie_cte_os_producao": null,
+  "serie_cte_os_homologacao": null,
+  "proximo_numero_mdfe_producao": null,
+  "proximo_numero_mdfe_homologacao": null,
+  "serie_mdfe_producao": null,
+  "serie_mdfe_homologacao": null,
+  "certificado_valido_ate": "2025-04-01T15:03:25-03:00",
+  "certificado_valido_de": "2024-04-01T15:03:25-03:00",
+  "certificado_cnpj": "12345678000123",
+  "certificado_especifico": false,
+  "data_ultima_emissao": null,
+  "caminho_logo": null,
+  "login_responsavel": "",
+  "senha_responsavel_preenchida": false,
+  "orientacao_danfe": "portrait",
+  "recibo_danfe": true,
+  "exibe_sempre_ipi_danfe": false,
+  "exibe_issqn_danfe": false,
+  "exibe_impostos_adicionais_danfe": false,
+  "exibe_fatura_danfe": false,
+  "exibe_unidade_tributaria_danfe": false,
+  "exibe_desconto_itens": false,
+  "exibe_sempre_volumes_danfe": false,
+  "exibe_composicao_carga_mdfe": false,
+  "data_inicio_recebimento_nfe": null,
+  "data_inicio_recebimento_cte": null,
+  "habilita_csrt_nfe": true,
+  "nfe_sincrono": false,
+  "nfe_sincrono_homologacao": false,
+  "mdfe_sincrono": false,
+  "mdfe_sincrono_homologacao": false,
+  "smtp_endereco": null,
+  "smtp_dominio": null,
+  "smtp_autenticacao": null,
+  "smtp_porta": null,
+  "smtp_login": null,
+  "smtp_remetente": null,
+  "smtp_responder_para": null,
+  "smtp_modo_verificacao_openssl": null,
+  "smtp_habilita_starttlls": true,
+  "smtp_ssl": false,
+  "smtp_tls": false,
+  "token_producao": "",
+  "token_homologacao": ""
+}
+```
 
-Utilize o comando **HTTP GET**. O resultado será todos os dados de todas a empresas.
+> **Empresa não encontrada**
+>
+> Código HTTP: `404 Not Found`
 
+```json
+{
+  "codigo": "nao_encontrado",
+  "mensagem": "Empresa não encontrada"
+}
+```
 
-## Paginação
+Retorna todos os dados da empresa. Além dos campos utilizados para criação da empresa, a consulta retornará também os campos `token_producao` e `token_homologacao` que são gerados pela API para interações nos ambientes de produção e homologação.
+
+**Método HTTP:** `GET`
+
+**URL:** `https://api.focusnfe.com.br/v2/empresas/ID`
+
+O ID é o identificador único da empresa fornecido no momento da criação.
+
+## Listagem de Empresas
+
+```shell
+curl -u "token obtido no cadastro da empresa:" \
+  https://api.focusnfe.com.br/v2/empresas?cnpj=12345678000123
+```
+
+> Exemplo de resposta da API:
+>
+> **Sucesso**
+>
+> Código HTTP: `200 OK`
+
+```json
+[
+  {
+    "id": 123,
+    "nome": "Razão social da empresa",
+    "nome_fantasia": "Nome fantasia da empresa",
+    "inscricao_estadual": "123456",
+    "inscricao_municipal": "123456",
+    "bairro": "Bairro",
+    "cargo_responsavel": null,
+    "cep": "12345-678",
+    "cnpj": "12345678000123",
+    "cpf": "",
+    "codigo_municipio": "12345678",
+    "codigo_pais": "1058",
+    "codigo_uf": "26",
+    "complemento": "",
+    "cpf_cnpj_contabilidade": "",
+    "cpf_responsavel": "",
+    "discrimina_impostos": false,
+    "email": "",
+    "enviar_email_destinatario": false,
+    "enviar_email_homologacao": false,
+    "habilita_nfce": false,
+    "habilita_nfe": false,
+    "habilita_nfse": false,
+    "habilita_nfsen_producao": false,
+    "habilita_nfsen_homologacao": false,
+    "habilita_cte": false,
+    "habilita_mdfe": false,
+    "habilita_manifestacao": false,
+    "habilita_manifestacao_homologacao": false,
+    "habilita_manifestacao_cte": false,
+    "habilita_manifestacao_cte_homologacao": false,
+    "logradouro": "Logradouro",
+    "municipio": "Municipio",
+    "nome_responsavel": "",
+    "numero": "1234",
+    "pais": "Pais",
+    "regime_tributario": "3",
+    "telefone": "",
+    "uf": "UF",
+    "habilita_contingencia_offline_nfce": false,
+    "habilita_contingencia_epec_nfce": false,
+    "reaproveita_numero_nfce_contingencia": false,
+    "mostrar_danfse_badge": true,
+    "csc_nfce_producao": null,
+    "id_token_nfce_producao": null,
+    "csc_nfce_homologacao": null,
+    "id_token_nfce_homologacao": null,
+    "proximo_numero_nfe_producao": null,
+    "proximo_numero_nfe_homologacao": null,
+    "serie_nfe_producao": null,
+    "serie_nfe_homologacao": null,
+    "proximo_numero_nfse_producao": null,
+    "proximo_numero_nfse_homologacao": null,
+    "proximo_numero_nfsen_producao": null,
+    "proximo_numero_nfsen_homologacao": null,
+    "serie_nfse_producao": null,
+    "serie_nfse_homologacao": null,
+    "serie_nfsen_producao": null,
+    "serie_nfsen_homologacao": null,
+    "proximo_numero_nfce_producao": null,
+    "proximo_numero_nfce_homologacao": null,
+    "serie_nfce_producao": null,
+    "serie_nfce_homologacao": null,
+    "proximo_numero_cte_producao": null,
+    "proximo_numero_cte_homologacao": null,
+    "serie_cte_producao": null,
+    "serie_cte_homologacao": null,
+    "proximo_numero_cte_os_producao": null,
+    "proximo_numero_cte_os_homologacao": null,
+    "serie_cte_os_producao": null,
+    "serie_cte_os_homologacao": null,
+    "proximo_numero_mdfe_producao": null,
+    "proximo_numero_mdfe_homologacao": null,
+    "serie_mdfe_producao": null,
+    "serie_mdfe_homologacao": null,
+    "certificado_valido_ate": "2025-04-01T15:03:25-03:00",
+    "certificado_valido_de": "2024-04-01T15:03:25-03:00",
+    "certificado_cnpj": "12345678000123",
+    "certificado_especifico": false,
+    "data_ultima_emissao": null,
+    "caminho_logo": null,
+    "login_responsavel": "",
+    "senha_responsavel_preenchida": false,
+    "orientacao_danfe": "portrait",
+    "recibo_danfe": true,
+    "exibe_sempre_ipi_danfe": false,
+    "exibe_issqn_danfe": false,
+    "exibe_impostos_adicionais_danfe": false,
+    "exibe_fatura_danfe": false,
+    "exibe_unidade_tributaria_danfe": false,
+    "exibe_desconto_itens": false,
+    "exibe_sempre_volumes_danfe": false,
+    "exibe_composicao_carga_mdfe": false,
+    "data_inicio_recebimento_nfe": null,
+    "data_inicio_recebimento_cte": null,
+    "habilita_csrt_nfe": true,
+    "nfe_sincrono": false,
+    "nfe_sincrono_homologacao": false,
+    "mdfe_sincrono": false,
+    "mdfe_sincrono_homologacao": false,
+    "smtp_endereco": null,
+    "smtp_dominio": null,
+    "smtp_autenticacao": null,
+    "smtp_porta": null,
+    "smtp_login": null,
+    "smtp_remetente": null,
+    "smtp_responder_para": null,
+    "smtp_modo_verificacao_openssl": null,
+    "smtp_habilita_starttlls": true,
+    "smtp_ssl": false,
+    "smtp_tls": false,
+    "token_producao": "",
+    "token_homologacao": ""
+  }
+]
+```
+
+Filtra as empresas de acordo com os campos informados por parâmetro. O retorno esperado será o mesmo da pesquisa de empresa por ID.
+
+**Método HTTP:** `GET`
+
+**URL:** `https://api.focusnfe.com.br/v2/empresas`
+
+### Parâmetros de Requisição
+
+ Campo | Tipo   | Obrigatório | Descrição
+-------|--------|-------------|-----------------------------
+ cnpj  | Texto  | não         | Número do CNPJ da empresa (somente números)
+ cpf   | Texto  | não         | Número do CPF da empresa (somente números)
+
+### Paginação
 
 Ao fazer uma pesquisa, a API irá devolver o cabeçalho HTTP *X-Total-Count* que representa
 o número total de ocorrências da pesquisa, porém a API devolve apenas 50 registros por vez.
