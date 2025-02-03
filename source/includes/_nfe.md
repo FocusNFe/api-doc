@@ -11,20 +11,20 @@ Através da API NFe é possível:
 
 ## URLs
 
-
-Método | URL (recurso) | Ação
--------|-------|-----
-POST |  /v2/nfe?ref=REFERENCIA  | Cria uma nota fiscal e a envia para processamento.
-GET  | /v2/nfe/REFERENCIA | Consulta a nota fiscal com a referência informada e o seu status de processamento
-DELETE |  /v2/nfe/REFERENCIA  | Cancela uma nota fiscal com a referência informada
-POST |  /v2/nfe/REFERENCIA/carta_correcao | Cria uma carta de correção para a nota fiscal com a referência informada.
-POST |  /v2/nfe/REFERENCIA/ator_interessado | Adiciona um ator interessado para a nota fiscal com a referência informada.
-POST |  /v2/nfe/REFERENCIA/insucesso_entrega | Indica o insucesso na entrega da carga pelo emitente da NF-e.
-DELETE |  /v2/nfe/REFERENCIA/insucesso_entrega | Cancela o evento de insucesso na entrega da carga pelo emitente da NF-e.
-POST |  /v2/nfe/REFERENCIA/email  | Envia um email com uma cópia da nota fiscal com a referência informada
-POST |  /v2/nfe/inutilizacao  | Inutiliza uma numeração da nota fiscal
-POST |  /v2/nfe/importacao?ref=REFERENCIA | Cria uma nota fiscal a partir da importação de um XML
-POST |  /v2/nfe/danfe  | Gera uma DANFe de Preview
+Método | URL (recurso)                        | Ação
+-------|--------------------------------------|-----
+POST   | /v2/nfe?ref=REFERENCIA               | Cria uma nota fiscal e a envia para processamento.
+GET    | /v2/nfe/REFERENCIA                   | Consulta a nota fiscal com a referência informada e o seu status de processamento
+DELETE | /v2/nfe/REFERENCIA                   | Cancela uma nota fiscal com a referência informada
+POST   | /v2/nfe/REFERENCIA/carta_correcao    | Cria uma carta de correção para a nota fiscal com a referência informada.
+POST   | /v2/nfe/REFERENCIA/ator_interessado  | Adiciona um ator interessado para a nota fiscal com a referência informada.
+POST   | /v2/nfe/REFERENCIA/insucesso_entrega | Indica o insucesso na entrega da carga pelo emitente da NF-e.
+DELETE | /v2/nfe/REFERENCIA/insucesso_entrega | Cancela o evento de insucesso na entrega da carga pelo emitente da NF-e.
+POST   | /v2/nfe/REFERENCIA/email             | Envia um email com uma cópia da nota fiscal com a referência informada
+POST   | /v2/nfe/inutilizacao                 | Inutiliza uma numeração da nota fiscal
+GET    | /v2/nfe/inutilizacoes                | Consulta XMLs de numerações inutilizadas
+POST   | /v2/nfe/importacao?ref=REFERENCIA    | Cria uma nota fiscal a partir da importação de um XML
+POST   | /v2/nfe/danfe                        | Gera uma DANFe de Preview
 
 ## Campos obrigatórios de uma NFe
 
@@ -3324,6 +3324,76 @@ Em algumas situações em que sejam identificados erros de emissão de forma tar
   "status": "erro_autorizacao"
 }
 ```
+
+## Consulta de XMLs de numerações inutilizadas
+
+```shell
+curl -u "token obtido no cadastro da empresa:" \
+  -X GET "https://api.focusnfe.com.br/v2/nfe/inutilizacoes?cnpj=12345678000123"
+```
+
+> Exemplos de respostas da API por **status**:
+>
+> **Sucesso**
+>
+> Código HTTP: `200 OK`
+
+```json
+[
+  {
+    "status_sefaz": "102",
+    "mensagem_sefaz": "Inutilizacao de numero homologado",
+    "cnpj": "12345678000123",
+    "modelo": "55",
+    "serie": "1",
+    "numero_inicial": "685246",
+    "numero_final": "685246",
+    "status": "autorizado",
+    "caminho_xml": "/arquivos/12345678000123/202403/XMLs/24114360730001475500100069228000069228-inu.xml",
+    "protocolo_sefaz": "141240068698039"
+  },
+  {
+    "status_sefaz": "102",
+    "mensagem_sefaz": "Inutilizacao de numero homologado",
+    "cnpj": "12345678000123",
+    "modelo": "55",
+    "serie": "1",
+    "numero_inicial": "692280",
+    "numero_final": "692280",
+    "status": "autorizado",
+    "caminho_xml": "/arquivos/12345678000123/202403/XMLs/241143607300014755001000692280000692280-inu.xml",
+    "protocolo_sefaz": "141240068698038"
+  }
+]
+```
+
+> **Requisição inválida**
+>
+> Código HTTP: `400 Bad Request`
+
+```json
+{
+    "codigo": "requisicao_invalida",
+    "mensagem": "Parâmetro \"cnpj\" ou \"cpf\" inválidos ou não informados"
+}
+```
+
+Este endpoint permite a consulta de XMLs correspondentes às numerações inutilizadas por meio da API. Numerações inutilizadas referem-se às faixas de numeração de notas fiscais eletrônicas (NF-e) declaradas como não utilizadas, conforme regulamentação fiscal.
+
+**Método HTTP**: `GET`
+
+**URL**: `https://api.focusnfe.com.br/v2/nfe/inutilizacoes`
+
+### Parâmetros de Requisição
+
+Campo                    | Tipo     | Obrigatório | Descrição
+----------------------   |-------   |-------------|----
+cnpj                     | texto    | Sim*        | CNPJ da empresa. **Informar apenas se não informado CPF*
+cpf                      | texto    | Sim*        | CPF da empresa. **Informar apenas se não informado CNPJ*
+data_recebimento_inicial | data     | Não         | Data inicial de recebimento da inutilização pela SEFAZ
+data_recebimento_final   | data     | Não         | Data final de recebimento da inutilização pela SEFAZ
+numero_inicial           | numérico | Não         | Número inicial inutilizado
+numero_final             | numérico | Não         | Número final inutilizado
 
 ## Outras documentações
 ### Enviador de Arquivos
