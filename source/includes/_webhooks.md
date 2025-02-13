@@ -45,7 +45,7 @@ Para NFe e NFe recebidas (Manifestação de Destinatário Eletrônica - MDe):
 
 Ressaltamos que os campos devolvidos são os mesmos da consulta da nota fiscal. Veja o tópico [**Consulta**](https://focusnfe.com.br/doc/#nfe_consulta) na categoria NFe.
 
-Para NFSe:
+Para NFSe e NFSe nacional:
 
 * **cnpj_prestador**: CNPJ do prestador do serviço.
 * **ref**: A referência da emissão.
@@ -119,7 +119,7 @@ Os seguintes eventos causam o acionamento do gatilho:
   * Efetivação de uma NFCe
   * NFCe original cancelada ou com erro de cancelamento
   * NFCe com erro de timeout mas cancelada posteriormente por ter sido detectada sua autorização sem nosso conhecimento
-* **NFSe**:
+* **NFSe e NFSe nacional**:
   * Erro na emissão de uma nota fiscal
   * Emissão de nota fiscal realizada com sucesso
   * Inutilização de faixa de numeração
@@ -309,7 +309,7 @@ Utilize o método HTTP POST para criar um novo gatilho. Esta requisição aceita
 
 *  **cnpj** – CNPJ da empresa. Se o CNPJ for omitido, o gatilho será acionado para todas as emissões feitas pelo token em questão.
 *  **cpf** – CPF da empresa/prestador do serviço. Se o CPF for omitido, o gatilho será acionado para todas as emissões feitas pelo token em questão.
-*  **event** – Informe qual evento que gostará de escutar: nfe, nfse, nfce_contingencia, nfce_correcao_timeout, nfe_recebida, nfse_recebida, inutilizacao, cte, mdfe, nfsen
+*  **event** – Informe qual evento que gostará de escutar: nfe, nfse, nfsen, nfce_contingencia, nfce_correcao_timeout, nfe_recebida, nfse_recebida, cte_recebida, inutilizacao, cte, mdfe
 *  **url** – URL que deverá ser chamada quando o gatilho for ativado
 *  **authorization** – (opcional) O valor que for informado neste campo será devolvido no acionamento do gatilho no cabeçalho "Authorization".
 Desta forma você poderá por exemplo informar um token secreto para garantir que apenas nossa API acione a sua URL.
