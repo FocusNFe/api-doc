@@ -13,14 +13,17 @@ e NFSe.
 
 ## URLs
 
-Método | URL (recurso)             | Ação
--------|-------                    |-----
-POST   | /v2/nfce?ref=REFERENCIA   |  Cria uma nota fiscal e a envia para processamento.
-GET    |  /v2/nfce/REFERENCIA      | Consulta a nota fiscal com a referência informada e o seu status de processamento.
-DELETE | /v2/nfce/REFERENCIA       |  Cancela uma nota fiscal com a referência informada
-POST   | /v2/nfce/REFERENCIA/email |  Envia um email com uma cópia da nota fiscal com a referência informada
-POST   | /v2/nfce/inutilizacao     | Inutiliza uma numeração da nota fiscal
-GET    | /v2/nfce/inutilizacoes    | Consulta XMLs de numerações inutilizadas
+Método | URL (recurso)                         | Ação
+-------|-------                                |-----
+POST   | /v2/nfce?ref=REFERENCIA               |  Cria uma nota fiscal e a envia para processamento.
+GET    |  /v2/nfce/REFERENCIA                  | Consulta a nota fiscal com a referência informada e o seu status de processamento.
+DELETE | /v2/nfce/REFERENCIA                   |  Cancela uma nota fiscal com a referência informada
+POST   | /v2/nfce/REFERENCIA/email             |  Envia um email com uma cópia da nota fiscal com a referência informada
+POST   | /v2/nfce/inutilizacao                 | Inutiliza uma numeração da nota fiscal
+GET    | /v2/nfce/inutilizacoes                | Consulta XMLs de numerações inutilizadas
+POST   | /v2/nfce/REFERENCIA/econf             | Registrar um evento de Conciliação Financeira – ECONF
+GET    | /v2/nfce/REFERENCIA/econf/PROTOCOLO   | Consultar um evento de Conciliação Financeira – ECONF
+DELETE | /v2/nfce/REFERENCIA/econf/PROTOCOLO   | Cancelar um evento de Conciliação Financeira – ECONF
 
 ## Campos obrigatórios de uma NFCe
 
@@ -2087,3 +2090,215 @@ Utilize o comando HTTP **POST** para enviar os emails. Esta operação aceita ap
 * **emails:** Array com uma lista de emails que deverão receber uma cópia da nota. Limitado a 10 emails por vez.
 
 A API imediatamente devolve a requisição com a confirmação dos emails. Os emails serão enviados em segundo plano, por isso pode levar alguns minutos até que eles cheguem à caixa postal.
+
+## Conciliação Financeira – ECONF
+
+A utilização do Evento de Conciliação Financeira - ECONF é facultativa e tem o objetivo de auxiliar as empresas que buscam demonstrar a existência de conformidade fiscal entre as informações financeiras e de meios de pagamentos e os documentos fiscais emitidos.
+
+### Envio
+
+> Exemplo de requisição
+
+```shell
+# O "arquivo.json" deve conter os dados do evento ECONF.
+curl -u "token obtido no cadastro da empresa:" \
+  -X POST -T arquivo.json https://api.focusnfe.com.br/v2/nfce/REFERENCIA/econf
+```
+
+> Exemplo de JSON de envio
+
+```json
+{
+  "detalhes_pagamento": [
+    {
+      "indicador_pagamento": "0",
+      "forma_pagamento": "01",
+      "descricao_pagamento": "Exemplo de evento de conciliaçào financeira",
+      "valor_pagamento": "1",
+      "data_pagamento": "2025-02-10",
+      "cnpj_transacional": "53681445000141",
+      "uf_transacional": "PR",
+      "cnpj_instituicao_financeira": "05443159000103",
+      "bandeira_operadora": "01",
+      "numero_autorizacao": "1234",
+      "cnpj_beneficiario": "05443159000105",
+      "uf_beneficiario": "PR"
+    }
+  ]
+}
+```
+
+> Exemplos de respostas da API por **status**:
+>
+> **Sucesso**
+>
+> Código HTTP: `200 OK`
+
+```json
+{
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "status": "autorizado",
+  "caminho_xml_conciliacao_financeira": "/arquivos/12345678000123/202502/XMLs/35250203916076000150550020000030031984736315-cf-01.xml",
+  "numero_conciliacao_financeira": 1,
+  "numero_protocolo": "335250000000445"
+}
+```
+
+**Método HTTP:** `POST`
+
+**URL:** `https://api.focusnfe.com.br/v2/nfce/REFERENCIA/econf`
+
+**Parâmetros de Requisição:**
+
+ Campo                      | Tipo      | Obrigatório | Descrição
+-------              |--------   |-------------|-----------------------------
+detalhes_pagamento          | Coleção   | Sim         | Coleção de detalhamento do pagamento com com tamanho mínimo de 1 item e máximo de 100 itens
+indicador_pagamento         | Texto     | Não         | Indicador da Forma de Pagamento
+forma_pagamento             | Texto     | Sim         | Forma de pagamento
+descricao_pagamento         | Texto     | Não         | Descrição do pagamento
+valor_pagamento             | Decimal   | Sim         | Valor do pagamento
+data_pagamento              | Data      | Sim         | Data do pagamento
+cnpj_transacional           | Texto     | Não        | CNPJ do estabelecimento onde o pagamento foi processado/transacionado/recebido quando a emissão do documento fiscal ocorrer em estabelecimento distinto
+uf_transacional             | Texto     | Sim*        | UF do CNPJ do estabelecimento onde o pagamento foi processado/transacionado/recebido. *Obrigatório quando informado cnpj_transacional
+cnpj_instituicao_financeira | Texto     | Não        | CNPJ da instituição financeira, de pagamento, adquirente ou subadquirente.
+bandeira_operadora          | Texto     | Não        | Bandeira da operadora de cartão de crédito e/ou débito
+numero_autorizacao          | Texto     | Não        | Número da autorização da transação da operação
+cnpj_beneficiario           | Texto     | Não        | CNPJ do estabelecimento beneficiário do pagamento
+uf_beneficiario             | Texto     | Sim*       | UF do CNPJ do estabelecimento beneficiário do pagamento. *Obrigatório quando informado o campo uf_beneficiario
+
+Possíveis valores para os campos citados acima.
+
+* indicador_pagamento:
+  * 0: Pagamento à Vista
+  * 1: Pagamento à Prazo
+* forma_pagamento
+  * 01: Dinheiro
+  * 02: Cheque
+  * 03: Cartão de Crédito
+  * 04: Cartão de Débito
+  * 05: Cartão da Loja (Private Label)
+  * 10: Vale Alimentação
+  * 11: Vale Refeição
+  * 12: Vale Presente
+  * 13: Vale Combustível
+  * 14: Duplicata Mercantil
+  * 15: Boleto Bancário
+  * 16: Depósito Bancário
+  * 17: Pagamento Instantâneo (PIX) – Dinâmico
+  * 18: Transferência bancária, Carteira Digital
+  * 19: Programa de fidelidade, Cashback, Crédito Virtual
+  * 20: Pagamento Instantâneo (PIX) – Estático
+  * 21: Crédito em Loja
+  * 22: Pagamento Eletrônico não Informado - falha de hardware do sistema emissor
+  * 90: Sem pagamento
+  * 99: Outros
+* bandeira_operadora
+  * 01: Visa
+  * 02: Mastercard
+  * 03: American Express
+  * 04: Sorocred
+  * 05: Diners Club
+  * 06: Elo
+  * 07: Hipercard
+  * 08: Aura
+  * 09: Cabal
+  * 10: Alelo
+  * 11: Banes Card
+  * 12: CalCard
+  * 13: Credz
+  * 14: Discover
+  * 15: GoodCard
+  * 16: GreenCard
+  * 17: Hiper
+  * 18: JcB
+  * 19: Mais
+  * 20: MaxVan
+  * 21: Policard
+  * 22: RedeCompras
+  * 23: Sodexo
+  * 24: ValeCard
+  * 25: Verocheque
+  * 26: VR
+  * 27: Ticket
+  * 99: Outros
+
+### Consulta
+
+> Exemplo de requisição
+
+```shell
+# O "arquivo.json" deve conter os dados do evento ECONF.
+curl -u "token obtido no cadastro da empresa:" \
+  -X GET https://api.focusnfe.com.br/v2/nfce/REFERENCIA/econf/NUMERO_PROTOCOLO
+```
+
+> Exemplos de respostas da API por **status**:
+>
+> **Sucesso**
+>
+> Código HTTP: `200 OK`
+
+```json
+{
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "status": "autorizado",
+  "caminho_xml_conciliacao_financeira": "/arquivos/12345678000123/202502/XMLs/35250203916076000150550020000030031984736315-cf-01.xml",
+  "numero_conciliacao_financeira": 1,
+  "numero_protocolo": "335250000000445"
+}
+```
+
+A consulta de um evento de Conciliação Financeira (ECONF) é feita a partir do número do protocolo retornado no campo `numero_protocolo` pela requisição de envio.
+
+**Método HTTP:** `GET`
+
+**URL:** `https://api.focusnfe.com.br/v2/nfce/REFERENCIA/econf/NUMERO_PROTOCOLO`
+
+### Cancelamento
+
+> Exemplo de requisição
+
+```shell
+# O "arquivo.json" deve conter os dados do evento ECONF.
+curl -u "token obtido no cadastro da empresa:" \
+  -X DELETE https://api.focusnfe.com.br/v2/nfce/REFERENCIA/econf/NUMERO_PROTOCOLO
+```
+
+> Exemplos de respostas da API por **status**:
+>
+> **Sucesso**
+>
+> Código HTTP: `200 OK`
+
+```json
+{
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "status": "autorizado",
+  "caminho_xml_cancelamento_conciliacao_financeira": "/arquivos/12345678000123/202502/XMLs/35250203916076000150550020000030041206848679-cf-canc-06.xml",
+  "numero_cancelamento_conciliacao_financeira": 6
+}
+```
+
+> **Número de protocolo não encontrado**
+>
+> Código HTTP: `422 Unprocessable Content`
+
+```json
+{
+  "codigo": "object_not_found",
+  "mensagem": "A nota fiscal não possui um evento de conciliação financeira vinculado a esse protocolo."
+}
+```
+
+O cancelamento de um evento de Conciliação Financeira (ECONF) é feito a partir do número do protocolo retornado no campo `numero_protocolo` pela requisição de envio.
+
+**Método HTTP:** `DELETE`
+
+**URL:** `https://api.focusnfe.com.br/v2/nfce/REFERENCIA/econf/NUMERO_PROTOCOLO`
+
+Quando houver mais de uma conciliação financeira vinculado a mesma NFe, o cancelamento dos eventos deve ser feito na mesma ordem dos envios, ou seja, do evento mais antigo para o mais recente.
+
+Caso você tente cancelar um protocolo fora da ordem esperada pela SEFAZ, será retornado a rejeição `Código 460 - Rejeicao: Protocolo do Evento difere do cadastrado`.
