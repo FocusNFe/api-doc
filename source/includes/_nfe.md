@@ -4290,6 +4290,6 @@ O cancelamento de um evento de Conciliação Financeira (ECONF) é feito a parti
 
 **URL:** `https://api.focusnfe.com.br/v2/nfe/REFERENCIA/econf/NUMERO_PROTOCOLO`
 
-Quando houver mais de uma conciliação financeira vinculado a mesma NFe, o cancelamento dos eventos deve ser feito na mesma ordem dos envios, ou seja, do evento mais antigo para o mais recente.
+Quando houver mais de uma conciliação financeira vinculada a mesma NFe, o cancelamento dos eventos deve ser feito na mesma ordem dos envios, ou seja, do evento mais antigo para o mais recente.
 
 Caso você tente cancelar um protocolo fora da ordem esperada pela SEFAZ, será retornado a rejeição `Código 460 - Rejeicao: Protocolo do Evento difere do cadastrado`.
