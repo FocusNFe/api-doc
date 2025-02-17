@@ -13,7 +13,8 @@ c) a terceira parte é composta de dois dígitos (ZZ) que formam o dígito verif
 
 A FocusNFe disponibiliza uma API que permite consultar alguns dos dados presentes no Cadastro Nacional de Pessoa Jurídica.
 
-A API usa como base dados fornecidos trimestralmente pela Receita Federal.
+A API usa como base dados fornecidos trimestralmente pela Receita Federal. Estes dados são atualizados periodicamente, normalmente uma vez ao mês.
+Por isso, é *importante que sua aplicação esteja preparada para lidar com dados que podem estar desatualizados*.
 
 ```shell
 # Pesquisar dados de cadastro do número de inscrição 07.504.505/0001-32
