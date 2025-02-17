@@ -813,7 +813,7 @@ emissão retroativa.
 }
 ```
 
-Em estados como São Paulo (sem contingência offline), pode acontecer da SEFAZ ficar indisponível e devolver 
+Em estados onde não há contingência offline, pode acontecer da SEFAZ ficar indisponível e devolver 
 erro de timeout na emissão de NFCe, mas ainda assim autorizar a nota. Nestas situações
 a NFCe é automaticamente cancelada quando detectamos esta situação. Podemos levar algum 
 tempo para ter a confirmação da duplicidade, dependendo da disponibilidade da SEFAZ, mas
