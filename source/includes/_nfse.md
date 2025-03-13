@@ -1383,7 +1383,7 @@ console.log("Corpo: " + request.responseText);
 
 
 
-Para cada nota autorizada, cancelada ou que tenha sido emitida uma carta de correção o destinatário da nota é notificado via email. Porém eventualmente pode ser necessário enviar a nota fiscal para outras pessoas ou mesmo reenviar o email para o mesmo destinatário.
+Para cada nota autorizada o tomador do serviço é notificado via email. Porém eventualmente pode ser necessário enviar a nota fiscal para outras pessoas ou mesmo reenviar o email para o mesmo destinatário.
 
 Para enviar um ou mais emails:
 
