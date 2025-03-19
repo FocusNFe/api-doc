@@ -50,6 +50,31 @@ curl -u "token obtido no cadastro da empresa:" \
   -X POST -T nfcom.json https://homologacao.focusnfe.com.br/v2/nfcom?ref=12345
 ```
 
+> Exemplos de respostas da API por **status**:
+>
+> **Sucesso**
+>
+> Código HTTP: `202 Accepted`
+
+```json
+{
+    "cnpj_emitente": "53681445000141",
+    "ref": "teste_emissao_nfcom",
+    "status": "processando_autorizacao"
+}
+```
+
+> **O CNPJ informado não é autorizado**
+>
+> Código HTTP: `403 Forbidden`
+
+```json
+{
+    "codigo": "permissao_negada",
+    "mensagem": "CNPJ do emitente não autorizado."
+}
+```
+
 ```java
 import java.util.HashMap;
 import org.codehaus.jettison.json.JSONException;
@@ -476,6 +501,39 @@ curl -u "token obtido no cadastro da empresa:" \
   https://homologacao.focusnfe.com.br/v2/nfcom/12345
 ```
 
+> Exemplos de respostas da API por **status**:
+>
+> **Sucesso**
+>
+> Código HTTP: `200 OK`
+
+```json
+{
+    "cnpj_emitente": "53681445000141",
+    "ref": "teste_emissao_nfcom",
+    "status": "cancelado",
+    "status_sefaz": "135",
+    "mensagem_sefaz": "Evento registrado e vinculado a NFCom ",
+    "chave": "NFCom41250353681445000141620010000000061006102424",
+    "numero": "6",
+    "serie": "1",
+    "modelo": "62",
+    "caminho_xml": "https://focusnfe.s3.sa-east-1.amazonaws.com/arquivos_development/53681445000141_721/202503/XMLs/NFCom41250353681445000141620010000000061006102424-nfcom.xml",
+    "caminho_xml_cancelamento": "https://focusnfe.s3.sa-east-1.amazonaws.com/arquivos_development/53681445000141_721/202503/XMLs/41250353681445000141620010000000061006102424-nfcom-can.xml"
+}
+```
+
+> **Não foi encontrada uma NFCom para a refêrencia informada**
+>
+> Código HTTP: `404 Not Found`
+
+```json
+{
+    "codigo": "nao_encontrado",
+    "mensagem": "Nfcom não encontrado"
+}
+```
+
 ```java
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
@@ -694,6 +752,32 @@ Caso na requisição seja passado o parâmetro `completa=1` serão adicionados 4
 curl -u "token obtido no cadastro da empresa:" \
   -X DELETE -d '{"justificativa":"Informe aqui a sua justificativa para realizar o cancelamento da NFCom."}' \
   https://homologacao.focusnfe.com.br/v2/nfcom/12345
+```
+
+> Exemplos de respostas da API por **status**:
+>
+> **Sucesso**
+>
+> Código HTTP: `200 OK`
+
+```json
+{
+    "status": "cancelado",
+    "status_sefaz": "135",
+    "mensagem_sefaz": "Evento registrado e vinculado a NFCom ",
+    "caminho_xml": "https://focusnfe.s3.sa-east-1.amazonaws.com/arquivos_development/53681445000141_721/202503/XMLs/41250353681445000141620010000000091034577557-nfcom-can.xml"
+}
+```
+
+> **NFCom ainda não processada**
+>
+> Código HTTP: `400 Bad Request`
+
+```json
+{
+    "codigo": "nao_autorizado",
+    "mensagem": "NFCom não autorizado"
+}
 ```
 
 
@@ -916,7 +1000,7 @@ A API devolverá os seguintes campos:
 * **status**: cancelado, caso a nota seja cancelada, ou erro_cancelamento, se houve algum erro ao cancelar a nota.
 * **status_sefaz**: O status do cancelamento na SEFAZ.
 * **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
-* **caminho_xml_cancelamento**: Caso a nota tenha sido cancelada, será informado aqui o caminho para download do XML de cancelamento.
+* **caminho_xml**: Caso a nota tenha sido cancelada, será informado aqui o caminho para download do XML de cancelamento.
 
 ### Prazo de cancelamento
 A NFCom poderá ser cancelada em até 24 horas após a emissão. No entanto, alguns estados podem permitir um prazo maior para o cancelamento.
