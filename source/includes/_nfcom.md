@@ -464,7 +464,10 @@ Utilize o comando **HTTP POST** para enviar a nota para a API. Envie no corpo do
 Nesta etapa, é feita uma primeira validação dos dados da nota. Caso ocorra algum problema, por exemplo, algum campo faltante, formato incorreto
 ou algum problema com o emitente a nota **não será aceita para processamento** e será devolvida a mensagem de erro apropriada. Veja a seção [erros](#introducao_erros).
 
-O envio da NFCom é um processo **síncrono**, ou seja, diferente da NFe, a nota é autorizada ou rejeitada na mesma requisição. A resposta da requisição irá conter o mesmo resultado que a operação da consulta, descrita a seguir.
+Caso a nota seja validada corretamente, a nota será **aceita para processamento**. Isto significa que a nota irá para uma fila de processamento
+onde eventualmente será processada (processamento assíncrono). Com isto, a nota poderá ser autorizada ou ocorrer um erro na autorização, de acordo com a validação da SEFAZ.
+
+Para verificar se a nota já foi autorizada, você terá que efetuar uma [consulta](#nfcom_consulta).
 
 ## Consulta
 
