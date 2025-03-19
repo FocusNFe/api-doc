@@ -21,6 +21,7 @@ includes:
   - lote_rps
   - nfses-recebidas
   - cte
+  - nfcom
   - mdfe
   - manifestacao
   - manifestacao-cte

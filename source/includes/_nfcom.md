@@ -1,4 +1,4 @@
-# NFCom (beta)
+# NFCom
 
 Através da API NFCom é possível:
 
@@ -10,15 +10,13 @@ Todos os processos envolvendo NFCom são **síncronos**. Ou seja, a emissão nã
 
 ## URLs
 
-
-Método | URL (recurso) | Ação
--------|-------|-----
-POST | /v2/nfcom?ref=REFERENCIA | Emite uma NFCom.
-GET  | /v2/nfcom/REFERENCIA | Consulta a NFCom com a referência informada e seu status de processamento.
-DELETE |  /v2/nfcom/REFERENCIA | Cancela a NFCom com a referência informada.
+Método | URL (recurso)            | Ação
+-------|-------                   |-----
+POST   | /v2/nfcom?ref=REFERENCIA | Emite uma NFCom.
+GET    | /v2/nfcom/REFERENCIA     | Consulta a NFCom com a referência informada e seu status de processamento.
+DELETE |  /v2/nfcom/REFERENCIA    | Cancela a NFCom com a referência informada.
 
 ## Campos da NFCom
-
 
 A NFCom possui vários campos para os mais variados tipos e formas de operações, por isso, criamos uma página exclusiva que mostra todos os campos da nossa API para o envio de NFCom. Nela, você pode buscar os campos pela TAG XML ou pela nossa tradução para API.
 
@@ -50,420 +48,46 @@ curl -u "token obtido no cadastro da empresa:" \
   -X POST -T nfcom.json https://homologacao.focusnfe.com.br/v2/nfcom?ref=12345
 ```
 
-```java
-import java.util.HashMap;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+> Exemplos de respostas da API por **status**:
+>
+> **Sucesso**
+>
+> Código HTTP: `202 Accepted`
 
-public class NFComAutorizar {
-
-  public static void main(String[] args) throws JSONException{
-
-    String login = "Token_obtido_no_cadastro_da_empresa";
-
-    /* Substituir pela sua identificação interna da nota. */
-    String ref = "12345";
-
-    /* Para ambiente de produção utilize a variável abaixo:
-    String server = "https://api.focusnfe.com.br/"; */
-    String server = "https://homologacao.focusnfe.com.br/";
-
-    String url = server.concat("v2/nfcom?ref="+ref);
-
-    /* Configuração para realizar o HTTP BasicAuth. */
-    Object config = new DefaultClientConfig();
-    Client client = Client.create((ClientConfig) config);
-    client.addFilter(new HTTPBasicAuthFilter(login, ""));
-
-    /* Aqui são criados as hash's que receberão os dados da nota. */
-    HashMap<String, String> nfcom = new HashMap<String, String>();
-    HashMap<String, String> itens = new HashMap<String, String>();
-
-    nfcom.put("data_emissao", "2023-05-04T16:57:42-03:00");
-    nfcom.put("numero_site", "0");
-    nfcom.put("tipo_faturamento", "0");
-    nfcom.put("finalidade_nfcom", "0");
-    nfcom.put("cnpj_emitente", "51916585000125");
-    nfcom.put("ie_virtual_emitente", "123");
-    nfcom.put("nome_emitente", "ACME LTDA");
-    nfcom.put("nome_fantasia_emitente", "ACME TESTES");
-    nfcom.put("logradouro_emitente", "R. Padre Natal Pigato");
-    nfcom.put("numero_emitente", "100");
-    nfcom.put("bairro_emitente", "Santa Felicidade");
-    nfcom.put("municipio_emitente", "Curitiba");
-    nfcom.put("uf_emitente", "PR");
-    nfcom.put("cep_emitente", "82320030");
-    nfcom.put("inscricao_estadual_emitente", "101942171617");
-    nfcom.put("nome_destinatario", "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL");
-    nfcom.put("cnpj_destinatario", "85904290000150");
-    nfcom.put("indicador_ie_destinatario", "2");
-    nfcom.put("logradouro_destinatario", "Rua Fictícia");
-    nfcom.put("numero_destinatario", "2");
-    nfcom.put("bairro_destinatario", "Centro");
-    nfcom.put("municipio_destinatario", "Curitiba");
-    nfcom.put("uf_destinatario", "PR");
-    nfcom.put("cep_destinatario", "82320030");
-    nfcom.put("codigo_assinante", "1");
-    nfcom.put("tipo_assinante", "3");
-    nfcom.put("tipo_servico", "5");
-    itens.put("numero_item","1");
-    itens.put("codigo_produto","123");
-    itens.put("descricao","Teste NFCom");
-    itens.put("classificacao","0100401");
-    itens.put("unidade_medida","4");
-    itens.put("quantidade_fatura","1");
-    itens.put("valor_item","139.90");
-    itens.put("valor_produtos","139.90");
-
-    /* Depois de fazer o input dos dados, são criados os objetos JSON já com os valores das hash's. */
-    JSONObject json = new JSONObject (nfcom);
-    JSONObject jsonItens = new JSONObject (itens);
-
-    /* Aqui adicionamos os objetos JSON nos campos da API como array no JSON principal. */
-    json.append("items", jsonItens);
-
-    /* É recomendado verificar como os dados foram gerados em JSON e se ele está seguindo a estrutura especificada em nossa documentação.
-    System.out.print(json); */
-
-    WebResource request = client.resource(url);
-
-    ClientResponse resposta = request.post(ClientResponse.class, json);
-
-    int httpCode = resposta.getStatus();
-
-    String body = resposta.getEntity(String.class);
-
-    /* As três linhas a seguir exibem as informações retornadas pela nossa API.
-     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(httpCode);
-    System.out.printf(body);
-  }
+```json
+{
+    "cnpj_emitente": "53681445000141",
+    "ref": "teste_emissao_nfcom",
+    "status": "processando_autorizacao"
 }
 ```
 
-```ruby
-# encoding: UTF-8
+> **O CNPJ informado não está autorizado a emitir NFCom**
+>
+> Código HTTP: `403 Forbidden`
 
-require "net/http"
-require "net/https"
-require "json"
-
-# token enviado pelo suporte
-token = "codigo_alfanumerico_token"
-
-# referência da nota - deve ser única para cada nota enviada
-ref = "id_referencia_nota"
-
-# endereço da api que deve ser utilizado conforme o ambiente: produção ou homologação
-servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "https://homologacao.focusnfe.com.br/"
-
-# no caso do ambiente de envio ser em produção, utilizar servidor_producao
-url_envio = servidor_homologacao + "v2/nfcom?ref=" + ref
-
-# altere os campos conforme a nota que será enviada
-dados_da_nota = {
-  data_emissao: "2023-05-04T16:57:42-03:00",
-  numero_site: "0",
-  tipo_faturamento: "0",
-  finalidade_nfcom: "0",
-  cnpj_emitente: "51916585000125",
-  ie_virtual_emitente: "123",
-  nome_emitente: "ACME LTDA",
-  nome_fantasia_emitente: "ACME LTDA",
-  logradouro_emitente: "R. Padre Natal Pigato",
-  numero_emitente: "100",
-  bairro_emitente: "Santa Felicidade",
-  municipio_emitente: "Curitiba",
-  uf_emitente: "PR",
-  cep_emitente: "82320030",
-  inscricao_estadual_emitente: "101942171617",
-  nome_destinatario: "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
-  cnpj_destinatario: "85904290000150",
-  indicador_ie_destinatario: "2",
-  logradouro_destinatario: "Rua Fictícia",
-  numero_destinatario: "2",
-  bairro_destinatario: "Centro",
-  municipio_destinatario: "Curitiba",
-  cep_destinatario: "82320030",
-  uf_destinatario: "PR",
-  codigo_assinante: "1",
-  tipo_assinante: "3",
-  tipo_servico: "5",
-  itens: [
-    {
-      numero_item: "1",
-      codigo_produto: "123",
-      descricao: "Teste NFCom",
-      classificacao: "0100401",
-      unidade_medida: "4",
-      quantidade_fatura: "1",
-      valor_item: "139.90",
-      valor_produtos: "139.90"
-    }
-  ]
+```json
+{
+    "codigo": "permissao_negada",
+    "mensagem": "CNPJ do emitente não autorizado."
 }
-
-# criamos um objeto uri para envio da nota
-uri = URI(url_envio)
-
-# também criamos um objeto da classe HTTP a partir do host da uri
-http = Net::HTTP.new(uri.hostname, uri.port)
-
-# aqui criamos um objeto da classe Post a partir da uri de requisição
-requisicao = Net::HTTP::Post.new(uri.request_uri)
-
-# adicionamos o token à requisição
-requisicao.basic_auth(token, "")
-
-# convertemos os dados da nota para o formato JSON e adicionamos ao corpo da requisição
-requisicao.body = dados_da_nota.to_json
-
-# no envio de notas em produção, é necessário utilizar o protocolo ssl
-# para isso, basta retirar o comentário da linha abaixo
-# http.use_ssl = true
-
-# aqui enviamos a requisição ao servidor e obtemos a resposta
-resposta = http.request(requisicao)
-
-# imprimindo o código HTTP da resposta
-puts "Código retornado pela requisição: " + resposta.code
-
-# imprimindo o corpo da resposta
-puts "Corpo da resposta: " + resposta.body
-
 ```
 
-```javascript
-/*
-As orientacoes a seguir foram extraídas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
-"Here's how to include the module in your project and use as the browser-based XHR object.
-Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work."
-*/
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+Para enviar uma **NFCom** utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de testes.
 
-var request = new XMLHttpRequest();
+**Método HTTP:** `POST`
 
-var token = "Token_obtido_no_cadastro_da_empresa";
+**URL:** `https://api.focusnfe.com.br/v2/nfcom?ref=REFERENCIA`
 
-// Substituir pela sua identificação interna da nota.
-var ref = "12345";
+Envie no corpo do POST os dados da nota fiscal em formato JSON.
 
-/*
-Para ambiente de produção utilize a URL abaixo:
-"https://api.focusnfe.com.br"
-*/
-var url = "https://homologacao.focusnfe.com.br/v2/nfcom?ref=" + ref;
+Nesta etapa, é feita uma primeira validação dos dados da nota. Caso ocorra algum problema, por exemplo, algum campo faltante, formato incorreto
+ou algum problema com o emitente a nota **não será aceita para processamento** e será devolvida a mensagem de erro apropriada. Veja a seção [erros](#introducao_erros).
 
-/*
-Utilize o valor 'false' como terceiro parâmetro para que a requisição aguarde a resposta da API.
-Passamos o token como quarto parâmetro deste método como autenticador do HTTP Basic Authentication.
-*/
-request.open('POST', url, false, token);
+Caso a nota seja validada corretamente, a nota será **aceita para processamento**. Isto significa que a nota irá para uma fila de processamento
+onde eventualmente será processada (processamento assíncrono). Com isto, a nota poderá ser autorizada ou ocorrer um erro na autorização, de acordo com a validação da SEFAZ.
 
-var nfcom = {
-  "data_emissao": "2023-05-04T16:57:42-03:00",
-  "numero_site": "0",
-  "tipo_faturamento": "0",
-  "finalidade_nfcom": "0",
-  "cnpj_emitente": "51916585000125",
-  "ie_virtual_emitente": "123",
-  "nome_emitente": "ACME LTDA",
-  "nome_fantasia_emitente": "ACME LTDA",
-  "logradouro_emitente": "R. Padre Natal Pigato",
-  "numero_emitente": "100",
-  "bairro_emitente": "Santa Felicidade",
-  "municipio_emitente": "Curitiba",
-  "uf_emitente": "PR",
-  "cep_emitente": "82320030",
-  "inscricao_estadual_emitente": "101942171617",
-  "nome_destinatario": "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
-  "cnpj_destinatario": "85904290000150",
-  "indicador_ie_destinatario": "2",
-  "logradouro_destinatario": "Rua Fictícia",
-  "numero_destinatario": "2",
-  "bairro_destinatario": "Centro",
-  "municipio_destinatario": "Curitiba",
-  "cep_destinatario": "82320030",
-  "uf_destinatario": "PR",
-  "codigo_assinante": "1",
-  "tipo_assinante": "3",
-  "tipo_servico": "5",
-  "itens": [
-    {
-      "numero_item": "1",
-      "codigo_produto": "123",
-      "descricao": "Teste NFCom",
-      "classificacao": "0100401",
-      "unidade_medida": "4",
-      "quantidade_fatura": "1",
-      "valor_item": "139.90",
-      "valor_produtos": "139.90"
-    }
-  ]
-};
-
-// Aqui fazemos a serialização do JSON com os dados da nota e enviamos através do método utilizado.
-request.send(JSON.stringify(nfcom));
-
-// Sua aplicação terá que tratar as respostas da API.
-console.log("HTTP code: " + request.status);
-console.log("Corpo: " + request.responseText);
-
-```
-
-```php
-<?php
-/* Você deverá definir isso globalmente para a sua aplicação.
-Para ambiente de produção utilize a variável abaixo:
-$server = "https://api.focusnfe.com.br"; */
-$server = "https://homologacao.focusnfe.com.br";
-// Substituir a variável ref pela sua identificação interna da nota.
-$ref = "12345";
-$login = "token obtido no cadastro da empresa";
-$password = "";
-$nfcom = array (
-  "data_emissao" => "2023-05-04T16:57:42-03:00",
-  "numero_site" => "0",
-  "tipo_faturamento" => "0",
-  "finalidade_nfcom" => "0",
-  "cnpj_emitente" => "51916585000125",
-  "ie_virtual_emitente" => "123",
-  "nome_emitente" => "ACME LTDA",
-  "nome_fantasia_emitente" => "ACME LTDA",
-  "logradouro_emitente" => "R. Padre Natal Pigato",
-  "numero_emitente" => "100",
-  "bairro_emitente" => "Santa Felicidade",
-  "municipio_emitente" => "Curitiba",
-  "uf_emitente" => "PR",
-  "cep_emitente" => "82320030",
-  "inscricao_estadual_emitente" => "101942171617",
-  "nome_destinatario" => "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
-  "cnpj_destinatario" => "85904290000150",
-  "indicador_ie_destinatario" => "2",
-  "logradouro_destinatario" => "Rua Fictícia",
-  "numero_destinatario" => "2",
-  "bairro_destinatario" => "Centro",
-  "municipio_destinatario" => "Curitiba",
-  "cep_destinatario" => "82320030",
-  "uf_destinatario" => "PR",
-  "codigo_assinante" => "1",
-  "tipo_assinante" => "3",
-  "tipo_servico" => "5",
-  "itens" => array(
-    array(
-      "numero_item" => "1",
-      "codigo_produto" => "123",
-      "descricao" => "Teste NFCom",
-      "classificacao" => "0100401",
-      "unidade_medida" => "4",
-      "quantidade_fatura" => "1",
-      "valor_item" => "139.90",
-      "valor_produtos" => "139.90"
-    )
-  ),
-);
-// Inicie o processo de envio das informações usando o cURL.
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $server."/v2/nfcom?ref=" . $ref);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($nfcom));
-curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
-$body = curl_exec($ch);
-$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-// As próximas três linhas são um exemplo de como imprimir as informações de retorno da API.
-print($http_code."\n");
-print($body."\n\n");
-print("");
-curl_close($ch);
-?>
-```
-
-```python
-# Faça o download e a instalação da biblioteca requests, através do python-pip.
-import json
-import requests
-
-# Para ambiente de produção utilize a variável abaixo:
-# url = "https://api.focusnfe.com.br"
-url = "https://homologacao.focusnfe.com.br/v2/nfcom"
-
-# Substituir pela sua identificação interna da nota
-ref = {"ref":"12345"}
-
-token="token obtido no cadastro da empresa"
-
-# Utilizamos dicionários para armazenar os campos e valores que
-# serão convertidos em JSON e enviados para nossa API.
-
-nfcom = {}
-itens = {}
-
-nfcom["data_emissao"] = "2023-05-04T16:57:42-03:00"
-nfcom["numero_site"] = "0"
-nfcom["tipo_faturamento"] = "0"
-nfcom["finalidade_nfcom"] = "0"
-nfcom["cnpj_emitente"] = "51916585000125"
-nfcom["ie_virtual_emitente"] = "123"
-nfcom["nome_emitente"] = "ACME LTDA"
-nfcom["nome_fantasia_emitente"] = "ACME TESTES"
-nfcom["logradouro_emitente"] = "R. Padre Natal Pigato"
-nfcom["numero_emitente"] = "100"
-nfcom["bairro_emitente"] = "Santa Felicidade"
-nfcom["municipio_emitente"] = "Curitiba"
-nfcom["uf_emitente"] = "PR"
-nfcom["cep_emitente"] = "82320030"
-nfcom["inscricao_estadual_emitente"] = "101942171617"
-nfcom["nome_destinatario"] = "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL"
-nfcom["cnpj_destinatario"] = "85904290000150"
-nfcom["indicador_ie_destinatario"] = "2"
-nfcom["logradouro_destinatario"] = "Rua Fictícia"
-nfcom["numero_destinatario"] = "2"
-nfcom["bairro_destinatario"] = "Centro"
-nfcom["municipio_destinatario"] = "Curitiba"
-nfcom["uf_destinatario"] = "PR"
-nfcom["cep_destinatario"] = "82320030"
-nfcom["codigo_assinante"] = "1"
-nfcom["tipo_assinante"] = "3"
-nfcom["tipo_servico"] = "5"
-itens["numero_item"] = "1"
-itens["codigo_produto"] = "123"
-itens["descricao"] = "Teste NFCom"
-itens["classificacao"] = "0100401"
-itens["unidade_medida"] = "4"
-itens["quantidade_fatura"] = "1"
-itens["valor_item"] = "139.90"
-itens["valor_produtos"] = "139.90"
-
-# Adicionamos os dados da variável itens como listas ao dicionário principal.
-nfcom["items"] = [itens]
-
-r = requests.post(url, params=ref, data=json.dumps(nfcom), auth=(token,""))
-
-# Imprimimos na tela o codigo HTTP da requisição e a mensagem de retorno da API
-print(r.status_code, r.text)
-```
-
-Para enviar uma NFCom utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de testes. 
-
-Envia uma NFCom para autorização:
-
-`https://api.focusnfe.com.br/v2/nfcom?ref=REFERENCIA`
-
-Utilize o comando **HTTP POST** para enviar a nota para a API. Envie no corpo do POST os dados da nota fiscal em formato JSON.
-
-A numeração da nota (número e série), pode ser definida automaticamente pela API. É recomendado deixar a numeração sob nossa responsabilidade, por questões de simplicidade. Entretanto, você pode controlar o envio destas informações pela sua aplicação, basta informar os campos **“numero”** e **“serie”** nos dados de envio.
-
-O envio da NFCom é um processo **síncrono**, ou seja, diferente da NFe, a nota é autorizada ou rejeitada na mesma requisição. A resposta da requisição irá conter o mesmo resultado que a operação da consulta, descrita a seguir.
+Para verificar se a nota já foi autorizada, você terá que efetuar uma [consulta](#nfcom_consulta).
 
 ## Consulta
 
@@ -472,216 +96,73 @@ curl -u "token obtido no cadastro da empresa:" \
   https://homologacao.focusnfe.com.br/v2/nfcom/12345
 ```
 
-```java
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
+> Exemplos de respostas da API por **status**:
+>
+> **Sucesso**
+>
+> Código HTTP: `200 OK`
 
-public class NFComConsulta {
-
-  public static void main(String[] args){
-
-    String login = "Token_obtido_no_cadastro_da_empresa";
-
-    /* Substituir pela sua identificação interna da nota. */
-    String ref = "12345";
-
-    /* Para ambiente de produção utilize a variável abaixo:
-    String server = "https://api.focusnfe.com.br/"; */
-    String server = "https://homologacao.focusnfe.com.br/";
-
-    String url = server.concat("v2/nfcom/"+ref+"?completa=1");
-
-    /* Configuração para realizar o HTTP BasicAuth. */
-    Object config = new DefaultClientConfig();
-    Client client = Client.create((ClientConfig) config);
-    client.addFilter(new HTTPBasicAuthFilter(login, ""));
-
-    WebResource request = client.resource(url);
-
-    ClientResponse resposta = request.get(ClientResponse.class);
-
-    int httpCode = resposta.getStatus();
-
-    String body = resposta.getEntity(String.class);
-
-    /* As três linhas abaixo imprimem as informações retornadas pela API.
-     * Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(httpCode);
-    System.out.printf(body);
-  }
+```json
+{
+    "cnpj_emitente": "53681445000141",
+    "ref": "teste_emissao_nfcom",
+    "status": "cancelado",
+    "status_sefaz": "135",
+    "mensagem_sefaz": "Evento registrado e vinculado a NFCom ",
+    "chave": "NFCom41250353681445000141620010000000061006102424",
+    "numero": "6",
+    "serie": "1",
+    "modelo": "62",
+    "caminho_xml": "https://focusnfe.s3.sa-east-1.amazonaws.com/arquivos_development/53681445000141_721/202503/XMLs/NFCom41250353681445000141620010000000061006102424-nfcom.xml",
+    "caminho_xml_cancelamento": "https://focusnfe.s3.sa-east-1.amazonaws.com/arquivos_development/53681445000141_721/202503/XMLs/41250353681445000141620010000000061006102424-nfcom-can.xml"
 }
 ```
 
-```ruby
-# encoding: UTF-8
+> **Não foi encontrada uma NFCom para a refêrencia informada**
+>
+> Código HTTP: `404 Not Found`
 
-require "net/http"
-require "net/https"
-
-# token enviado pelo suporte
-token = "codigo_alfanumerico_token"
-
-# referência da nota - deve ser única para cada nota enviada
-ref = "id_referencia_nota"
-
-# endereço da api que deve ser utilizado conforme o ambiente: produção ou homologação
-servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "https://homologacao.focusnfe.com.br/"
-
-# no caso do ambiente de envio ser em produção, utilizar servidor_producao
-url_envio = servidor_homologacao + "v2/nfcom/" + ref
-
-# criamos um objeto uri para envio da nota
-uri = URI(url_envio)
-# também criamos um objeto da classe HTTP a partir do host da uri
-http = Net::HTTP.new(uri.hostname, uri.port)
-
-# aqui criamos um objeto da classe Get a partir da uri de requisição
-requisicao = Net::HTTP::Get.new(uri.request_uri)
-
-# adicionamos o token à requisição
-requisicao.basic_auth(token, '')
-
-# no envio de notas em produção, é necessário utilizar o protocolo ssl
-# para isso, basta retirar o comentário da linha abaixo
-# http.use_ssl = true
-
-# aqui enviamos a requisição ao servidor e obtemos a resposta
-resposta = http.request(requisicao)
-
-# imprimimos o código HTTP da resposta
-puts "Código retornado pela requisição: " + resposta.code
-
-# imprimimos o corpo da resposta
-puts "Corpo da resposta: " + resposta.body
-
+```json
+{
+    "codigo": "nao_encontrado",
+    "mensagem": "Nfcom não encontrado"
+}
 ```
 
-```javascript
-/*
-As orientacoes a seguir foram extraídas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
-"Here's how to include the module in your project and use as the browser-based XHR object.
-Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work."
-*/
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+Para consultar uma **NFCom** utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de testes.
 
-var request = new XMLHttpRequest();
+**Método HTTP:** `GET`
 
-var token = "Token_obtido_no_cadastro_da_empresa";
-
-// Substituir pela sua identificação interna da nota
-var ref = "12345";
-
-/*
-Para ambiente de produção utilize a URL abaixo:
-"https://api.focusnfe.com.br"
-*/
-var url = "https://homologacao.focusnfe.com.br/v2/nfcom/" + ref + "?completa=1";
-
-/*
-Utilize o valor 'false' como terceiro parâmetro para que a requisição aguarde a resposta da API.
-Passamos o token como quarto parâmetro deste método como autenticador do HTTP Basic Authentication.
-*/
-request.open('GET', url, false, token);
-
-request.send();
-
-// Sua aplicação terá que tratar as respostas da API.
-console.log("HTTP code: " + request.status);
-console.log("Corpo: " + request.responseText);
-
-```
-
-```php
-<?php
-/* Você deverá definir isso globalmente para sua aplicação.
-Para ambiente de produção utilize a variável abaixo:
-$server = "https://api.focusnfe.com.br"; */
-$server = "https://homologacao.focusnfe.com.br";
-// Substituir a variável ref pela sua identificação interna da nota.
-$ref = "12345";
-$login = "token obtido no cadastro da empresa";
-$password = "";
-// Inicie o processo de envio das informações usando o cURL.
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $server."/v2/nfcom/" . $ref);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_HTTPHEADER, array());
-curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
-$body = curl_exec($ch);
-$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-// As próximas três linhas são um exemplo de como imprimir as informações de retorno da API.
-print($http_code."\n");
-print($body."\n\n");
-print("");
-curl_close($ch);
-?>
-```
-
-```python
-# Faça o download e a instalação da biblioteca requests, através do python-pip.
-import requests
-
-# Para ambiente de produção utilize a variável abaixo:
-# url = "https://api.focusnfe.com.br"
-url = "https://homologacao.focusnfe.com.br/v2/nfcom/"
-
-# Substituir pela sua identificação interna da nota
-ref = "12345"
-
-token="token obtido no cadastro da empresa"
-
-# Utilize este parâmetro para obter mais informações em suas consultas
-completa = "completa=1"
-
-r = requests.get(url+ref, params=completa, auth=(token,""))
-
-# Imprimimos na tela o codigo HTTP da requisição e a mensagem de retorno da API
-print(r.status_code, r.text)
-```
-
-Para consultar uma NFCom utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de testes.
-
-Consultar as informações de uma NFCom:
-
-`https://api.focusnfe.com.br/v2/nfcom/REFERENCIA?completa=(0|1)`
-
-Utilize o comando **HTTP GET** para consultar a nota através da API.
+**URL:** `https://api.focusnfe.com.br/v2/nfcom/REFERENCIA?completa=(0|1)`
 
 Parâmetro Opcional | Ação
 -------|-------|
-completa = 0 ou 1 | Habilita a API para mostrar campos adicionais na requisição de consulta.
+completa = 0 ou 1 | Habilita a API há mostrar campos adicionais na requisição de consulta.
 
 Campos de retorno:
 
+* **cnpj_emitente**: O CNPJ emitente da NFCom (o CNPJ de sua empresa).
+* **ref**: A referência da emissão.
 * **status**: A situação atual da NFCom, podendo ser:
-  - **processando_autorizacao**: A nota ainda está em processamento pela API. Você deverá aguardar o processamento pela SEFAZ.
   - **autorizado**: A nota foi autorizada. Neste caso, é fornecido os dados completos da nota, como chave e arquivos para download.
   - **cancelado**: O documento foi cancelado. Neste caso, é fornecido o caminho para download do XML de cancelamento (caminho_xml_cancelamento).
   - **erro_autorizacao**: Houve um erro de autorização por parte da SEFAZ. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. É possível fazer o reenvio da nota com a mesma referência, se ela estiver neste estado.
   - **denegado**: O documento foi denegado. A SEFAZ pode denegar uma nota se houver algum erro cadastral nos dados do destinatário ou do emitente. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. Não é possível reenviar a nota caso este estado seja alcançado, pois é gerado um número, série, chave de NFCom e XML para esta nota. O XML deverá ser armazenado pelo mesmo período de uma nota autorizada ou cancelada.
 * **status_sefaz**: O status da nota na SEFAZ.
 * **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
-* **serie**: A série da nota fiscal, caso ela tenha sido autorizada.
-* **numero**: O número da nota fiscal, caso ela tenha sido autorizada.
-* **cnpj_emitente**: O CNPJ do emitente da nota fiscal (o CNPJ de sua empresa).
-* **ref**: A referência da emissão.
-* **chave_nfcom**: A chave da NFCom, caso ela tenha sido autorizada.
-* **caminho_xml_nota_fiscal**: Caso a nota tenha sido autorizada, retorna o caminho para download do XML.
+* **chave**: A chave da NFCom, caso ela tenha sido autorizada.
+* **numero**: O número da NFCom, caso ela tenha sido autorizada.
+* **serie**: A série da NFCom, caso ela tenha sido autorizada.
+* **modelo**: O modelo da NFCom, caso ela tenha sido autorizada.
+* **caminho_xml**: Caso a nota tenha sido autorizada, retorna o caminho para download do XML.
 * **caminho_danfecom**: Caso a nota tenha sido autorizada retorna o caminho para download do DANFe-COM.
 * **caminho_xml_cancelamento**: Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.
 
 Caso na requisição seja passado o parâmetro `completa=1` serão adicionados 4 campos:
 
-* **requisicao_nota_fiscal**: Inclui os dados completos da requisição da nota fiscal, da mesma forma que constam no XML da nota.
-* **protocolo_nota_fiscal**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
-* **requisicao_cancelamento**: Inclui os dados completos da requisição de cancelamento da nota fiscal.
+* **requisicao**: Inclui os dados completos da requisição da NFCom, da mesma forma que constam no XML da nota.
+* **protocolo**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
+* **requisicao_cancelamento**: Inclui os dados completos da requisição de cancelamento da NFCom.
 * **protocolo_cancelamento**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
 
 ## Cancelamento
@@ -692,216 +173,39 @@ curl -u "token obtido no cadastro da empresa:" \
   https://homologacao.focusnfe.com.br/v2/nfcom/12345
 ```
 
+> Exemplos de respostas da API por **status**:
+>
+> **Sucesso**
+>
+> Código HTTP: `200 OK`
 
-```java
-import java.util.HashMap;
-import org.codehaus.jettison.json.JSONObject;
-import com.sun.jersey.api.client.Client;
-import com.sun.jersey.api.client.ClientResponse;
-import com.sun.jersey.api.client.WebResource;
-import com.sun.jersey.api.client.config.ClientConfig;
-import com.sun.jersey.api.client.config.DefaultClientConfig;
-import com.sun.jersey.api.client.filter.HTTPBasicAuthFilter;
-
-public class NFComCancelamento {
-
-  public static void main(String[] args){
-
-    String login = "Token_obtido_no_cadastro_da_empresa";
-
-    /* Substituir pela sua identificação interna da nota. */
-    String ref = "12345";
-
-    /* Para ambiente de produção utilize a variável abaixo:
-    String server = "https://api.focusnfe.com.br/"; */
-    String server = "https://homologacao.focusnfe.com.br/";
-
-    String url = server.concat("v2/nfcom/"+ref);
-    /* Aqui criamos um hashmap para receber a chave "justificativa" e o valor desejado. */
-    HashMap<String, String> justificativa = new HashMap<String, String>();
-    justificativa.put("justificativa", "Informe aqui a sua justificativa para realizar o cancelamento da NFCom.");
-
-    /* Criamos um objeto JSON para receber a hash com os dados esperado pela API. */
-    JSONObject json = new JSONObject(justificativa);
-
-    /* Configuração para realizar o HTTP BasicAuth. */
-    Object config = new DefaultClientConfig();
-    Client client = Client.create((ClientConfig) config);
-    client.addFilter(new HTTPBasicAuthFilter(login, ""));
-
-    WebResource request = client.resource(url);
-
-    ClientResponse resposta = request.delete(ClientResponse.class, json);
-
-    int httpCode = resposta.getStatus();
-
-    String body = resposta.getEntity(String.class);
-
-     /* As três linhas abaixo imprimem as informações retornadas pela API.
-        Aqui o seu sistema deverá interpretar e lidar com o retorno. */
-    System.out.print("HTTP Code: ");
-    System.out.print(httpCode);
-    System.out.printf(body);
-  }
+```json
+{
+    "status": "cancelado",
+    "status_sefaz": "135",
+    "mensagem_sefaz": "Evento registrado e vinculado a NFCom ",
+    "caminho_xml": "https://focusnfe.s3.sa-east-1.amazonaws.com/arquivos_development/53681445000141_721/202503/XMLs/41250353681445000141620010000000091034577557-nfcom-can.xml"
 }
 ```
 
-```ruby
-# encoding: UTF-8
+> **NFCom ainda não processada**
+>
+> Código HTTP: `400 Bad Request`
 
-require "net/http"
-require "net/https"
-require "json"
-
-# token enviado pelo suporte
-token = "codigo_alfanumerico_token"
-
-# referência da nota - deve ser única para cada nota enviada
-ref = "id_referencia_nota"
-
-# endereço da api que deve ser utilizado conforme o ambiente: produção ou homologação
-servidor_producao = "https://api.focusnfe.com.br/"
-servidor_homologacao = "https://homologacao.focusnfe.com.br/"
-
-# no caso do ambiente de envio ser em produção, utilizar servidor_producao
-url_envio = servidor_homologacao + "v2/nfcom/" + ref
-
-# altere os campos conforme a nota que será enviada
-justificativa_cancelamento = {
-  justificativa: "Informe aqui a sua justificativa para realizar o cancelamento da NFCom."
+```json
+{
+    "codigo": "nao_autorizado",
+    "mensagem": "NFCom não autorizado"
 }
-
-# criamos um objeto uri para envio da nota
-uri = URI(url_envio)
-
-# também criamos um objeto da classe HTTP a partir do host da uri
-http = Net::HTTP.new(uri.hostname, uri.port)
-
-# aqui criamos um objeto da classe Delete a partir da uri de requisição
-requisicao = Net::HTTP::Delete.new(uri.request_uri)
-
-# adicionamos o token à requisição
-requisicao.basic_auth(token, '')
-
-# convertemos a hash de justificativa do cancelamento para o formato JSON e adicionamos ao corpo da requisição
-requisicao.body = justificativa_cancelamento.to_json
-
-# no envio de notas em produção, é necessário utilizar o protocolo ssl
-# para isso, basta retirar o comentário da linha abaixo
-# http.use_ssl = true
-
-# aqui enviamos a requisição ao servidor e obtemos a resposta
-resposta = http.request(requisicao)
-
-# imprimimos o código HTTP da resposta
-puts "Código retornado pela requisição: " + resposta.code
-
-# imprimimos o corpo da resposta
-puts "Corpo da resposta: " + resposta.body
-
 ```
 
-```javascript
-/*
-As orientações a seguir foram extraidas do site do NPMJS: https://www.npmjs.com/package/xmlhttprequest
-"Here's how to include the module in your project and use as the browser-based XHR object.
-Note: use the lowercase string "xmlhttprequest" in your require(). On case-sensitive systems (eg Linux) using uppercase letters won't work."
-*/
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+Para cancelar uma **NFCom**, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de testes.
 
-var request = new XMLHttpRequest();
+**Método HTTP:** `DELETE`
 
-var token = "Token_obtido_no_cadastro_da_empresa";
+**URL:** `https://api.focusnfe.com.br/v2/nfcom/REFERENCIA`
 
-// Substituir pela sua identificação interna da nota.
-var ref = "12345";
-
-/*
-Para ambiente de producao utilize a URL abaixo:
-"https://api.focusnfe.com.br"
-*/
-var url = "https://homologacao.focusnfe.com.br/v2/nfcom/"+ ref;
-
-/*
-Utilize o valor 'false' como terceiro parâmetro para que a requisicao aguarde a resposta da API.
-Passamos o token como quarto parâmetro deste método como autenticador do HTTP Basic Authentication.
-*/
-request.open('DELETE', url, false, token);
-
-var cancelar = {
-  "justificativa": "Informe aqui a sua justificativa para realizar o cancelamento da NFCom."
-};
-
-// Aqui fazemos a serialização do JSON com os dados da nota e enviamos através do método utilizado.
-request.send(JSON.stringify(cancelar));
-
-// Sua aplicação terá que tratar as respostas da API.
-console.log("HTTP code: " + request.status);
-console.log("Corpo: " + request.responseText);
-
-```
-
-```php
-<?php
-/* Você deverá definir isso globalmente para sua aplicação.
-Para ambiente de produção utilize a variável abaixo:
-$server = "https://api.focusnfe.com.br"; */
-$server = "https://homologacao.focusnfe.com.br";
-// Substituir a variável ref pela sua identificação interna da nota.
-$ref = "12345";
-$login = "token obtido no cadastro da empresa";
-$password = "";
-$justificativa = array ("justificativa" => "Informe aqui a sua justificativa para realizar o cancelamento da NFCom.");
-// Inicie o processo de envio das informações utilizando o cURL.
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, $server . "/v2/nfcom/" . $ref);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
-curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($justificativa));
-curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-curl_setopt($ch, CURLOPT_USERPWD, "$login:$password");
-$body = curl_exec($ch);
-$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-// As próximas três linhas são um exemplo de como imprimir as informações de retorno da API.
-print($http_code."\n");
-print($body."\n\n");
-print("");
-curl_close($ch);
-?>
-```
-
-```python
-# Faça o download e a instalação da biblioteca requests, através do python-pip.
-import json
-import requests
-
-# Para ambiente de produção utilize a variável abaixo:
-# url = "https://api.focusnfe.com.br"
-url = "https://homologacao.focusnfe.com.br/v2/nfcom/"
-
-# Substituir pela sua identificação interna da nota
-ref = "12345"
-
-token="token obtido no cadastro da empresa"
-
-# Usamos um dicionário para armazenar os campos e valores que
-# serão convertidos para JSON e enviados para nossa API
-justificativa={}
-justificativa["justificativa"] = "Informe aqui a sua justificativa para realizar o cancelamento da NFCom."
-
-r = requests.delete(url+ref, data=json.dumps(justificativa), auth=(token,""))
-
-# Imprimimos na tela o código HTTP da requisição e a mensagem de retorno da API
-print(r.status_code, r.text)
-```
-
-Para cancelar uma NFCom, basta fazer uma requisição à URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de testes.
-
-Cancelar uma NFCom já autorizada:
-
-`https://api.focusnfe.com.br/v2/nfcom/REFERENCIA`
-
-Utilize o comando **HTTP DELETE** para cancelar a nota através da API.
+Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
 
 O parâmetro de cancelamento deverá ser enviado da seguinte forma:
 
@@ -912,7 +216,7 @@ A API devolverá os seguintes campos:
 * **status**: cancelado, caso a nota seja cancelada, ou erro_cancelamento, se houve algum erro ao cancelar a nota.
 * **status_sefaz**: O status do cancelamento na SEFAZ.
 * **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
-* **caminho_xml_cancelamento**: Caso a nota tenha sido cancelada, será informado aqui o caminho para download do XML de cancelamento.
+* **caminho_xml**: Caso a nota tenha sido cancelada, será informado aqui o caminho para download do XML de cancelamento.
 
 ### Prazo de cancelamento
 A NFCom poderá ser cancelada em até 24 horas após a emissão. No entanto, alguns estados podem permitir um prazo maior para o cancelamento.
