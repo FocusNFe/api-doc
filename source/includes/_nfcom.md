@@ -2,11 +2,9 @@
 
 Através da API NFCom é possível:
 
-* Emitir NFCom (Nota Fiscal de Serviço de Comunicação Eletrônica) utilizando dados simplificados.
+* Emitir NFCom (Nota Fiscal de Serviço de Comunicação Eletrônica) utilizando dados simplificados. Este processo é **assíncrono**. Ou seja, após a emissão a nota será enfileirada para processamento.
 * Consultar o status de NFCom emitidas.
 * Cancelar NFCom.
-
-Todos os processos envolvendo NFCom são **síncronos**. Ou seja, a emissão não é feita em segundo plano, ao contrário da NFe e NFSe.
 
 ## URLs
 
