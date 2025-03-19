@@ -1,4 +1,4 @@
-# NFCom (beta)
+# NFCom
 
 Através da API NFCom é possível:
 
@@ -455,13 +455,14 @@ print(r.status_code, r.text)
 
 Para enviar uma NFCom utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de testes. 
 
-Envia uma NFCom para autorização:
+Envia uma **NFCom** para autorização:
 
 `https://api.focusnfe.com.br/v2/nfcom?ref=REFERENCIA`
 
 Utilize o comando **HTTP POST** para enviar a nota para a API. Envie no corpo do POST os dados da nota fiscal em formato JSON.
 
-A numeração da nota (número e série), pode ser definida automaticamente pela API. É recomendado deixar a numeração sob nossa responsabilidade, por questões de simplicidade. Entretanto, você pode controlar o envio destas informações pela sua aplicação, basta informar os campos **“numero”** e **“serie”** nos dados de envio.
+Nesta etapa, é feita uma primeira validação dos dados da nota. Caso ocorra algum problema, por exemplo, algum campo faltante, formato incorreto
+ou algum problema com o emitente a nota **não será aceita para processamento** e será devolvida a mensagem de erro apropriada. Veja a seção [erros](#introducao_erros).
 
 O envio da NFCom é um processo **síncrono**, ou seja, diferente da NFe, a nota é autorizada ou rejeitada na mesma requisição. A resposta da requisição irá conter o mesmo resultado que a operação da consulta, descrita a seguir.
 
@@ -652,36 +653,36 @@ Consultar as informações de uma NFCom:
 
 `https://api.focusnfe.com.br/v2/nfcom/REFERENCIA?completa=(0|1)`
 
-Utilize o comando **HTTP GET** para consultar a nota através da API.
+Utilize o comando **HTTP GET** para consultar a sua nota para nossa API.
 
 Parâmetro Opcional | Ação
 -------|-------|
-completa = 0 ou 1 | Habilita a API para mostrar campos adicionais na requisição de consulta.
+completa = 0 ou 1 | Habilita a API há mostrar campos adicionais na requisição de consulta.
 
 Campos de retorno:
 
+* **cnpj_emitente**: O CNPJ emitente da NFCom (o CNPJ de sua empresa).
+* **ref**: A referência da emissão.
 * **status**: A situação atual da NFCom, podendo ser:
-  - **processando_autorizacao**: A nota ainda está em processamento pela API. Você deverá aguardar o processamento pela SEFAZ.
   - **autorizado**: A nota foi autorizada. Neste caso, é fornecido os dados completos da nota, como chave e arquivos para download.
   - **cancelado**: O documento foi cancelado. Neste caso, é fornecido o caminho para download do XML de cancelamento (caminho_xml_cancelamento).
   - **erro_autorizacao**: Houve um erro de autorização por parte da SEFAZ. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. É possível fazer o reenvio da nota com a mesma referência, se ela estiver neste estado.
   - **denegado**: O documento foi denegado. A SEFAZ pode denegar uma nota se houver algum erro cadastral nos dados do destinatário ou do emitente. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. Não é possível reenviar a nota caso este estado seja alcançado, pois é gerado um número, série, chave de NFCom e XML para esta nota. O XML deverá ser armazenado pelo mesmo período de uma nota autorizada ou cancelada.
 * **status_sefaz**: O status da nota na SEFAZ.
 * **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
-* **serie**: A série da nota fiscal, caso ela tenha sido autorizada.
-* **numero**: O número da nota fiscal, caso ela tenha sido autorizada.
-* **cnpj_emitente**: O CNPJ do emitente da nota fiscal (o CNPJ de sua empresa).
-* **ref**: A referência da emissão.
-* **chave_nfcom**: A chave da NFCom, caso ela tenha sido autorizada.
-* **caminho_xml_nota_fiscal**: Caso a nota tenha sido autorizada, retorna o caminho para download do XML.
+* **chave**: A chave da NFCom, caso ela tenha sido autorizada.
+* **numero**: O número da NFCom, caso ela tenha sido autorizada.
+* **serie**: A série da NFCom, caso ela tenha sido autorizada.
+* **modelo**: O modelo da NFCom, caso ela tenha sido autorizada.
+* **caminho_xml**: Caso a nota tenha sido autorizada, retorna o caminho para download do XML.
 * **caminho_danfecom**: Caso a nota tenha sido autorizada retorna o caminho para download do DANFe-COM.
 * **caminho_xml_cancelamento**: Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.
 
 Caso na requisição seja passado o parâmetro `completa=1` serão adicionados 4 campos:
 
-* **requisicao_nota_fiscal**: Inclui os dados completos da requisição da nota fiscal, da mesma forma que constam no XML da nota.
-* **protocolo_nota_fiscal**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
-* **requisicao_cancelamento**: Inclui os dados completos da requisição de cancelamento da nota fiscal.
+* **requisicao**: Inclui os dados completos da requisição da NFCom, da mesma forma que constam no XML da nota.
+* **protocolo**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
+* **requisicao_cancelamento**: Inclui os dados completos da requisição de cancelamento da NFCom.
 * **protocolo_cancelamento**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
 
 ## Cancelamento
@@ -901,7 +902,7 @@ Cancelar uma NFCom já autorizada:
 
 `https://api.focusnfe.com.br/v2/nfcom/REFERENCIA`
 
-Utilize o comando **HTTP DELETE** para cancelar a nota através da API.
+Utilize o comando **HTTP DELETE** para cancelar a sua nota para nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
 
 O parâmetro de cancelamento deverá ser enviado da seguinte forma:
 
