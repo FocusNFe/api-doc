@@ -90,6 +90,27 @@ Para CTe:
 
 Ressaltamos que os campos devolvidos são os mesmos da consulta da CTe. Veja o tópico [**Consulta**](https://focusnfe.com.br/doc/#cte-e-cte-os_consulta) na categoria Cte e CTe OS.
 
+Para NFCom:
+
+* **cnpj_emitente**: O CNPJ emitente da NFCom (o CNPJ de sua empresa).
+* **ref**: A referência da emissão.
+* **status**: A situação atual da NFCom, podendo ser:
+  - **autorizado**: A nota foi autorizada. Neste caso, é fornecido os dados completos da nota, como chave e arquivos para download.
+  - **cancelado**: O documento foi cancelado. Neste caso, é fornecido o caminho para download do XML de cancelamento (caminho_xml_cancelamento).
+  - **erro_autorizacao**: Houve um erro de autorização por parte da SEFAZ. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. É possível fazer o reenvio da nota com a mesma referência, se ela estiver neste estado.
+  - **denegado**: O documento foi denegado. A SEFAZ pode denegar uma nota se houver algum erro cadastral nos dados do destinatário ou do emitente. A mensagem de erro você encontrará nos campos status_sefaz e mensagem_sefaz. Não é possível reenviar a nota caso este estado seja alcançado, pois é gerado um número, série, chave de NFCom e XML para esta nota. O XML deverá ser armazenado pelo mesmo período de uma nota autorizada ou cancelada.
+* **status_sefaz**: O status da nota na SEFAZ.
+* **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
+* **chave**: A chave da NFCom, caso ela tenha sido autorizada.
+* **numero**: O número da NFCom, caso ela tenha sido autorizada.
+* **serie**: A série da NFCom, caso ela tenha sido autorizada.
+* **modelo**: O modelo da NFCom, caso ela tenha sido autorizada.
+* **caminho_xml**: Caso a nota tenha sido autorizada, retorna o caminho para download do XML.
+* **caminho_danfecom**: Caso a nota tenha sido autorizada retorna o caminho para download do DANFe-COM.
+* **caminho_xml_cancelamento**: Caso a nota esteja cancelada, é fornecido o caminho para fazer o download do XML de cancelamento.
+
+Ressaltamos que os campos devolvidos são os mesmos da consulta da NFCom. Veja o tópico [**Consulta**](https://focusnfe.com.br/doc/#nfcom_consulta) na categoria NFCom.
+
 A vantagem de utilizar gatilhos é que não haverá a necessidade de fazer "polling" (realizar constantes requisições a fim de verificar o status da nota).
 
 Na ocorrência de falha na execução do POST para a URL definida (exemplo: servidor fora do ar ou alguma resposta HTTP diferente de 20X) a API tentará um reenvio nos seguintes intervalos: 1 minuto, 30 minutos, 1 hora, 3 horas, 24 horas até o momento em que a API irá desistir de acionar o gatilho.
@@ -133,6 +154,10 @@ Os seguintes eventos causam o acionamento do gatilho:
   * Erro na emissão de uma MDFe
   * Emissão de MDFe realizada com sucesso
   * MDFe Denegada
+* **NFCom**:
+  * Erro na emissão de uma NFCom
+  * Emissão de NFCom realizada com sucesso
+  * NFCom Denegada
 
 ## Criação
 ```python
@@ -309,7 +334,7 @@ Utilize o método HTTP POST para criar um novo gatilho. Esta requisição aceita
 
 *  **cnpj** – CNPJ da empresa. Se o CNPJ for omitido, o gatilho será acionado para todas as emissões feitas pelo token em questão.
 *  **cpf** – CPF da empresa/prestador do serviço. Se o CPF for omitido, o gatilho será acionado para todas as emissões feitas pelo token em questão.
-*  **event** – Informe qual evento que gostará de escutar: nfe, nfse, nfsen, nfce_contingencia, nfce_correcao_timeout, nfe_recebida, nfse_recebida, cte_recebida, inutilizacao, cte, mdfe
+*  **event** – Informe qual evento que gostará de escutar: nfe, nfse, nfsen, nfce_contingencia, nfce_correcao_timeout, nfe_recebida, nfse_recebida, cte_recebida, inutilizacao, cte, mdfe, nfcom
 *  **url** – URL que deverá ser chamada quando o gatilho for ativado
 *  **authorization** – (opcional) O valor que for informado neste campo será devolvido no acionamento do gatilho no cabeçalho "Authorization".
 Desta forma você poderá por exemplo informar um token secreto para garantir que apenas nossa API acione a sua URL.
@@ -659,7 +684,8 @@ Para isso é disponibilizado um endereço para cada tipo de documento que aceita
 * NFSe: `https://api.focusnfe.com.br/v2/nfse/REFERENCIA/hook`
 * CTe: `https://api.focusnfe.com.br/v2/cte/REFERENCIA/hook`
 * NFe Recebida: `https://api.focusnfe.com.br/v2/nfes_recebidas/CHAVE_NFE/hook`
-* NFSe Nacional: `https://api.focusnfe.com.br/v2/nfsen/CHAVE_NFE/hook`
+* NFSe Nacional: `https://api.focusnfe.com.br/v2/nfsen/REFERENCIA/hook`
+* NFCom: `https://api.focusnfe.com.br/v2/nfcom/REFERENCIA/hook`
 
 O corpo da requisição do método POST pode ser vazio.
 
