@@ -6,8 +6,11 @@ Através da API CTe é possível:
 * Emitir CTe OS (outros serviços) utilizando dados simplificados. Este processo é **síncrono**. Ou seja, na mesma requisição é feito processamento da CTe.
 * Cancelar uma CTe de qualquer modelo.
 * Consultar o status de CTe emitidas.
-* Emitir os eventos: carta de correção, prestação em desacordo, registro multimodal e informações GTV (apenas CTe OS)
-* Inutilizar uma faixa de numeração de CTe de qualquer modelo
+* Emitir os eventos:
+  * Carta de correção
+  * Prestação do serviço em desacordo
+  * Registro de multimodal (apenas para CTe)
+  * Informações da GTV (apenas para CTeOS)
 
 ## URLs
 
@@ -19,6 +22,9 @@ POST |  /v2/cte_os?ref=REFERENCIA | Emite uma CTe OS.
 GET  | /v2/cte/REFERENCIA | Consulta a CTe com a referência informada e o seu status de processamento
 DELETE |  /v2/cte/REFERENCIA  | Cancela uma CTe com a referência informada
 POST |  /v2/cte/REFERENCIA/carta_correcao | Cria uma carta de correção para a CTe com a referência informada.
+POST |  /v2/cte/REFERENCIA/desacordo | Registra o evento de "Prestação do serviço em desacordo" para a CTe com a referência informada.
+POST |  /v2/cte/REFERENCIA/registro_multimodal | Registra o evento de "Registro de multimodal" para a CTe com a referência informada.
+POST |  /v2/cte/REFERENCIA/dados_gtv | Registra o evento de "Informações da GTV" para a CTe com a referência informada.
 
 ## Campos de um CTe
 
@@ -168,6 +174,7 @@ HTTP CODE/STATUS | Status API Focus | Descrição | Correção
 409 - conflict | cte_em_processamento | Já existe um CT-e utilizando essa referencia e ele está em processamento | Altere a referência da requisição e tente novamente.
 404 - not found | nao_encontrado | CT-e não encontrado| CT-e informado na requisição não foi encontrado.
 400 - bad request | nao_autorizado| CT-e não autorizado | CT-e informado na requisição não foi autorizado, informe o evento GTV apenas para CTe O.S(modelo 67).
+400 - bad request | certificado_vencido | O certificado do emitente está vencido | É necessário renovar ou adquirir um novo certificado digital modelo A1.
 400 - bad request | requisicao_invalida | Sua requisição é inválida porque alguns dos paramêtros básicos não foram cumpridos. Entre em contato com o nosso suporte.
 
 

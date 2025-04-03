@@ -484,6 +484,7 @@ HTTP CODE/STATUS | Status API Focus | Descrição | Correção
 400 - bad request | requisicao_invalida | CNPJ do emitente não autorizado ou não informado. | Verifique o campo "cnpj_emitente" em seu JSON. É preciso habilitar a emissão de NFe no cadastro do emitente(Painel API).
 400 - bad request | requisicao_invalida | CNPJ/UF do emitente não autorizado ou não informado. | Verifique os campos "cnpj_emitente" e "uf_emitente". É preciso habilitar a emissão de NFe no cadastro do emitente(Painel API).
 403 - forbidden | permissao_negada | CNPJ do emitente não autorizado. | O emitente utilizado não está autorizado a emitir NFe ou foi informado o CNPJ do emitente incorretamente no JSON.
+400 - bad request | certificado_vencido | O certificado do emitente está vencido | É necessário renovar ou adquirir um novo certificado digital modelo A1.
 
 ## Envio
 
