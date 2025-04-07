@@ -236,6 +236,7 @@ HTTP CODE/STATUS | Status API Focus | Descrição | Correção
 400 - bad request | ref_ausente | Parâmetro "ref" não informado | É necessário usar o parâmetro 'ref' nessa requisição com a API. Consulte a nossa documentação.
 422 - unprocessable entity | ambiente_nao_configurado | Ambiente não configurado para emissão de NFCe | O ambiente de emissão de NFCe não foi configurado para o seu emitente. Entre em contato com a nossa equipe de suporte.
 422 - unprocessable entity | empresa_nao_configurada | Empresa não configurada para emissão de NFCe | É necessário informar no cadastro do emitente(Painel API) o CSC e id_token(gerados na Sefaz do Estado do emitente), para emissão de NFCe.
+400 - bad request | certificado_vencido | O certificado do emitente está vencido | É necessário renovar ou adquirir um novo certificado digital modelo A1.
 
 ## Envio
 
