@@ -4294,3 +4294,63 @@ O cancelamento de um evento de Conciliação Financeira (ECONF) é feito a parti
 Quando houver mais de uma conciliação financeira vinculada a mesma NFe, o cancelamento dos eventos deve ser feito na mesma ordem dos envios, ou seja, do evento mais antigo para o mais recente.
 
 Caso você tente cancelar um protocolo fora da ordem esperada pela SEFAZ, será retornado a rejeição `Código 460 - Rejeicao: Protocolo do Evento difere do cadastrado`.
+
+## Eventos
+
+```shell
+curl -u "token obtido no cadastro da empresa:" \
+  -X POST -d '{"tipo_evento":"NOME_EVENTO"}' \
+  https://homologacao.focusnfe.com.br/v2/nfe/12345/evento
+```
+
+> Exemplos de respostas da API por **status** para a requisição de um evento:
+> autorizado
+
+```json
+{
+  "status_sefaz": "135",
+  "mensagem_sefaz": "Evento registrado e vinculado a NF-e",
+  "status": "autorizado",
+  "caminho_xml_evento_prorrogacao_suspensao_icms": "/arquivos_development/07504505000132_25/202406/XMLs/41240607504505000132550030000007431804923238-pro-icms-01.xml",
+  "numero_evento_prorrogacao_suspensao_icms": 1
+}
+```
+
+> requisicao_invalida
+
+```json
+{
+  "codigo": "requisicao_invalida",
+  "mensagem": "Parâmetro \"tipo_evento\" não informado"
+}
+```
+
+Registrar um **Evento** a uma NFe já autorizada:
+
+`https://api.focusnfe.com.br/v2/nfe/REFERENCIA/evento`
+
+Utilize o comando **HTTP POST** para registrar um **evento** a sua nota para nossa API. Este método é síncrono, ou seja, a comunicação com a SEFAZ será feita imediatamente e devolvida a resposta na mesma requisição.
+
+Cada tipo de evento possui seus próprios parâmetros específicos. No entanto, todos os eventos exigem o envio do parâmetro comum:
+
+* **tipo_evento**: Identifica qual evento será registrado na nota.
+
+A seguir, detalhamos os parâmetros específicos para cada tipo de evento.
+
+### Evento de pedido de prorrogação da suspensão do ICMS na remessa para industrialização
+
+Para registrar este evento, utilize os seguintes parâmetros:
+
+* **tipo_evento**: (Obrigatório) Deve ser informado com o valor fixo: **prorrogacao_suspensao_icms**.
+* **itens_pedido**: (Opcional) Array com informações dos itens para os quais deseja solicitar a prorrogação da suspensão do ICMS.
+Caso este campo não seja informado, a prorrogação será solicitada para todos os itens da nota.
+  * **numero_item**: (Integer) Número do item na NFe.
+  * **quantidade_item**: (Float) Quantidade do item para a qual se solicita a prorrogação.
+
+A API irá em seguida devolver os seguintes campos:
+
+* **status_sefaz**: O status do evento na SEFAZ.
+* **mensagem_sefaz**: Mensagem descritiva da SEFAZ detalhando o status.
+* **status**: autorizado, se o evento for registrado com sucesso, ou erro_autorizacao, se houve algum erro no registro do evento.
+* **caminho_xml_evento_prorrogacao_suspensao_icms**: Caso a evento tenha sido registrado, será informado aqui o caminho para download do XML do evento de prorrogação da suspensão do ICMS na remessa para industrialização.
+* **numero_evento_prorrogacao_suspensao_icms**: O número sequencial do evento.
