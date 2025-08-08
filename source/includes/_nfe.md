@@ -4304,7 +4304,10 @@ curl -u "token obtido no cadastro da empresa:" \
 ```
 
 > Exemplos de respostas da API por **status** para a requisição de um evento:
-> autorizado
+>
+> **Sucesso**
+>
+> Código HTTP: `200 OK`
 
 ```json
 {
@@ -4316,7 +4319,22 @@ curl -u "token obtido no cadastro da empresa:" \
 }
 ```
 
-> requisicao_invalida
+> **Erro Sefaz**
+>
+> Código HTTP: `200 OK`
+
+```json
+{
+    "evento": "evento_prorrogacao_suspensao_icms",
+    "status_sefaz": "298",
+    "mensagem_sefaz": "Assinatura difere do padrao do Projeto",
+    "status": "erro_autorizacao"
+}
+```
+
+> **Parâmetro não informado**
+>
+> Código HTTP: `400 Bad Request`
 
 ```json
 {
@@ -4324,6 +4342,29 @@ curl -u "token obtido no cadastro da empresa:" \
   "mensagem": "Parâmetro \"tipo_evento\" não informado"
 }
 ```
+
+> **Nota fiscal não emitida**
+>
+> Código HTTP: `400 Bad Request`
+
+```json
+{
+    "codigo": "nfe_nao_autorizada",
+    "mensagem": "Nota fiscal não autorizada."
+}
+```
+
+> **Nota fiscal já cancelada**
+>
+> Código HTTP: `422 Unprocessable Content`
+
+```json
+{
+    "codigo": "already_processed",
+    "mensagem": "A nota fiscal foi cancelada"
+}
+```
+
 
 Registrar um **Evento** a uma NFe já autorizada:
 
