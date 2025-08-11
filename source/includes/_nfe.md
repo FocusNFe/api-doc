@@ -4380,6 +4380,15 @@ A seguir, detalhamos os parâmetros específicos para cada tipo de evento.
 
 ### Evento de pedido de prorrogação da suspensão do ICMS na remessa para industrialização
 
+> **Exemplo "Evento de pedido de prorrogação da suspensão do ICMS na remessa para industrialização"**
+> 
+
+```shell
+curl -u "token obtido no cadastro da empresa:" \
+  -X POST -d '{"tipo_evento":"prorrogacao_suspensao_icms", "itens_pedido": [{"numero_item": 1, "quantidade_item": 1.0}, {"numero_item": 2, "quantidade_item": 3.0}]}' \
+  https://homologacao.focusnfe.com.br/v2/nfe/12345/evento
+```
+
 Para registrar este evento, utilize os seguintes parâmetros:
 
 * **tipo_evento**: (Obrigatório) Deve ser informado com o valor fixo: **prorrogacao_suspensao_icms**.
