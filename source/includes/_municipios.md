@@ -188,6 +188,7 @@ Os parâmetros disponíveis para consulta dos municípios são atualmente os seg
 * sigla_uf: Busca pela sigla do estado, ex: PR
 * nome_municipio: Busca pelo nome exato do município. Ex: Curitiba irá devolver apenas um registro
 * nome: Busca por parte do nome do município. Ex: Curitiba irá devolver os municípios "Curitiba" e "Curitibanos"
+* status_nfse: Filtra pelo status da NFSe no município. Valores aceitos: "ativo", "fora_do_ar", "pausado", "em_implementacao", "em_reimplementacao", "inativo". Qualquer outro valor resulta em HTTP 400 (Bad Request).
 
 Caso já saiba o código exato do município, você pode efetuar a busca diretamente em:
 
@@ -216,7 +217,9 @@ Caso já saiba o código exato do item da lista de serviço ou do código tribut
     "nome_municipio": "Curitibanos",
     "sigla_uf": "SC",
     "nome_uf": "Santa Catarina",
-    "nfse_habilitada": false
+    "nfse_habilitada": false,
+    "status_nfse": null,
+    "data_previsao_reimplementacao_nfse": null
   },
   {
     "codigo_municipio": "4106902",
@@ -232,7 +235,9 @@ Caso já saiba o código exato do item da lista de serviço ou do código tribut
     "cpf_cnpj_obrigatorio_nfse": null,
     "codigo_cnae_obrigatorio_nfse": true,
     "item_lista_servico_obrigatorio_nfse": false,
-    "codigo_tributario_municipio_obrigatorio_nfse": false
+    "codigo_tributario_municipio_obrigatorio_nfse": false,
+    "status_nfse": "ativo",
+    "data_previsao_reimplementacao_nfse": null
   }
 ]
 ```
@@ -271,6 +276,8 @@ Para cada consulta à nossa API de municípios a resposta trará um ou mais obje
 * **codigo_cnae_obrigatorio_nfse**: Se a NFSe para este município está implementada, esse campo irá indicar se o município precisa informar o código cnae para emissão deste documento. O valor 'true' indica a obrigatoriedade, o valor 'false' indica a não obrigatoriedade e o valor 'null' indica a ausência dessa informação no sistema.
 * **item_lista_servico_obrigatorio_nfse**: Se a NFSe para este município está implementada, esse campo irá indicar se o município precisa informar o item da lista de serviço para emissão deste documento. Caso seu valor seja 'true', a busca pelos possíveis valores pode ser feita como exemplificada anteriormente.  O valor 'true' indica a obrigatoriedade, o valor 'false' indica a não obrigatoriedade e o valor 'null' indica a ausência dessa informação no sistema.
 * **codigo_tributario_municipio_obrigatorio_nfse**: Se a NFSe para este município está implementada, esse campo irá indicar se o município precisa informar o código tributário do município para emissão deste documento. Caso seu valor seja 'true', a busca pelos possíveis valores pode ser feita como exemplificada anteriormente.  O valor 'true' indica a obrigatoriedade, o valor 'false' indica a não obrigatoriedade e o valor 'null' indica a ausência dessa informação no sistema.
+* **status_nfse**: Status operacional da NFSe no município. Valores possíveis: "ativo", "fora_do_ar", "pausado", "em_implementacao", "em_reimplementacao", "inativo".
+* **data_previsao_reimplementacao_nfse**: Data prevista para conclusão da reimplementação da NFSe no município, no formato ISO 8601 (YYYY-MM-DD). Pode ser 'null' quando não houver previsão.
 
 Considere que novos campos poderão ser adicionados nesta API.
 
