@@ -115,6 +115,14 @@ A vantagem de utilizar gatilhos é que não haverá a necessidade de fazer "poll
 
 Na ocorrência de falha na execução do POST para a URL definida (exemplo: servidor fora do ar ou alguma resposta HTTP diferente de 20X) a API tentará um reenvio nos seguintes intervalos: 1 minuto, 30 minutos, 1 hora, 3 horas, 24 horas até o momento em que a API irá desistir de acionar o gatilho.
 
+### Desativação automática de Webhooks
+
+Para garantir a estabilidade e performance da nossa API, webhooks que apresentarem falhas constantes de entrega serão monitorados automaticamente.
+
+Caso um webhook acumule falhas durante 7 dias (não necessariamente consecutivos) e sem sucessos neste período, ele será desativado automaticamente pelo sistema. Esse processo visa evitar impactos nas filas e na experiência geral dos demais clientes.
+
+Recomenda-se que os endpoints de recebimento estejam sempre disponíveis, para garantir o correto funcionamento da integração.
+
 ## Status API
 
 Aqui você encontra os status possíveis para os gatilhos (webhooks).
@@ -493,7 +501,13 @@ console.log("Corpo: " + request.responseText);
   "authorization": null,
   "authorization_header": null,
   "event": "nfe",
-  "cnpj": "51916585000125"
+  "count_since": "2025-10-06T05:38:45-03:00",
+  "request_count": 4,
+  "error_count": 0,
+  "success_count": 4,
+  "empresa_id": 1,
+  "cnpj": "51916585000125",
+  "nome": "Minha Empresa"
 }
 ```
 
@@ -508,6 +522,22 @@ Para consultar apenas um gatilho individualmente, utilize a URL:
 `https://api.focusnfe.com.br/v2/hooks/HOOK_ID`
 
 Substituindo HOOK_ID pelo identificador do gatilho.
+
+### Campos retornados
+
+* **id**: Identificador único do webhook.
+* **url**: URL de destino configurada para o envio dos eventos.
+* **authorization**: Token ou chave de autorização utilizada para autenticação do webhook (caso aplicável).
+* **authorization_header**: Cabeçalho HTTP utilizado para envio da autorização, como por exemplo `Authorization: Bearer {token}`.
+* **event**: Nome do evento que dispara o envio do webhook.
+* **count_since**: Data da primeira tentativa de entrega registrada para este webhook.
+* **request_count**: Número total de tentativas de envio realizadas.
+* **error_count**: Quantidade de tentativas que resultaram em falha.
+* **success_count**: Quantidade de tentativas que foram bem-sucedidas.
+* **empresa_id**: Identificador único da empresa associada ao webhook.
+* **cnpj**: CNPJ da empresa associada ao webhook.
+* **cpf**: CPF da empresa associada ao webhook.
+* **nome**: Nome da empresa associada ao webhook.
 
 ## Exclusão
 ```python
