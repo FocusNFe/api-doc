@@ -522,7 +522,7 @@ Para consultar apenas um gatilho individualmente, utilize a URL:
 
 Substituindo HOOK_ID pelo identificador do gatilho.
 
-### Campos retornados
+### Campos devolvidos
 
 * **id**: Identificador único do webhook.
 * **url**: URL de destino configurada para o envio dos eventos.
