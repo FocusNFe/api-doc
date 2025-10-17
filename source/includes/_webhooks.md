@@ -528,11 +528,11 @@ Substituindo HOOK_ID pelo identificador do gatilho.
 * **url**: URL de destino configurada para o envio dos eventos.
 * **authorization**: Token ou chave de autorização utilizada para autenticação do webhook (caso aplicável).
 * **authorization_header**: Cabeçalho HTTP utilizado para envio da autorização, como por exemplo `Authorization: Bearer {token}`.
-* **event**: Nome do evento que dispara o envio do webhook.
-* **count_since**: Data da primeira tentativa de entrega registrada para este webhook.
-* **request_count**: Número total de tentativas de envio realizadas.
-* **error_count**: Quantidade de tentativas que resultaram em falha.
-* **success_count**: Quantidade de tentativas que foram bem-sucedidas.
+* **event**: Tipo de evento que dispara o envio do webhook.
+* **count_since**: Data de início da janela atual de métricas de reputação.
+* **request_count**: Número total de tentativas de entrega realizadas durante a janela atual de métricas.
+* **error_count**: Número de tentativas de entrega que resultaram em falha durante a janela atual de métricas.
+* **success_count**: Número de tentativas de entrega bem-sucedidas durante a janela atual de métricas.
 * **empresa_id**: Identificador único da empresa associada ao webhook.
 * **cnpj**: CNPJ da empresa associada ao webhook.
 * **cpf**: CPF da empresa associada ao webhook.
