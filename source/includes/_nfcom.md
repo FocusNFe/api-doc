@@ -87,6 +87,16 @@ onde eventualmente será processada (processamento assíncrono). Com isto, a not
 
 Para verificar se a nota já foi autorizada, você terá que efetuar uma [consulta](#nfcom_consulta).
 
+### Emissão em contingência offline
+
+Para enviar uma NFCom em contingência offline utilize a URL abaixo, alterando o ambiente de produção para homologação, caso esteja emitindo notas de teste.
+
+`https://api.focusnfe.com.br/v2/nfcom?ref=REFERENCIA&contingencia=1`
+
+É importante ressaltar que atualmente não há a possibilidade de envio de NFCom em contingência offline de forma automática, apenas de forma manual, utilizando o parâmetro **contingencia=1**.
+
+Ao enviar a NFCom por este endpoint, a NFCom será autorizada de forma síncrona com o status HTTP 201 (created) **sem comunicação com a SEFAZ**, fazendo uma tentativa de efetivação posterior. 
+
 ## Consulta
 
 ```shell
@@ -162,6 +172,11 @@ Caso na requisição seja passado o parâmetro `completa=1` serão adicionados 4
 * **protocolo**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
 * **requisicao_cancelamento**: Inclui os dados completos da requisição de cancelamento da NFCom.
 * **protocolo_cancelamento**: Inclui os dados completos do protocolo devolvido pela SEFAZ.
+
+Caso a NFCom tenha sido emitida em contingência, serão adicionados os seguintes campos:
+
+* **contingencia_offline**: O valor 'true' indica que a emissão foi feita em contingência offline
+* **contingencia_offline_efetivada**: Indica se a NFCom já foi efetivada (transmitida) para a SEFAZ.
 
 ## Cancelamento
 
