@@ -115,13 +115,12 @@ A vantagem de utilizar gatilhos é que não haverá a necessidade de fazer "poll
 
 Na ocorrência de falha na execução do POST para a URL definida (exemplo: servidor fora do ar ou alguma resposta HTTP diferente de 20X) a API tentará um reenvio nos seguintes intervalos: 1 minuto, 30 minutos, 1 hora, 3 horas, 24 horas até o momento em que a API irá desistir de acionar o gatilho.
 
-### Desativação automática de Webhooks
+### Monitoramento de Reputação
 
-Para garantir a estabilidade e performance da nossa API, webhooks que apresentarem falhas constantes de entrega serão monitorados automaticamente.
+A reputação dos endpoints de entrega é monitorada ativamente, considerando uma janela de avaliação rolante (últimos 2 dias). 
+Caso um webhook acumule majoritariamente falhas de entrega por 7 dias, será desativado automaticamente. Webhooks saudáveis, que enfrentem eventuais problemas mas voltem a ter entregas bem-sucedidas, não devem ser afetados.
 
-Caso um webhook acumule falhas durante 7 dias (não necessariamente consecutivos) e sem sucessos neste período, ele será desativado automaticamente pelo sistema. Esse processo visa evitar impactos nas filas e na experiência geral dos demais clientes.
-
-Recomenda-se que os endpoints de recebimento estejam sempre disponíveis, para garantir o correto funcionamento da integração.
+Para garantir o correto funcionamento da integração recomenda-se que os endpoints estejam sempre disponíveis.
 
 ## Status API
 
