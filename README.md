@@ -28,6 +28,8 @@ Edite os arquivos markdown em `source/includes`, visualize o resultado em [local
 
 ### Deploy
 
+#### Legado
+
 Executado automaticamente via _GitHub Actions_ a cada [*release*](https://github.com/FocusNFe/api-doc/releases) criada.
 
 #### Deploy Manual
@@ -37,6 +39,28 @@ Caso deseje fazer deploy manual, faça build localmente e subir arquivos para _m
 sudo docker run --rm --name slate -v $(pwd)/build:/srv/slate/build -v $(pwd):/srv/slate slatedocs/slate build
 scp -s -r ./build/* USER@HOST:/var/www/doc/
 ```
+
+#### Provisorio(Novo)
+
+Nossa documentação está passando por um processo de **migração**. Durante esse período, para publicar atualizações da documentação da API, siga os passos abaixo:
+
+##### 1. Gerar os arquivos de build
+
+No diretório raiz do projeto, execute o script:
+
+```bash
+./slate.sh build
+```
+
+Esse comando criará uma pasta chamada `build`, que conterá todos os arquivos estáticos necessários para a publicação no novo site.
+
+##### 2. Publicar no novo repositório
+
+Após gerar os arquivos, copie o conteúdo da pasta `build` para `doc` do [repositório do novo site](https://github.com/FocusNFe/site_focus_2025).
+
+##### 3. Realizar o deploy
+
+Realize o **merge** na branch `main`. O **deploy** será executado automaticamente através do **GitHub Actions**.
 
 ### TODO
 
