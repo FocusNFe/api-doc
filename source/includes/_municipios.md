@@ -218,7 +218,7 @@ Caso já saiba o código exato do item da lista de serviço ou do código tribut
     "sigla_uf": "SC",
     "nome_uf": "Santa Catarina",
     "nfse_habilitada": false,
-    "status_nfse": null,
+    "status_nfse": "nao_implementado",
     "data_previsao_reimplementacao_nfse": null
   },
   {
