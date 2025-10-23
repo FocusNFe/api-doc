@@ -188,7 +188,7 @@ Os parâmetros disponíveis para consulta dos municípios são atualmente os seg
 * sigla_uf: Busca pela sigla do estado, ex: PR
 * nome_municipio: Busca pelo nome exato do município. Ex: Curitiba irá devolver apenas um registro
 * nome: Busca por parte do nome do município. Ex: Curitiba irá devolver os municípios "Curitiba" e "Curitibanos"
-* status_nfse: Filtra pelo status da NFSe no município. Valores aceitos: "ativo", "fora_do_ar", "pausado", "em_implementacao", "em_reimplementacao", "inativo". Qualquer outro valor resulta em HTTP 400 (Bad Request).
+* status_nfse: Busca pelo status da emissão de NFSe no município. Valores aceitos: "ativo", "fora_do_ar", "pausado", "em_implementacao", "em_reimplementacao", "inativo", "nao_implementado"
 
 Caso já saiba o código exato do município, você pode efetuar a busca diretamente em:
 
