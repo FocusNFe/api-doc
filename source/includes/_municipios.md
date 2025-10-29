@@ -219,8 +219,6 @@ Caso já saiba o código exato do item da lista de serviço ou do código tribut
     "nome_uf": "Santa Catarina",
     "nfse_habilitada": false,
     "status_nfse": "nao_implementado",
-    "data_previsao_reimplementacao_nfse": null,
-    "ultima_emissao_nfse": null
   },
   {
     "codigo_municipio": "4106902",
