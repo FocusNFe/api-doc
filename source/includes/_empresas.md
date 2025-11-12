@@ -52,7 +52,12 @@ Abaixo são listados todos os campos de uma empresa.
    "arquivo_certificado_base64":"MIIj4gIBAzCCI54GCSqGSIb3DQEHAaCC..apagado…ASD==",
    "senha_certificado":123456,
    "csc_nfce_producao":"ABCDEF",
-   "id_token_nfce_producao":"00001"
+   "id_token_nfce_producao":"00001",
+   "habilita_nfcom": true,
+   "proximo_numero_nfcom_producao": 1,
+   "proximo_numero_nfcom_homologacao": 1,
+   "serie_nfcom_producao": "1",
+   "serie_nfcom_homologacao": "1"
 }
 ```
 
@@ -79,6 +84,7 @@ Abaixo são listados todos os campos de uma empresa.
 | habilita_nfe                                       | booleano         | Sim        | N/A         | N/A         | Informa se empresa será habilitada para emissão de NFe – Nota Fiscal Eletrônica modelo 55
 | habilita_nfce                                      | booleano         | N/A        | Sim         | N/A         | Informa se empresa será habilitada para emissão de NFCe – Nota Fiscal ao Consumidor Eletrônica modelo 65
 | habilita_nfse                                      | booleano         | N/A        | N/A         | Sim _*_     | Informa se empresa será habilitada para emissão de NFSe – Nota Fiscal de Serviço Eletrônica. _* Não pode ser habilitada simultaneamente com NFSe Nacional em produção (campo habilita_nfsen_producao)_
+| habilita_nfcom                                     | booleano         | N/A        | N/A         | N/A         | Informa se empresa será habilitada para emissão de NFCom – Nota Fiscal de Comunicação
 | habilita_nfsen_producao                            | booleano         | N/A        | N/A         | Sim _*_     | Informa se empresa será habilitada para emissão de NFSe Nacional em ambiente de produção – Nota Fiscal de Serviço Eletrônica Nacional. _* Não pode ser habilitada simultaneamente com NFSe (campo habilita_nfse)_
 | habilita_nfsen_homologacao                         | booleano         | N/A        | N/A         | Sim         | Informa se empresa será habilitada para emissão de NFSe Nacional em ambiente de homologação – Nota Fiscal de Serviço Eletrônica Nacional
 | habilita_cte                                       | booleano         | N/A        | N/A         | N/A         | Informa se empresa será habilitada para emissão de CTe ou CTeOS (Conhecimento de Transporte)
@@ -119,6 +125,10 @@ Abaixo são listados todos os campos de uma empresa.
 | proximo_numero_nfsen_homologacao                   | numérico         | N/A        | N/A         |             | Próximo número do RPS da NFSe Nacional a ser emitida em homologação. Calculado automaticamente.
 | serie_nfsen_producao                               | numérico         | N/A        | N/A         |             | Série do RPS para envio de NFSe Nacional em produção. Algumas prefeituras não utilizam.
 | serie_nfsen_homologacao                            | numérico         | N/A        | N/A         |             | Série do RPS para envio de NFSe Nacional em homologação. Algumas prefeituras não utilizam.
+| proximo_numero_nfcom_producao                      | numérico         | N/A        | N/A         | N/A         | Próximo número da NFCom a ser emitida em produção. Calculado automaticamente.
+| proximo_numero_nfcom_homologacao                   | numérico         | N/A        | N/A         | N/A         | Próximo número da NFCom a ser emitida em homologação. Calculado automaticamente.
+| serie_nfcom_producao                               | numérico         | N/A        | N/A         | N/A         | Série da NFCom a ser emitida em produção. Valor padrão: 1
+| serie_nfcom_homologacao                            | numérico         | N/A        | N/A         | N/A         | Série da NFCom a ser emitida em homologação. Valor padrão: 1
 | proximo_numero_cte_producao                        | numérico         |            | N/A         | N/A         | Próximo número da CTe a ser emitida em produção. Calculado automaticamente.
 | proximo_numero_cte_homologacao                     | numérico         |            | N/A         | N/A         | Próximo número da CTe a ser emitida em homologação. Calculado automaticamente.
 | serie_cte_producao                                 | numérico         |            | N/A         | N/A         | Série da CTe a ser emitida em produção. Valor padrão: 1
@@ -214,6 +224,7 @@ Uma empresa pode ser criada usando o seguinte endereço
   "habilita_nfce": false,
   "habilita_nfe": false,
   "habilita_nfse": false,
+  "habilita_nfcom": false,
   "habilita_nfsen_producao": false,
   "habilita_nfsen_homologacao": false,
   "habilita_cte": false,
@@ -250,6 +261,10 @@ Uma empresa pode ser criada usando o seguinte endereço
   "serie_nfse_homologacao": null,
   "serie_nfsen_producao": null,
   "serie_nfsen_homologacao": null,
+  "proximo_numero_nfcom_producao": null,
+  "proximo_numero_nfcom_homologacao": null,
+  "serie_nfcom_producao": null,
+  "serie_nfcom_homologacao": null,
   "proximo_numero_nfce_producao": null,
   "proximo_numero_nfce_homologacao": null,
   "serie_nfce_producao": null,
@@ -433,6 +448,7 @@ curl -X PUT -u "token obtido no cadastro da empresa:" \
   "habilita_nfce": false,
   "habilita_nfe": false,
   "habilita_nfse": false,
+  "habilita_nfcom": false,
   "habilita_nfsen_producao": false,
   "habilita_nfsen_homologacao": false,
   "habilita_cte": false,
@@ -469,6 +485,10 @@ curl -X PUT -u "token obtido no cadastro da empresa:" \
   "serie_nfse_homologacao": null,
   "serie_nfsen_producao": null,
   "serie_nfsen_homologacao": null,
+  "proximo_numero_nfcom_producao": null,
+  "proximo_numero_nfcom_homologacao": null,
+  "serie_nfcom_producao": null,
+  "serie_nfcom_homologacao": null,
   "proximo_numero_nfce_producao": null,
   "proximo_numero_nfce_homologacao": null,
   "serie_nfce_producao": null,
@@ -656,6 +676,7 @@ curl -X DELETE -u "token obtido no cadastro da empresa:" \
   "habilita_nfce": false,
   "habilita_nfe": false,
   "habilita_nfse": false,
+  "habilita_nfcom": false,
   "habilita_nfsen_producao": false,
   "habilita_nfsen_homologacao": false,
   "habilita_cte": false,
@@ -692,6 +713,10 @@ curl -X DELETE -u "token obtido no cadastro da empresa:" \
   "serie_nfse_homologacao": null,
   "serie_nfsen_producao": null,
   "serie_nfsen_homologacao": null,
+  "proximo_numero_nfcom_producao": null,
+  "proximo_numero_nfcom_homologacao": null,
+  "serie_nfcom_producao": null,
+  "serie_nfcom_homologacao": null,
   "proximo_numero_nfce_producao": null,
   "proximo_numero_nfce_homologacao": null,
   "serie_nfce_producao": null,
@@ -835,6 +860,7 @@ curl -u "token obtido no cadastro da empresa:" \
   "habilita_nfce": false,
   "habilita_nfe": false,
   "habilita_nfse": false,
+  "habilita_nfcom": false,
   "habilita_nfsen_producao": false,
   "habilita_nfsen_homologacao": false,
   "habilita_cte": false,
@@ -871,6 +897,10 @@ curl -u "token obtido no cadastro da empresa:" \
   "serie_nfse_homologacao": null,
   "serie_nfsen_producao": null,
   "serie_nfsen_homologacao": null,
+  "proximo_numero_nfcom_producao": null,
+  "proximo_numero_nfcom_homologacao": null,
+  "serie_nfcom_producao": null,
+  "serie_nfcom_homologacao": null,
   "proximo_numero_nfce_producao": null,
   "proximo_numero_nfce_homologacao": null,
   "serie_nfce_producao": null,
@@ -986,6 +1016,7 @@ curl -u "token obtido no cadastro da empresa:" \
     "habilita_nfce": false,
     "habilita_nfe": false,
     "habilita_nfse": false,
+    "habilita_nfcom": false,
     "habilita_nfsen_producao": false,
     "habilita_nfsen_homologacao": false,
     "habilita_cte": false,
@@ -1022,6 +1053,10 @@ curl -u "token obtido no cadastro da empresa:" \
     "serie_nfse_homologacao": null,
     "serie_nfsen_producao": null,
     "serie_nfsen_homologacao": null,
+    "proximo_numero_nfcom_producao": null,
+    "proximo_numero_nfcom_homologacao": null,
+    "serie_nfcom_producao": null,
+    "serie_nfcom_homologacao": null,
     "proximo_numero_nfce_producao": null,
     "proximo_numero_nfce_homologacao": null,
     "serie_nfce_producao": null,
