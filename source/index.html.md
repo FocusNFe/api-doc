@@ -54,7 +54,7 @@ meta:
 <aside>
 Esta é a documentação da API para a versão mais recente (v2).
 <br/>
-<strong>Aviso:</strong> A documentação oficial da API está em migração. Consulte a versão em progresso em <a href="http://doc.focusnfe.com.br/">aqui</a>.
+<strong>Aviso:</strong> A documentação oficial da API está em migração. Consulte a versão em progresso <a href="http://doc.focusnfe.com.br/">aqui</a>.
 </aside>
 
 A API da Focus NFe permite que você emita ou consulte documentos fiscais (NFe, NFSe, NFCe) a partir do seu sistema, seja qual for a tecnologia que ele utilize através da geração de dados em um formato simplificado, sem a necessidade de gerar a assinatura digital destes documentos. A API ainda gerencia toda a comunicação com os servidores da SEFAZ de cada estado ou com os servidores da prefeitura, no caso de NFSe.
