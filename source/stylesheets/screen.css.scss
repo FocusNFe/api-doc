@@ -757,3 +757,33 @@ html, body {
 .postman-buttom-link img{
   width: 70px;
 }
+
+
+/* REFORMA TRIBUTARIA Style */
+
+.content aside.warning {
+  background-color: #d68971;
+}
+.content aside.warning a {
+  color:#ffe6a9;
+}
+.content aside.success {
+  background-color: #80aa5b;
+}
+.content ins {
+  color: #376c16;
+  text-decoration: none;
+}
+.content ins a {
+  color:#99b830;
+}
+
+.content ins strong::after, .ins-rt {
+  content: "(RT)";
+  font-size: 0.75em;
+  font-weight: normal;
+  line-height: 0;
+  position: relative;
+  top: -0.4em;
+  margin: 0 0 0 4px;
+}

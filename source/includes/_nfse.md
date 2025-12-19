@@ -20,13 +20,22 @@ POST|/v2/nfse/REFERENCIA/email | Envia um email com uma cópia da nota fiscal co
 ## Campos
 
 Cada prefeitura pode utilizar um formato diferente de XML, mas utilizando nossa API você utiliza um formato único de campos para todas as prefeituras.
-**OBSERVAÇÃO**: Alguns municípios podem ter campos adicionais ou algumas regras específicas para preenchimento de campos. Uma boa prática é consultar a nossa [lista de municípios atendidos](https://focusnfe.com.br/cidades-atendidas/) e ver as orientações a respeito das especificidades dos campos em sua cidade, em especial os destacados na sequência:
-* natureza_operacao
-* item_lista_servico
-* codigo_cnae
-* codigo_tributario_municipio
 
 A listagem completa dos campos segue abaixo. Aqueles denotados com (*) são obrigatórios.
+
+<aside class="success">
+Campos novos da <b>Reforma Tributária</b> são denotados com <sup>(RT)</sup> e destacados em <b>verde</b>.
+<br/>
+Durante a transição, alguns municípios podem não aceitar ou não interpretar estes campos.
+</aside>
+
+<aside class="warning">
+<b>ATENÇÃO</b>: Alguns municípios podem ter campos adicionais ou regras específicas para preenchimento de campos.
+Estas exceções tem se mostrado frequentes em função da <b>Reforma Tributária</b>.
+<br/>
+Consulte nossa <b><a href="https://focusnfe.com.br/cidades-integradas-nfse/">lista de municípios integrados</a></b> para orientações sobre especificidades de seu município.
+</aside>
+
 
 ### Geral
 
@@ -73,7 +82,7 @@ A listagem completa dos campos segue abaixo. Aqueles denotados com (*) são obri
   - **4**: Imune;
   - **5**: Exigibilidade suspensa por decisão judicial;
   - **6**: Exigibilidade suspensa por procedimento administrativo.
-- **regime_especial_tributacao**: (String) Informar o código de identificação do regime especial de tributação conforme abaixo. Campo ignorado em alguns municípios.
+- **regime_especial_tributacao**: (String) Código de identificação do regime especial de tributação conforme abaixo. Campo ignorado em alguns municípios.
   - **1**: Microempresa municipal;
   - **2**: Estimativa;
   - **3**: Sociedade de profissionais;
@@ -98,9 +107,15 @@ informar o número do RPS que será substituído. Municípios que seguem o padr�
   - **inscricao_municipal**(*): (String). Inscrição municipal do prestador de serviços. Caracteres não numéricos são ignorados.
 
 ### Tomador
+
 - **tomador**:
   - **cpf**(*): (String) CPF do tomador, se aplicável. Caracteres não numéricos são ignorados.
   - **cnpj**(*): (String) CNPJ do tomador, se aplicável. Caracteres não numéricos são ignorados.
+  - <ins> **nif**: (String) NIF (Número de Identificação Fiscal) do tomador estrangeiro, fornecido por órgão de administração tributária no exterior, se aplicável.</ins>
+  - <ins> **motivo_ausencia_nif**: (String) Motivo para não informação do NIF do tomador estrangeiro, se aplicável.</ins>
+      - <ins>0: Não informado na nota de origem</ins>
+      - <ins>1: Dispensado do NIF</ins>
+      - <ins>2: Não exigência do NIF</ins>
   - **inscricao_municipal**: (String) Inscrição municipal do tomador. Caracteres não numéricos são ignorados.
   - **razao_social**: (String) Razão social ou nome do tomador. Tamanho: 115 caracteres.
   - **telefone**: (String) Telefone do tomador. Tamanho: 11 caracteres.
@@ -133,19 +148,30 @@ informar o número do RPS que será substituído. Municípios que seguem o padr�
   - **aliquota**: (Decimal) Aliquota do ISS. Algumas cidades permitem usar 4 dígitos decimais.
   - **desconto_incondicionado**: (Decimal) Valor do desconto incondicionado. Campo ignorado em alguns municípios.
   - **desconto_condicionado**: (Decimal) Valor do desconto condicionado. Campo ignorado em alguns municípios.
-  - **item_lista_servico**(*): (String) Informar o código da lista de serviços, normalmente de acordo com a Lei Complementar 116/2003.
-  - **codigo_cnae**: (String) Informar o código CNAE de 7 dígitos. Campo ignorado em alguns municípios.
-  - **codigo_tributario_municipio**: (String) Informar o código tributário de acordo com a tabela de cada município (não há um padrão).
+  - **item_lista_servico**(*): (String) Código da lista de serviços, normalmente de acordo com a Lei Complementar 116/2003. <ins>Com a Reforma Tributária, alguns municípios passaram adotar o padrão nacional (vide [Tabela Lista Serviço Nacional](https://www.gov.br/nfse/pt-br/biblioteca/documentacao-tecnica/documentacao-atual/anexo_b-nbs2-lista_servico_nacional-snnfse.xlsx)).</ins>
+  - **codigo_cnae**: (String) Código CNAE de 7 dígitos. Campo ignorado em alguns municípios.
+  - **codigo_tributario_municipio**: (String) Código tributário de acordo com a tabela de cada município (não há um padrão).
   - **discriminacao**(*): (String) Discriminação dos serviços. Tamanho: Varia por município.
-  - **codigo_municipio**(*): (String) Informar o código IBGE de 7 dígitos do município de prestação do serviço.
+  - **codigo_municipio**(*): (String) Código IBGE de 7 dígitos do município de prestação do serviço.
   - **percentual_total_tributos**: (Decimal) Percentual aproximado de todos os impostos, de acordo com a Lei da Transparência. No momento disponível apenas alguns municípios.
-  - **fonte_total_tributos**: (String) Fonte de onde foi retirada a informação de total de impostos, por exemplo, “IBPT”. No momento disponível apenas para alguns municípios.
+  - **fonte_total_tributos**: (String) Fonte de onde foi retirada a informação de total de impostos, por exemplo, "IBPT". No momento disponível apenas para alguns municípios.
+  - <ins> **codigo_nbs**: (String) Código da lista de Nomenclatura Brasileira de Serviços (vide [Tabela NBS](https://www.gov.br/mdic/pt-br/images/REPOSITORIO/scs/decos/NBS/NBSa_2-0.csv)).</ins>
+  - <ins> **codigo_indicador_operacao**: (String) Código indicador de operação (vide [Tabela IndOp](https://www.gov.br/nfse/pt-br/biblioteca/documentacao-tecnica/rtc/anexovii-indop_ibscbs_v1-00-00.xlsx)).</ins>
+  - <ins> **ibs_cbs_classificacao_tributaria**: (String) Código de Classificação Tributária do IBS e CBS (vide [Tabela de Correlação NBS-cClassTrib](https://www.gov.br/nfse/pt-br/biblioteca/documentacao-tecnica/rtc/anexoviii-correlacaoitemnbsindopcclasstrib_ibscbs_v1-00-00.xlsx) e [Tabela de Classificação Tributária](https://dfe-portal.svrs.rs.gov.br/DFE/ClassificacaoTributaria)).</ins>
+  - <ins> **ibs_cbs_situacao_tributaria**: (String) Código de Situação Tributária do IBS e CBS (vide tabelas acima).</ins>
+  - <ins> **ibs_cbs_base_calculo**: (Decimal) Base de cálculo do IBS e CBS.</ins>
 
 ### Intermediário
+
 - **intermediario** (esta seção é ignorada se não suportada pelo município)
   - **razao_social**: (String) Razão social do intermediário do serviço. Tamanho: 115 caracteres.
   - **cpf**: (String) CPF do intermediário do serviço, se aplicável. Caracteres não numéricos são ignorados.
   - **cnpj**: (String) CNPJ do intermediário do serviço, se aplicável. Caracteres não numéricos são ignorados.
+  - <ins> **nif**: (String) NIF (Número de Identificação Fiscal) do intermediário estrangeiro, fornecido por órgão de administração tributária no exterior, se aplicável.</ins>
+  - <ins> **motivo_ausencia_nif**: (String) Motivo para não informação do NIF do intermediário estrangeiro, se aplicável.</ins>
+      - <ins>0: Não informado na nota de origem</ins>
+      - <ins>1: Dispensado do NIF</ins>
+      - <ins>2: Não exigência do NIF</ins>
   - **inscricao_municipal**: (String) Inscrição municipal do intermediário do serviço, se aplicável. Caracteres não numéricos são ignorados.
 
 
