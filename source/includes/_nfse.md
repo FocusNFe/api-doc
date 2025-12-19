@@ -23,18 +23,19 @@ Cada prefeitura pode utilizar um formato diferente de XML, mas utilizando nossa 
 
 A listagem completa dos campos segue abaixo. Aqueles denotados com (*) são obrigatórios.
 
-<aside class="warning">
-<b>ATENÇÃO</b>: Alguns municípios podem ter campos adicionais ou regras específicas para preenchimento de campos.
-Estas exceções tem se mostrado frequentes em função da <b>Reforma Tributária</b>.
-<br/>
-Consulte nossa <a href="https://focusnfe.com.br/cidades-integradas-nfse/">lista de municípios atendidos</a> para orientações a respeito de especificidades em seu município.
-</aside>
-
 <aside class="success">
 Campos novos da <b>Reforma Tributária</b> são denotados com <sup>(RT)</sup> e destacados em <b>verde</b>.
 <br/>
 Durante a transição, alguns municípios podem não aceitar ou não interpretar estes campos.
 </aside>
+
+<aside class="warning">
+<b>ATENÇÃO</b>: Alguns municípios podem ter campos adicionais ou regras específicas para preenchimento de campos.
+Estas exceções tem se mostrado frequentes em função da <b>Reforma Tributária</b>.
+<br/>
+Consulte nossa <b><a href="https://focusnfe.com.br/cidades-integradas-nfse/">lista de municípios integrados</a></b> para orientações sobre especificidades de seu município.
+</aside>
+
 
 ### Geral
 
