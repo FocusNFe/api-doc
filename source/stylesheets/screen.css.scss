@@ -766,9 +766,14 @@ html, body {
 }
 .content aside.warning a {
   color:#ffe6a9;
+  font-weight: bold;
 }
 .content aside.success {
   background-color: #80aa5b;
+}
+.content aside.success a {
+  color:#ffe6a9;
+  font-weight: bold;
 }
 .content ins {
   color: #376c16;
