@@ -48,8 +48,12 @@ meta:
 
 ---
 
-
 # Introdução
+
+<aside style="background-color: #ea5b0c; color: #ffffff; position: sticky; top: 0; z-index: 99;">
+  <div><strong>Reforma Tributária</strong>: Acesse nossos <a href="https://focusnfe.com.br/guides/reforma-tributaria/" target="_blank" style="color: #f8dd55; font-weight: bold;">Guides</a> e veja o que muda na integração com a API.</div>
+  <div style="margin-top: 0.5em;"><strong>Aviso</strong>: Esta documentação está em migração, consulte a <a href="http://doc.focusnfe.com.br/" target="_blank" style="color: #f8dd55;font-weight: bold;">nova documentação</a> em progresso.</div>
+</aside>
 
 <aside>
 Esta é a documentação da API para a versão mais recente (v2).
