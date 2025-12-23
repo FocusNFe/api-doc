@@ -162,6 +162,12 @@ informar o número do RPS que será substituído. Municípios que seguem o padr�
   - <ins> **ibs_cbs_classificacao_tributaria**: (String) Código de Classificação Tributária do IBS e CBS (vide [Tabela de Correlação NBS-cClassTrib](https://www.gov.br/nfse/pt-br/biblioteca/documentacao-tecnica/rtc/anexoviii-correlacaoitemnbsindopcclasstrib_ibscbs_v1-00-00.xlsx) e [Tabela de Classificação Tributária](https://dfe-portal.svrs.rs.gov.br/DFE/ClassificacaoTributaria)).</ins>
   - <ins> **ibs_cbs_situacao_tributaria**: (String) Código de Situação Tributária do IBS e CBS (vide tabelas acima).</ins>
   - <ins> **ibs_cbs_base_calculo**: (Decimal) Base de cálculo do IBS e CBS.</ins>
+  - <ins> **ibs_uf_aliquota**: (Decimal) Alíquota da UF para IBS da localidade de incidência.</ins>
+  - <ins> **ibs_mun_aliquota**: (Decimal) Alíquota do Município para IBS da localidade de incidência.</ins>
+  - <ins> **cbs_aliquota**: (Decimal) Alíquota da União para CBS.</ins>
+  - <ins> **ibs_uf_valor**: (Decimal) Valor do IBS da UF calculado.</ins>
+  - <ins> **ibs_mun_valor**: (Decimal) Valor do IBS do Município calculado.</ins>
+  - <ins> **cbs_valor**: (Decimal) Valor do CBS da União calculado.</ins>
 
 ### Intermediário
 
