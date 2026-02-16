@@ -158,7 +158,7 @@ informar o número do RPS que será substituído. Municípios que seguem o padr�
   - **percentual_total_tributos**: (Decimal) Percentual aproximado de todos os impostos, de acordo com a Lei da Transparência. No momento disponível apenas alguns municípios.
   - **fonte_total_tributos**: (String) Fonte de onde foi retirada a informação de total de impostos, por exemplo, "IBPT". No momento disponível apenas para alguns municípios.
   - <ins> **codigo_nbs**: (String) Código da lista de Nomenclatura Brasileira de Serviços (vide [Tabela NBS](https://www.gov.br/mdic/pt-br/images/REPOSITORIO/scs/decos/NBS/NBSa_2-0.csv)).</ins>
-  - <ins> **codigo_indicador_operacao**: (String) Código indicador de operação (vide [Tabela IndOp](https://www.gov.br/nfse/pt-br/biblioteca/documentacao-tecnica/rtc/anexovii-indop_ibscbs_v1-00-00.xlsx)).</ins>
+  - <ins> **codigo_indicador_operacao**: (String) Código indicador de operação (vide [Tabela IndOp](https://www.gov.br/nfse/pt-br/biblioteca/documentacao-tecnica/rtc/anexovii-indop_ibscbs_v1-01-00.xlsx)).</ins>
   - <ins> **ibs_cbs_classificacao_tributaria**: (String) Código de Classificação Tributária do IBS e CBS (vide [Tabela de Correlação NBS-cClassTrib](https://www.gov.br/nfse/pt-br/biblioteca/documentacao-tecnica/rtc/anexoviii-correlacaoitemnbsindopcclasstrib_ibscbs_v1-00-00.xlsx) e [Tabela de Classificação Tributária](https://dfe-portal.svrs.rs.gov.br/DFE/ClassificacaoTributaria)).</ins>
   - <ins> **ibs_cbs_situacao_tributaria**: (String) Código de Situação Tributária do IBS e CBS (vide tabelas acima).</ins>
   - <ins> **ibs_cbs_base_calculo**: (Decimal) Base de cálculo do IBS e CBS.</ins>
