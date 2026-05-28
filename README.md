@@ -1,6 +1,21 @@
 
 # Focus NFe API Doc
 
+---
+---
+
+# ⚠️⚠️⚠️ AVISO ⚠️⚠️⚠️
+
+Este **REPOSITORIO** foi descontinuado e está **ARQUIVADO**.
+
+Repositórios de documentação vigentes:
+- Readme.com - [FocusNFe/openapi-doc](https://github.com/FocusNFe/openapi-doc)
+- Documentação de Campos - [FocusNFe/api-fields-doc](https://github.com/FocusNFe/api-fields-doc)
+- Guides - [FocusNFe/api-fields-doc](https://github.com/FocusNFe/api-fields-doc)
+
+---
+---
+
 ### Local Development
 
 #### Setup
